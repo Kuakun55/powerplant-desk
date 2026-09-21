@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Powerplant Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ============================== TOKENS ============================== */
+:root{
+  --font: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  --bg:#dfe6ee; --bg-2:#eef2f7;
+  --surface:#ffffff; --surface-2:#f4f7fa;
+  --ink:#16273f; --ink-2:#48586f; --ink-3:#7a8aa0;
+  --line:#c5d2df; --line-strong:#a7b8ca;
+  --accent:#1f4b78; --accent-2:#2c689e; --accent-ink:#ffffff;
+
+  --red:#c62a1f; --amber:#a56a12; --green:#1f8a4c; --cyan:#0c7595;
+  --row-red:#fbe9e7; --row-amber:#fbf1de; --row-cyan:#e0f2f8; --row-green:#e7f5ec;
+
+  --panel-bg:#0a0f16; --panel-bg-2:#111925; --panel-line:#243244; --panel-off:#33404f;
+  --panel-off-ink:#61728a;
+
+  --shadow:0 1px 2px rgba(16,32,54,.08), 0 6px 18px rgba(16,32,54,.06);
+  --radius:10px; --radius-s:7px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1620; --bg-2:#13202c;
+    --surface:#182432; --surface-2:#1e2d3d;
+    --ink:#dde8f2; --ink-2:#98abbe; --ink-3:#6b7f93;
+    --line:#2a3a4b; --line-strong:#3c5266;
+    --accent:#4a90c2; --accent-2:#5ea3d4; --accent-ink:#08131e;
+
+    --red:#ff6f60; --amber:#e7ab4c; --green:#4fc07d; --cyan:#48c2e0;
+    --row-red:#301a18; --row-amber:#2c2515; --row-cyan:#132a34; --row-green:#153126;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1620; --bg-2:#13202c;
+  --surface:#182432; --surface-2:#1e2d3d;
+  --ink:#dde8f2; --ink-2:#98abbe; --ink-3:#6b7f93;
+  --line:#2a3a4b; --line-strong:#3c5266;
+  --accent:#4a90c2; --accent-2:#5ea3d4; --accent-ink:#08131e;
+  --red:#ff6f60; --amber:#e7ab4c; --green:#4fc07d; --cyan:#48c2e0;
+  --row-red:#301a18; --row-amber:#2c2515; --row-cyan:#132a34; --row-green:#153126;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+}
+
+/* ============================== BASE ============================== */
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font); font-size:14.5px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+h1,h2,h3{margin:0; text-wrap:balance; line-height:1.25}
+button{font-family:inherit}
+:focus-visible{outline:2.5px solid var(--accent-2); outline-offset:2px; border-radius:3px}
+@media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important; scroll-behavior:auto !important}}
+
+.wrap{max-width:1240px; margin:0 auto; padding-inline:16px}
+
+/* ============================== ANNUNCIATOR ============================== */
+.annunciator{background:linear-gradient(180deg,var(--panel-bg-2),var(--panel-bg)); border-bottom:1px solid var(--panel-line)}
+.annunciator-inner{max-width:1240px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+.ann-brand{display:flex; align-items:center; gap:11px; margin-right:4px}
+.ann-mark{width:30px; height:30px; border-radius:6px; border:1px solid var(--panel-line); background:radial-gradient(circle at 30% 25%, #1b6f7f, #0c3944); display:grid; place-items:center; flex:none}
+.ann-mark span{font-family:var(--mono); font-weight:600; font-size:13px; color:#8fe6f2}
+.ann-brand b{color:#e7eef6; font-weight:600; font-size:14px; letter-spacing:.02em}
+.ann-brand small{display:block; color:#7f92a8; font-size:11px; font-family:var(--mono); letter-spacing:.04em}
+.lamps{display:flex; gap:9px; flex-wrap:wrap; flex:1}
+.lamp{
+  --glow:transparent; --lampink:var(--panel-off-ink);
+  appearance:none; cursor:pointer; text-align:left;
+  background:var(--panel-bg); border:1px solid var(--panel-off); color:var(--lampink);
+  border-radius:7px; padding:7px 11px; min-width:104px;
+  display:flex; flex-direction:column; gap:2px; position:relative; transition:transform .08s ease;
+}
+.lamp:hover{transform:translateY(-1px)}
+.lamp:active{transform:translateY(0)}
+.lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono)}
+.lamp .cnt{font-size:19px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
+.lamp.on{color:var(--lampink); border-color:var(--glow); background:var(--panel-bg-2); box-shadow:0 0 0 1px var(--glow) inset, 0 0 14px -2px var(--glow); animation:lampPulse 2.6s ease-in-out infinite}
+.lamp.on .lab{color:var(--lampink)}
+.lamp.on.red{--glow:#ff4433; --lampink:#ff8f84}
+.lamp.on.amber{--glow:#e79a1f; --lampink:#ffce80}
+.lamp::before{content:""; position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:var(--panel-off); box-shadow:none}
+.lamp.on::before{background:var(--glow); box-shadow:0 0 8px 1px var(--glow)}
+@keyframes lampPulse{0%,100%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 10px -3px var(--glow)} 50%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 18px 0 var(--glow)}}
+.all-clear{color:#5f95a0; font-family:var(--mono); font-size:12px; letter-spacing:.03em; display:flex; align-items:center; gap:7px}
+.all-clear::before{content:""; width:8px; height:8px; border-radius:50%; background:#2ea36a; box-shadow:0 0 9px 1px #2ea36a}
+
+/* ============================== HEADER / TABS ============================== */
+.appbar{display:flex; align-items:center; gap:14px; padding:14px 0 10px; flex-wrap:wrap}
+.appbar h1{font-size:20px; font-weight:600; letter-spacing:-.01em}
+.appbar h1 small{display:block; font-size:12px; font-weight:400; color:var(--ink-2); letter-spacing:.01em; margin-top:1px}
+.spacer{flex:1}
+.mode-badge{display:flex; align-items:center; gap:7px; font-size:12px; color:var(--ink-2); background:var(--surface); border:1px solid var(--line); padding:6px 11px; border-radius:20px}
+.mode-badge .dot{width:8px; height:8px; border-radius:50%; background:var(--cyan); flex:none}
+.mode-badge.team .dot{background:var(--green); box-shadow:0 0 7px 0 var(--green)}
+.mode-badge b{color:var(--ink); font-weight:600}
+.icon-btn{background:var(--surface); border:1px solid var(--line); color:var(--ink); width:38px; height:38px; border-radius:9px; cursor:pointer; display:grid; place-items:center; font-size:16px}
+.icon-btn:hover{border-color:var(--line-strong); background:var(--surface-2)}
+
+.tabs{display:flex; gap:2px; border-bottom:2px solid var(--line); margin-top:4px}
+.tab{
+  appearance:none; background:none; border:none; cursor:pointer; color:var(--ink-2);
+  font-size:14.5px; font-weight:600; padding:11px 16px; position:relative; margin-bottom:-2px;
+  border-bottom:2px solid transparent; display:flex; align-items:center; gap:9px;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent); border-bottom-color:var(--accent)}
+.tab .pill{font-family:var(--mono); font-size:11px; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-2); border-radius:11px; padding:1px 7px; min-width:22px; text-align:center}
+.tab[aria-selected="true"] .pill{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+
+.panel{padding:20px 0 60px}
+.panel[hidden]{display:none !important}
+
+/* ============================== TOOLBAR / CONTROLS ============================== */
+.toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px}
+.search{position:relative; flex:1; min-width:190px}
+.search input{width:100%; padding:9px 12px 9px 34px; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:9px; font-size:14px; font-family:inherit}
+.search input::placeholder{color:var(--ink-3)}
+.search svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--ink-3)}
+.seg{display:inline-flex; background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:2px; gap:2px}
+.seg button{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); font-size:12.5px; font-weight:500; padding:6px 11px; border-radius:7px; white-space:nowrap; font-family:inherit}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:var(--shadow); font-weight:600}
+label.field-lab{font-size:11px; color:var(--ink-3); font-weight:600; letter-spacing:.04em; text-transform:uppercase; margin-right:2px}
+select.plain{padding:8px 10px; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px; font-family:inherit; font-size:13.5px}
+
+.btn{appearance:none; cursor:pointer; border-radius:9px; padding:9px 15px; font-size:13.5px; font-weight:600; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-family:inherit; display:inline-flex; align-items:center; gap:7px; white-space:nowrap}
+.btn:hover{border-color:var(--line-strong); background:var(--surface-2)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-2); border-color:var(--accent-2)}
+.btn.ghost{background:none; border-color:transparent; color:var(--accent); padding-inline:8px}
+.btn.sm{padding:6px 10px; font-size:12.5px}
+.btn.danger{color:var(--red); border-color:transparent; background:none}
+.btn.danger:hover{background:var(--row-red)}
+
+.focus-chip{display:inline-flex; align-items:center; gap:9px; background:var(--row-amber); border:1px solid var(--amber); color:var(--amber); font-size:12.5px; font-weight:600; padding:5px 8px 5px 12px; border-radius:20px; margin-bottom:14px}
+.focus-chip button{appearance:none; border:none; background:rgba(0,0,0,.06); color:inherit; cursor:pointer; width:20px; height:20px; border-radius:50%; font-size:13px; line-height:1}
+
+/* ============================== TABLE ============================== */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+.table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:760px; font-size:13px}
+thead th{
+  position:sticky; top:0; background:var(--surface-2); text-align:left; font-weight:600; color:var(--ink-2);
+  font-size:11px; letter-spacing:.03em; text-transform:uppercase; padding:11px 12px; border-bottom:1px solid var(--line-strong); white-space:nowrap;
+}
+tbody td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .08s ease}
+tbody tr.clickable{cursor:pointer}
+tbody tr.clickable:hover{background:var(--surface-2)}
+tr.row-red{background:var(--row-red)} tr.row-red:hover{background:var(--row-red); filter:brightness(.98)}
+tr.row-amber{background:var(--row-amber)} tr.row-amber:hover{filter:brightness(.98)}
+tr.row-cyan{background:var(--row-cyan)} tr.row-cyan:hover{filter:brightness(.98)}
+tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.98)}
+.subject-cell{max-width:270px; min-width:170px}
+.subj{font-weight:600; color:var(--ink)}
+.sub-meta{font-size:11.5px; color:var(--ink-2); margin-top:2px}
+.notes-cell{max-width:240px; font-size:12px; color:var(--ink-2)}
+
+.tag{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px; white-space:nowrap; border:1px solid transparent}
+.tag.red{background:var(--row-red); color:var(--red); border-color:var(--red)}
+.tag.amber{background:var(--row-amber); color:var(--amber); border-color:var(--amber)}
+.tag.green{background:var(--row-green); color:var(--green); border-color:var(--green)}
+.tag.cyan{background:var(--row-cyan); color:var(--cyan); border-color:var(--cyan)}
+.tag.grey{background:var(--surface-2); color:var(--ink-2); border-color:var(--line-strong)}
+.dleft{font-family:var(--mono); font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
+.dleft.red{color:var(--red)} .dleft.amber{color:var(--amber)} .dleft.cyan{color:var(--cyan)} .dleft.green{color:var(--green)} .dleft.muted{color:var(--ink-3)}
+.flag{display:inline-flex; align-items:center; gap:4px; font-size:10.5px; font-weight:700; color:var(--red); font-family:var(--mono); letter-spacing:.02em}
+.flag.amber{color:var(--amber)}
+.row-actions{display:flex; gap:2px; justify-content:flex-end}
+.mini{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); padding:5px 8px; border-radius:6px; font-size:12px; font-weight:600; line-height:1; font-family:inherit}
+.mini:hover{background:var(--surface-2); color:var(--ink)}
+.mini.del:hover{color:var(--red); background:var(--row-red)}
+
+/* ============================== EMPTY STATE ============================== */
+.empty{text-align:center; padding:54px 24px; border:1.5px dashed var(--line-strong); border-radius:var(--radius); background:var(--surface-2)}
+.empty h3{font-size:16px; color:var(--ink); margin-bottom:6px}
+.empty p{color:var(--ink-2); font-size:13.5px; margin:0 auto 18px; max-width:400px}
+.empty .actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+
+/* ============================== COMPLIANCE PLAN ============================== */
+.section-head{display:flex; align-items:center; gap:10px; margin:28px 0 14px}
+.section-head h2{font-size:15px; font-weight:600}
+.section-head .rule{flex:1; height:1px; background:var(--line)}
+.section-head .hint{font-size:12px; color:var(--ink-3)}
+.months{display:grid; grid-template-columns:repeat(auto-fill, minmax(184px,1fr)); gap:12px}
+.mcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-s); padding:13px; min-height:104px}
+.mcard.overdue{border-color:var(--red); background:var(--row-red)}
+.mcard h4{font-size:12px; font-family:var(--mono); letter-spacing:.03em; color:var(--ink-2); text-transform:uppercase; display:flex; justify-content:space-between; align-items:center; margin-bottom:9px}
+.mcard.overdue h4{color:var(--red)}
+.mcard h4 .n{background:var(--surface-2); border:1px solid var(--line); border-radius:11px; padding:0 7px; font-size:11px; color:var(--ink-2)}
+.mcard.overdue h4 .n{background:var(--red); color:#fff; border-color:var(--red)}
+.mitem{display:flex; align-items:center; gap:7px; padding:4px 0; border-top:1px dotted var(--line); font-size:12px}
+.mitem:first-of-type{border-top:none}
+.mitem .adno{font-family:var(--mono); font-weight:600; font-size:11.5px; color:var(--ink)}
+.mitem .sp{margin-left:auto; width:8px; height:8px; border-radius:50%; flex:none}
+.sp-ready{background:var(--green)} .sp-ordered{background:var(--amber)} .sp-notready{background:var(--red)} .sp-na{background:var(--ink-3)}
+.mcard .none{font-size:12px; color:var(--ink-3); font-style:italic}
+
+/* ============================== RELIABILITY ============================== */
+.rel-grid{display:grid; grid-template-columns:1fr; gap:18px}
+@media (min-width:860px){.rel-grid{grid-template-columns:1.15fr .85fr}}
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-s); padding:13px 14px}
+.kpi .k-lab{font-size:11px; color:var(--ink-3); font-weight:600; letter-spacing:.04em; text-transform:uppercase}
+.kpi .k-val{font-size:25px; font-weight:600; font-variant-numeric:tabular-nums; margin-top:5px; line-height:1; font-family:var(--mono)}
+.kpi .k-sub{font-size:11px; color:var(--ink-2); margin-top:4px}
+.kpi.alert .k-val{color:var(--red)}
+.chart-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow)}
+.chart-scroll{overflow-x:auto}
+.chart-legend{display:flex; gap:18px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-2); margin-top:8px}
+.chart-legend span{display:inline-flex; align-items:center; gap:6px}
+.lg-line{width:20px; height:3px; border-radius:2px; background:var(--accent-2)}
+.lg-alert{width:20px; height:0; border-top:2px dashed var(--red)}
+.lg-dot{width:9px; height:9px; border-radius:50%; background:var(--red)}
+svg text{font-family:var(--mono)}
+
+/* ============================== MODAL ============================== */
+.modal{position:fixed; inset:0; background:rgba(10,18,28,.55); backdrop-filter:blur(2px); display:flex; align-items:flex-start; justify-content:center; padding:34px 16px; z-index:60; overflow-y:auto}
+.modal-box{background:var(--surface); border:1px solid var(--line-strong); border-radius:14px; box-shadow:0 24px 60px rgba(8,16,28,.4); width:100%; max-width:600px; margin:auto}
+.modal-head{display:flex; align-items:center; gap:10px; padding:17px 20px; border-bottom:1px solid var(--line)}
+.modal-head h3{font-size:16px; font-weight:600}
+.modal-head .adno-badge{font-family:var(--mono); font-size:12px; color:var(--ink-2)}
+.modal-body{padding:18px 20px; display:grid; grid-template-columns:1fr 1fr; gap:13px}
+.form-row{display:flex; flex-direction:column; gap:5px}
+.form-row.full{grid-column:1 / -1}
+.form-row label{font-size:12px; font-weight:600; color:var(--ink-2)}
+.form-row label .req{color:var(--red)}
+.form-row input, .form-row select, .form-row textarea{
+  padding:9px 11px; border:1px solid var(--line-strong); background:var(--surface-2); color:var(--ink);
+  border-radius:8px; font-size:13.5px; font-family:inherit; width:100%;
+}
+.form-row textarea{resize:vertical; min-height:62px}
+.form-row .err{font-size:11px; color:var(--red); font-weight:600; display:none}
+.form-row.invalid input, .form-row.invalid select, .form-row.invalid textarea{border-color:var(--red)}
+.form-row.invalid .err{display:block}
+.modal-foot{padding:15px 20px; border-top:1px solid var(--line); display:flex; gap:10px; align-items:center}
+.modal-foot .spacer{flex:1}
+@media (max-width:520px){.modal-body{grid-template-columns:1fr}}
+
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+footer.foot{color:var(--ink-3); font-size:11.5px; text-align:center; padding:24px 0 34px; font-family:var(--mono)}
+</style>
+<style>
+#loginGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--bg,#dfe6ee);font-family:var(--font,system-ui,sans-serif);padding:20px}
+#loginGate form{background:var(--surface,#fff);color:var(--ink,#16273f);border:1px solid var(--line,#c5d2df);border-radius:12px;box-shadow:0 6px 24px rgba(16,32,54,.12);padding:28px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
+#loginGate h2{margin:0;font-size:20px}#loginGate p{margin:0 0 6px;color:var(--ink-3,#7a8aa0);font-size:13px}
+#loginGate label{font-size:12px;font-weight:600;color:var(--ink-2,#48586f)}
+#loginGate input{font:inherit;padding:10px 12px;border:1px solid var(--line-strong,#a7b8ca);border-radius:8px;background:var(--surface-2,#f4f7fa);color:inherit}
+#loginGate button{font:inherit;font-weight:600;padding:11px;border:0;border-radius:8px;background:var(--accent,#1f4b78);color:var(--accent-ink,#fff);cursor:pointer;margin-top:6px}
+#loginErr{color:var(--red,#c62a1f);font-size:13px;min-height:18px}
+body.locked>.wrap,body.locked>section{display:none!important}
+</style>
+</head>
+<body class="locked">
+<div id="loginGate"><form id="loginForm" autocomplete="on">
+<h2>Powerplant Desk</h2><p>Sign in to continue</p>
+<label for="lgUser">Username</label><input id="lgUser" name="username" autocomplete="username" required>
+<label for="lgPass">Password</label><input id="lgPass" name="password" type="password" autocomplete="current-password" required>
+<div id="loginErr"></div><button type="submit">Sign in</button></form></div>
+<script>
+(function(){
+  var HASH="97898f9a77bb9b241b96225cc35561930d74e13ad3dc517696c21dc5e142a804";
+  var gate=document.getElementById("loginGate");
+  function unlock(){ gate.remove(); document.body.classList.remove("locked"); }
+  try{ if(sessionStorage.getItem("ppd.auth")===HASH){ unlock(); return; } }catch(e){}
+  async function sha(t){ var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)); return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join(""); }
+  document.getElementById("loginForm").addEventListener("submit",async function(e){
+    e.preventDefault();
+    var h=await sha(document.getElementById("lgUser").value.trim()+":"+document.getElementById("lgPass").value);
+    if(h===HASH){ try{sessionStorage.setItem("ppd.auth",HASH);}catch(e){} unlock(); }
+    else { document.getElementById("loginErr").textContent="Incorrect username or password"; }
+  });
+})();
+</script>
+
+
+<!-- ===================== ANNUNCIATOR PANEL ===================== -->
+<section class="annunciator" aria-label="Annunciator panel">
+  <div class="annunciator-inner">
+    <div class="ann-brand">
+      <div class="ann-mark"><span>PW</span></div>
+      <div><b>POWERPLANT DESK</b><small>ENG · APU · COMPONENTS</small></div>
+    </div>
+    <div class="lamps" id="lamps"></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <!-- ===================== APP BAR ===================== -->
+  <div class="appbar">
+    <h1>Powerplant Engineer Desk<small>Technical Services — Powerplant Engineering</small></h1>
+    <div class="spacer"></div>
+    <div class="mode-badge" id="modeBadge" title="Data storage mode">
+      <span class="dot"></span><span id="modeText">Checking…</span>
+    </div>
+    <button class="icon-btn" id="themeBtn" title="Toggle light/dark theme" aria-label="Toggle theme">◐</button>
+  </div>
+
+  <!-- ===================== TABS ===================== -->
+  <div class="tabs" role="tablist" aria-label="Modules">
+    <button class="tab" role="tab" id="tab-ad" aria-selected="true" data-tab="ad">
+      AD Management <span class="pill" id="pill-ad">0</span>
+    </button>
+    <button class="tab" role="tab" id="tab-eng" aria-selected="false" data-tab="eng">
+      Engineering Support <span class="pill" id="pill-eng">0</span>
+    </button>
+    <button class="tab" role="tab" id="tab-rel" aria-selected="false" data-tab="rel">
+      Reliability <span class="pill" id="pill-rel">0</span>
+    </button>
+  </div>
+
+  <!-- ===================== TAB 1: AD ===================== -->
+  <section class="panel" id="panel-ad" role="tabpanel" aria-labelledby="tab-ad">
+    <div class="toolbar">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="adSearch" type="search" placeholder="Search AD, subject, applicability, SB…" aria-label="Search ADs">
+      </div>
+      <div class="seg" role="group" aria-label="Filter by category" id="adCat">
+        <button data-v="all" aria-pressed="true">All</button>
+        <button data-v="Engine">Engine</button>
+        <button data-v="APU">APU</button>
+        <button data-v="Component">Component</button>
+      </div>
+      <div class="seg" role="group" aria-label="Filter by status" id="adStatus">
+        <button data-v="open" aria-pressed="true">Open</button>
+        <button data-v="urgent">Urgent</button>
+        <button data-v="complied">Complied</button>
+        <button data-v="all">All</button>
+      </div>
+      <button class="btn primary" id="adAdd">+ Add AD</button>
+    </div>
+    <div id="adFocusChip"></div>
+    <div id="adTableHost"></div>
+
+    <div class="section-head">
+      <h2>Compliance plan</h2><div class="rule"></div>
+      <span class="hint">Next 6 months · dot colour = spares status</span>
+    </div>
+    <div class="months" id="adPlan"></div>
+  </section>
+
+  <!-- ===================== TAB 2: ENG ===================== -->
+  <section class="panel" id="panel-eng" role="tabpanel" aria-labelledby="tab-eng" hidden>
+    <div class="toolbar">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="engSearch" type="search" placeholder="Search reference, subject, counterparty…" aria-label="Search engineering tasks">
+      </div>
+      <div class="seg" role="group" aria-label="Filter by status" id="engStatus">
+        <button data-v="all" aria-pressed="true">All</button>
+        <button data-v="Open">Open</button>
+        <button data-v="Awaiting reply">Awaiting reply</button>
+        <button data-v="Closed">Closed</button>
+      </div>
+      <button class="btn primary" id="engAdd">+ Add task</button>
+    </div>
+    <div id="engFocusChip"></div>
+    <div id="engTableHost"></div>
+  </section>
+
+  <!-- ===================== TAB 3: RELIABILITY ===================== -->
+  <section class="panel" id="panel-rel" role="tabpanel" aria-labelledby="tab-rel" hidden>
+    <div class="toolbar">
+      <label class="field-lab">Displayed rate</label>
+      <div class="seg" role="group" aria-label="Select rate" id="relRate">
+        <button data-v="engUer" aria-pressed="true">Engine UER /1000 EFH</button>
+        <button data-v="ifsd" aria-pressed="false">IFSD /1000 EFH</button>
+        <button data-v="apuUer" aria-pressed="false">APU removal /1000 APU h</button>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn primary" id="relAdd">+ Add monthly data</button>
+    </div>
+
+    <div class="rel-grid">
+      <div>
+        <div class="kpis" id="relKpis"></div>
+        <div class="chart-card">
+          <div class="chart-scroll"><div id="relChart"></div></div>
+          <div class="chart-legend">
+            <span><span class="lg-line"></span> Monthly rate</span>
+            <span><span class="lg-alert"></span> Alert level (mean + 2σ)</span>
+            <span><span class="lg-dot"></span> Above alert level</span>
+          </div>
+        </div>
+      </div>
+      <div id="relTableHost"></div>
+    </div>
+  </section>
+
+  <footer class="foot">Powerplant Desk · Sample records start with DEMO- and are entirely fictional</footer>
+</div>
+
+<div id="modalHost"></div>
+
+<script>
+"use strict";
+/* =========================================================================
+   Powerplant Desk — single-file work tool
+   Storage: shared realtime `db` capability when published as an Artifact,
+   otherwise localStorage. Detected at runtime; mode shown in the header.
+   ========================================================================= */
+
+/* ----------------------------- utilities ----------------------------- */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const el = (t, a={}, kids=[]) => {
+  const n = document.createElement(t);
+  for (const k in a){
+    if (k === "class") n.className = a[k];
+    else if (k === "html") n.innerHTML = a[k];
+    else if (k === "text") n.textContent = a[k];
+    else if (k.startsWith("on") && typeof a[k] === "function") n.addEventListener(k.slice(2), a[k]);
+    else if (a[k] !== null && a[k] !== undefined && a[k] !== false) n.setAttribute(k, a[k]);
+  }
+  (Array.isArray(kids)?kids:[kids]).forEach(c => { if(c!=null && c!==false) n.append(c.nodeType?c:document.createTextNode(c)); });
+  return n;
+};
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-"+Date.now()+"-"+Math.random().toString(36).slice(2,8));
+const esc = s => String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const MS_DAY = 86400000;
+function todayISO(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function parseISO(s){ if(!s) return null; const [y,m,d]=s.split("-").map(Number); return new Date(y, m-1, d); }
+function daysUntil(iso){ if(!iso) return null; const t=parseISO(todayISO()), d=parseISO(iso); return Math.round((d-t)/MS_DAY); }
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(iso){ if(!iso) return "—"; const d=parseISO(iso); if(!d||isNaN(d)) return "—"; return String(d.getDate()).padStart(2,"0")+" "+MON[d.getMonth()]+" "+d.getFullYear(); }
+function addDays(iso, n){ const d=parseISO(iso); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function monthKey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
+function fmtMonth(k){ if(!k) return "—"; const [y,m]=k.split("-").map(Number); return MON[m-1]+" "+y; }
+
+/* ----------------------------- state ----------------------------- */
+const state = {
+  tab: "ad",
+  ads: [], eng: [], rel: [],
+  adSearch:"", adCat:"all", adStatus:"open", adFocus:null,
+  engSearch:"", engStatus:"all", engFocus:null,
+  relRate:"engUer",
+  mode:"local",
+};
+const AD_DONE = a => a.status==="Complied" || a.status==="N/A";
+
+/* ============================================================
+   STORAGE BACKENDS  (uniform async interface)
+   ============================================================ */
+const COLLS = ["ads","eng","rel"];
+
+const LocalBackend = {
+  name:"local",
+  init(onData){
+    for (const c of COLLS){
+      let arr = [];
+      try { arr = JSON.parse(localStorage.getItem("ppd."+c) || "[]"); } catch(e){ arr = []; }
+      onData(c, Array.isArray(arr)?arr:[]);
+    }
+  },
+  _save(c){ try{ localStorage.setItem("ppd."+c, JSON.stringify(state[c])); }catch(e){} },
+  async upsert(c, rec){
+    const i = state[c].findIndex(x => x.id===rec.id);
+    if (i>=0) state[c][i]=rec; else state[c].push(rec);
+    this._save(c); onDataChanged(c);
+  },
+  async remove(c, id){
+    state[c] = state[c].filter(x => x.id!==id);
+    this._save(c); onDataChanged(c);
+  },
+};
+
+function makeTeamBackend(db){
+  return {
+    name:"team",
+    _unsub:[],
+    init(onData){
+      for (const c of COLLS){
+        const un = db.collection(c).onSnapshot(
+          snap => { onData(c, snap.docs.map(d => ({ ...(d.data()||{}), id:d.id }))); },
+          err => { console.warn("db snapshot error", c, err && err.code); }
+        );
+        this._unsub.push(un);
+      }
+    },
+    async upsert(c, rec){
+      const { id, ...body } = rec;
+      await db.collection(c).doc(id).set(body);
+    },
+    async remove(c, id){ await db.collection(c).doc(id).delete(); },
+  };
+}
+
+let backend = LocalBackend;
+
+/* onData: backend pushes an authoritative array for a collection */
+function onData(coll, items){ state[coll] = items; renderAll(); }
+/* onDataChanged: local backend already mutated state[coll]; just re-render */
+function onDataChanged(coll){ renderAll(); }
+
+async function upsert(coll, rec){ try { await backend.upsert(coll, rec); } catch(e){ alert("Save failed: "+(e&&e.message||e)); } }
+async function remove(coll, id){ try { await backend.remove(coll, id); } catch(e){ alert("Delete failed: "+(e&&e.message||e)); } }
+
+/* ============================================================
+   FLAGS / ANNUNCIATOR
+   ============================================================ */
+function flagSets(){
+  const t = todayISO();
+  const active = state.ads.filter(a => !AD_DONE(a));
+  const overdue     = active.filter(a => { const d=daysUntil(a.dueDate); return d!==null && d<0; });
+  const planAfter   = state.ads.filter(a => a.plannedDate && a.dueDate && a.plannedDate>a.dueDate && !AD_DONE(a));
+  const due30       = active.filter(a => { const d=daysUntil(a.dueDate); return d!==null && d>=0 && d<=30; });
+  const sparesNR    = active.filter(a => a.sparesStatus==="Not ready");
+  const queryOver   = state.eng.filter(e => e.status!=="Closed" && e.targetDate && e.targetDate<t);
+  const relAlertRates = ["engUer","ifsd","apuUer"].filter(r => { const s=relStats(r); return s.alert!=null && s.latest!=null && s.latest>s.alert; });
+  return { overdue, planAfter, due30, sparesNR, queryOver, relAlertRates };
+}
+
+const LAMPS = [
+  { key:"overdue",   lab:"AD OVERDUE",      tone:"red",   go:()=>focusAD("overdue") },
+  { key:"planAfter", lab:"PLAN AFTER DUE",  tone:"amber", go:()=>focusAD("planAfter") },
+  { key:"due30",     lab:"AD DUE ≤ 30 D", tone:"amber", go:()=>focusAD("due30") },
+  { key:"sparesNR",  lab:"SPARES NOT READY", tone:"amber", go:()=>focusAD("sparesNR") },
+  { key:"queryOver", lab:"QUERY OVERDUE",   tone:"red",   go:()=>focusENG("overdue") },
+  { key:"relAlert",  lab:"RELIABILITY ALERT", tone:"red", go:()=>{ selectTab("rel"); $("#relChart").scrollIntoView({behavior:"smooth", block:"center"}); } },
+];
+
+function renderLamps(){
+  const f = flagSets();
+  const counts = { overdue:f.overdue.length, planAfter:f.planAfter.length, due30:f.due30.length, sparesNR:f.sparesNR.length, queryOver:f.queryOver.length, relAlert:f.relAlertRates.length };
+  const host = $("#lamps"); host.innerHTML="";
+  let anyOn = false;
+  for (const L of LAMPS){
+    const n = counts[L.key]; const on = n>0; if(on) anyOn=true;
+    host.append(el("button", {
+      class:"lamp "+(on?("on "+L.tone):""), type:"button",
+      "aria-label":L.lab+": "+n, onclick:L.go
+    }, [ el("span",{class:"lab",text:L.lab}), el("span",{class:"cnt",text:String(n)}) ]));
+  }
+  if(!anyOn){ host.append(el("div",{class:"all-clear",text:"ALL CLEAR — no urgent items requiring action"})); }
+}
+
+/* ============================================================
+   TAB 1 — AD MANAGEMENT
+   ============================================================ */
+function adUrgencyRank(a){
+  if (AD_DONE(a)) return 5;
+  const d = daysUntil(a.dueDate);
+  if (d===null) return 4;
+  if (d<0) return 0; if (d<=30) return 1; if (d<=90) return 2; return 3;
+}
+function adRowClass(a){
+  if (AD_DONE(a)) return "row-green";
+  const d = daysUntil(a.dueDate);
+  if (d===null) return "";
+  if (d<0) return "row-red"; if (d<=30) return "row-amber"; if (d<=90) return "row-cyan"; return "";
+}
+function dLeftCell(a){
+  if (AD_DONE(a)) return el("span",{class:"dleft muted",text:"—"});
+  const d = daysUntil(a.dueDate);
+  if (d===null) return el("span",{class:"dleft muted",text:"—"});
+  let cls = d<0?"red":d<=30?"amber":d<=90?"cyan":"green";
+  let txt = d<0 ? Math.abs(d)+" d overdue" : d+" d";
+  return el("span",{class:"dleft "+cls, text:txt});
+}
+const SPARE_TAG = { "Ready":"green", "Ordered":"amber", "Not ready":"red", "N/A":"grey" };
+const AD_STATUS_TAG = { "Open":"grey","Planned":"cyan","In work":"amber","Complied":"green","N/A":"grey" };
+
+function focusAD(kind){ state.adFocus=kind; selectTab("ad"); renderAD(); $("#adTableHost").scrollIntoView({behavior:"smooth", block:"start"}); }
+const AD_FOCUS_LABEL = { overdue:"Overdue ADs", planAfter:"Planned after due date", due30:"Due within 30 days", sparesNR:"Spares not ready" };
+
+function adFilteredRows(){
+  let rows = state.ads.slice();
+  const f = state.adFocus;
+  if (f==="overdue")   rows = rows.filter(a=>!AD_DONE(a) && daysUntil(a.dueDate)!==null && daysUntil(a.dueDate)<0);
+  else if (f==="planAfter") rows = rows.filter(a=>a.plannedDate&&a.dueDate&&a.plannedDate>a.dueDate&&!AD_DONE(a));
+  else if (f==="due30")     rows = rows.filter(a=>{const d=daysUntil(a.dueDate);return !AD_DONE(a)&&d!==null&&d>=0&&d<=30;});
+  else if (f==="sparesNR")  rows = rows.filter(a=>a.sparesStatus==="Not ready"&&!AD_DONE(a));
+  else {
+    if (state.adCat!=="all") rows = rows.filter(a=>a.category===state.adCat);
+    const s = state.adStatus;
+    if (s==="open") rows = rows.filter(a=>!AD_DONE(a));
+    else if (s==="complied") rows = rows.filter(a=>AD_DONE(a));
+    else if (s==="urgent") rows = rows.filter(a=>{
+      const d=daysUntil(a.dueDate);
+      return !AD_DONE(a) && ((d!==null&&d<=30) || a.sparesStatus==="Not ready" || (a.plannedDate&&a.dueDate&&a.plannedDate>a.dueDate));
+    });
+  }
+  const q = state.adSearch.trim().toLowerCase();
+  if (q) rows = rows.filter(a => [a.adNo,a.subject,a.applicability,a.sbRef,a.remarks,a.authority].join(" ").toLowerCase().includes(q));
+  rows.sort((a,b)=>{
+    const r = adUrgencyRank(a)-adUrgencyRank(b); if(r) return r;
+    return (a.dueDate||"9999").localeCompare(b.dueDate||"9999");
+  });
+  return rows;
+}
+
+function renderAD(){
+  // focus chip
+  const chipHost = $("#adFocusChip"); chipHost.innerHTML="";
+  if (state.adFocus){
+    chipHost.append(el("div",{class:"focus-chip"},[
+      "Filtering: "+(AD_FOCUS_LABEL[state.adFocus]||state.adFocus),
+      el("button",{type:"button","aria-label":"Clear filter", text:"×", onclick:()=>{state.adFocus=null; renderAD();}})
+    ]));
+  }
+  const host = $("#adTableHost"); host.innerHTML="";
+  if (state.ads.length===0){ host.append(emptyState("No ADs yet","Start by adding an AD affecting an engine, APU or component, or load sample data to see how it works", ()=>openAdModal(), loadSamples)); renderAdPlan(); return; }
+  const rows = adFilteredRows();
+  const cols = ["AD No.","Authority","Subject / Applicability","Cat.","SB / Ref","Compliance","Due date","Days","Planned","Spares","Status","",""];
+  const table = el("table");
+  const thead = el("thead"); const htr=el("tr");
+  ["AD No.","Auth","Subject / Applicability","Cat","SB / Ref","Compliance","Due date","Days","Planned","Spares","Status","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
+  thead.append(htr); table.append(thead);
+  const tb = el("tbody");
+  if (rows.length===0){ tb.append(el("tr",{},el("td",{colspan:13, class:"none", html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'}))); }
+  for (const a of rows){
+    const tr = el("tr",{class:"clickable "+adRowClass(a), onclick:(e)=>{ if(e.target.closest(".row-actions")) return; openAdModal(a); }});
+    const planFlag = a.plannedDate && a.dueDate && a.plannedDate>a.dueDate;
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-weight:600",text:a.adNo||"—"})));
+    tr.append(el("td",{},el("span",{class:"tag grey",text:a.authority||"—"})));
+    tr.append(el("td",{class:"subject-cell"},[
+      el("div",{class:"subj",text:a.subject||"—"}),
+      el("div",{class:"sub-meta"},[ el("span",{class:"mono",text:a.applicability||"—"}) ])
+    ]));
+    tr.append(el("td",{},el("span",{class:"tag "+(a.category==="Engine"?"cyan":a.category==="APU"?"amber":"grey"),text:a.category||"—"})));
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:a.sbRef||"—"})));
+    tr.append(el("td",{},[ document.createTextNode(a.complianceType||"—"), a.repeatInterval?el("div",{class:"sub-meta mono",text:a.repeatInterval}):null ]));
+    tr.append(el("td",{},[ document.createTextNode(fmtDate(a.dueDate)), a.otherDueLimit?el("div",{class:"sub-meta mono",text:a.otherDueLimit}):null ]));
+    tr.append(el("td",{}, dLeftCell(a)));
+    tr.append(el("td",{}, [ document.createTextNode(fmtDate(a.plannedDate)), planFlag?el("div",{class:"flag",text:"▲ LATE"}):null ]));
+    tr.append(el("td",{},el("span",{class:"tag "+(SPARE_TAG[a.sparesStatus]||"grey"),text:a.sparesStatus||"N/A"})));
+    tr.append(el("td",{},el("span",{class:"tag "+(AD_STATUS_TAG[a.status]||"grey"),text:a.status||"Open"})));
+    tr.append(el("td",{class:"notes-cell",text:a.remarks||""}));
+    tr.append(el("td",{},el("div",{class:"row-actions"},[
+      el("button",{class:"mini",title:"Edit","aria-label":"Edit",text:"Edit",onclick:()=>openAdModal(a)}),
+      el("button",{class:"mini del",title:"Delete","aria-label":"Delete",text:"Del",onclick:()=>confirmDel("ads",a.id,a.adNo)}),
+    ])));
+    tb.append(tr);
+  }
+  table.append(tb);
+  host.append(el("div",{class:"table-wrap"}, table));
+  renderAdPlan();
+}
+
+function renderAdPlan(){
+  const host = $("#adPlan"); host.innerHTML="";
+  const active = state.ads.filter(a=>!AD_DONE(a) && a.dueDate);
+  // overdue card
+  const overdue = active.filter(a=>daysUntil(a.dueDate)<0).sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+  const oc = el("div",{class:"mcard overdue"});
+  oc.append(el("h4",{},[ "OVERDUE", el("span",{class:"n",text:String(overdue.length)}) ]));
+  if(overdue.length===0) oc.append(el("div",{class:"none",text:"No overdue items"}));
+  overdue.slice(0,6).forEach(a=>oc.append(planItem(a)));
+  if(overdue.length>6) oc.append(el("div",{class:"sub-meta",style:"margin-top:6px",text:"+ "+(overdue.length-6)+" more"}));
+  host.append(oc);
+  // next 6 months
+  const now = new Date(); now.setDate(1);
+  for (let i=0;i<6;i++){
+    const m = new Date(now.getFullYear(), now.getMonth()+i, 1);
+    const key = monthKey(m);
+    const items = active.filter(a=>a.dueDate.slice(0,7)===key && daysUntil(a.dueDate)>=0).sort((a,b)=>a.dueDate.localeCompare(b.dueDate));
+    const c = el("div",{class:"mcard"});
+    c.append(el("h4",{},[ fmtMonth(key).toUpperCase(), el("span",{class:"n",text:String(items.length)}) ]));
+    if(items.length===0) c.append(el("div",{class:"none",text:"Empty"}));
+    items.forEach(a=>c.append(planItem(a)));
+    host.append(c);
+  }
+}
+function planItem(a){
+  const spClass = a.sparesStatus==="Ready"?"sp-ready":a.sparesStatus==="Ordered"?"sp-ordered":a.sparesStatus==="Not ready"?"sp-notready":"sp-na";
+  return el("div",{class:"mitem", title:(a.subject||"")+" · Spares: "+(a.sparesStatus||"N/A"), style:"cursor:pointer", onclick:()=>openAdModal(a)},[
+    el("span",{class:"adno",text:a.adNo||"—"}),
+    el("span",{style:"color:var(--ink-3);font-family:var(--mono);font-size:11px",text:String(parseISO(a.dueDate).getDate()).padStart(2,"0")}),
+    el("span",{class:"sp "+spClass})
+  ]);
+}
+
+/* ============================================================
+   TAB 2 — ENGINEERING SUPPORT
+   ============================================================ */
+function focusENG(kind){ state.engFocus=kind; selectTab("eng"); renderENG(); }
+const ENG_STATUS_TAG = { "Open":"cyan","Awaiting reply":"amber","Closed":"green" };
+
+function engFilteredRows(){
+  let rows = state.eng.slice();
+  const t = todayISO();
+  if (state.engFocus==="overdue") rows = rows.filter(e=>e.status!=="Closed" && e.targetDate && e.targetDate<t);
+  else if (state.engStatus!=="all") rows = rows.filter(e=>e.status===state.engStatus);
+  const q = state.engSearch.trim().toLowerCase();
+  if (q) rows = rows.filter(e=>[e.refNo,e.type,e.subject,e.counterparty,e.asset,e.notes].join(" ").toLowerCase().includes(q));
+  rows.sort((a,b)=>{
+    const ao=a.status!=="Closed"&&a.targetDate&&a.targetDate<t?0:1;
+    const bo=b.status!=="Closed"&&b.targetDate&&b.targetDate<t?0:1;
+    if(ao!==bo) return ao-bo;
+    return (a.targetDate||"9999").localeCompare(b.targetDate||"9999");
+  });
+  return rows;
+}
+function renderENG(){
+  const chipHost=$("#engFocusChip"); chipHost.innerHTML="";
+  if(state.engFocus){
+    chipHost.append(el("div",{class:"focus-chip"},[ "Filtering: tasks overdue for reply",
+      el("button",{type:"button","aria-label":"Clear filter",text:"×",onclick:()=>{state.engFocus=null; renderENG();}}) ]));
+  }
+  const host=$("#engTableHost"); host.innerHTML="";
+  if(state.eng.length===0){ host.append(emptyState("No Engineering Support tasks yet","Log technical queries, engineering orders (EA), document reviews, warranty claims, etc., or load sample data", ()=>openEngModal(), loadSamples)); return; }
+  const rows=engFilteredRows(); const t=todayISO();
+  const table=el("table"); const thead=el("thead"); const htr=el("tr");
+  ["Reference","Type","Subject","Counterparty","ENG/APU/Comp","Raised","Target","Status","Progress",""].forEach(h=>htr.append(el("th",{text:h})));
+  thead.append(htr); table.append(thead);
+  const tb=el("tbody");
+  if(rows.length===0) tb.append(el("tr",{},el("td",{colspan:10, html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'})));
+  for(const e of rows){
+    const late = e.status!=="Closed" && e.targetDate && e.targetDate<t;
+    const tr=el("tr",{class:"clickable "+(late?"row-red":""), onclick:(ev)=>{ if(ev.target.closest(".row-actions"))return; openEngModal(e); }});
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-weight:600",text:e.refNo||"—"})));
+    tr.append(el("td",{text:e.type||"—"}));
+    tr.append(el("td",{class:"subject-cell"},el("div",{class:"subj",text:e.subject||"—"})));
+    tr.append(el("td",{text:e.counterparty||"—"}));
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:e.asset||"—"})));
+    tr.append(el("td",{text:fmtDate(e.dateRaised)}));
+    tr.append(el("td",{},[ document.createTextNode(fmtDate(e.targetDate)), late?el("div",{class:"flag",text:"▲ OVERDUE"}):null ]));
+    tr.append(el("td",{},el("span",{class:"tag "+(ENG_STATUS_TAG[e.status]||"grey"),text:e.status||"Open"})));
+    tr.append(el("td",{class:"notes-cell",text:e.notes||""}));
+    tr.append(el("td",{},el("div",{class:"row-actions"},[
+      el("button",{class:"mini",title:"Edit","aria-label":"Edit",text:"Edit",onclick:()=>openEngModal(e)}),
+      el("button",{class:"mini del",title:"Delete","aria-label":"Delete",text:"Del",onclick:()=>confirmDel("eng",e.id,e.refNo)}),
+    ])));
+    tb.append(tr);
+  }
+  table.append(tb); host.append(el("div",{class:"table-wrap"},table));
+}
+
+/* ============================================================
+   TAB 3 — RELIABILITY
+   ============================================================ */
+function relValue(rec, rate){
+  const n = Number, efh=n(rec.engFH), apu=n(rec.apuHours);
+  if(rate==="engUer") return efh>0 ? n(rec.engRemovals)/efh*1000 : null;
+  if(rate==="ifsd")   return efh>0 ? n(rec.ifsd)/efh*1000 : null;
+  if(rate==="apuUer") return apu>0 ? n(rec.apuRemovals)/apu*1000 : null;
+  return null;
+}
+function relStats(rate){
+  const sorted = state.rel.slice().sort((a,b)=>(a.month||"").localeCompare(b.month||""));
+  const series = sorted.map(r=>({month:r.month, v:relValue(r,rate)})).filter(p=>p.v!=null && isFinite(p.v));
+  const vals = series.map(p=>p.v);
+  const n = vals.length;
+  const mean = n? vals.reduce((s,x)=>s+x,0)/n : null;
+  let sd=null, alert=null;
+  if(n>=3){ const varr=vals.reduce((s,x)=>s+(x-mean)*(x-mean),0)/n; sd=Math.sqrt(varr); alert=mean+2*sd; }
+  const latest = n? vals[n-1] : null;
+  return { series, mean, sd, alert, latest, n };
+}
+const RATE_LABEL = { engUer:"Engine UER / 1000 EFH", ifsd:"IFSD / 1000 EFH", apuUer:"APU removal / 1000 APU h" };
+
+function renderREL(){
+  // KPIs
+  const s = relStats(state.relRate);
+  const k = $("#relKpis"); k.innerHTML="";
+  const fmt = x => x==null?"—":x.toFixed(2);
+  const alertHit = s.alert!=null && s.latest!=null && s.latest>s.alert;
+  k.append(kpi("Latest month", fmt(s.latest), s.series.length?fmtMonth(s.series[s.series.length-1].month):"No data yet", alertHit));
+  k.append(kpi("Mean", fmt(s.mean), s.n+" months with data", false));
+  k.append(kpi("Alert level", s.alert==null?"—":fmt(s.alert), s.alert==null?"Needs ≥ 3 months":"mean + 2σ", false));
+
+  // chart
+  $("#relChart").innerHTML = svgChart(s);
+
+  // table
+  const host=$("#relTableHost"); host.innerHTML="";
+  if(state.rel.length===0){ host.append(emptyState("No reliability data yet","Record monthly EFH, engine/APU removals and IFSDs to calculate rates and alert levels, or load sample data", ()=>openRelModal(), loadSamples)); return; }
+  const rows=state.rel.slice().sort((a,b)=>(b.month||"").localeCompare(a.month||""));
+  const table=el("table"); table.style.minWidth="0";
+  const thead=el("thead"); const htr=el("tr");
+  ["Month","EFH","Eng rem","IFSD","APU h","APU rem", RATE_LABEL[state.relRate].split(" /")[0], ""].forEach(h=>htr.append(el("th",{text:h})));
+  thead.append(htr); table.append(thead);
+  const tb=el("tbody");
+  for(const r of rows){
+    const v=relValue(r,state.relRate);
+    const over = s.alert!=null && v!=null && v>s.alert;
+    const tr=el("tr",{class:"clickable "+(over?"row-red":""), onclick:(ev)=>{ if(ev.target.closest(".row-actions"))return; openRelModal(r); }});
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-weight:600",text:fmtMonth(r.month)})));
+    tr.append(el("td",{class:"num mono",text:Number(r.engFH||0).toLocaleString()}));
+    tr.append(el("td",{class:"num mono",text:r.engRemovals??0}));
+    tr.append(el("td",{class:"num mono",text:r.ifsd??0}));
+    tr.append(el("td",{class:"num mono",text:Number(r.apuHours||0).toLocaleString()}));
+    tr.append(el("td",{class:"num mono",text:r.apuRemovals??0}));
+    tr.append(el("td",{},el("span",{class:"dleft "+(over?"red":"muted"),text:v==null?"—":v.toFixed(2)})));
+    tr.append(el("td",{},el("div",{class:"row-actions"},[
+      el("button",{class:"mini",title:"Edit","aria-label":"Edit",text:"Edit",onclick:()=>openRelModal(r)}),
+      el("button",{class:"mini del",title:"Delete","aria-label":"Delete",text:"Del",onclick:()=>confirmDel("rel",r.id,fmtMonth(r.month))}),
+    ])));
+    tb.append(tr);
+  }
+  table.append(tb); host.append(el("div",{class:"table-wrap"},table));
+}
+function kpi(lab,val,sub,alert){
+  return el("div",{class:"kpi"+(alert?" alert":"")},[
+    el("div",{class:"k-lab",text:lab}), el("div",{class:"k-val",text:val}), el("div",{class:"k-sub",text:sub})
+  ]);
+}
+function svgChart(s){
+  const W=680, H=300, P={t:22,r:18,b:44,l:46};
+  const iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const pts=s.series;
+  const cs = "var(--ink-2)", grid="var(--line)";
+  if(pts.length===0){
+    return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="No data">
+      <text x="${W/2}" y="${H/2}" text-anchor="middle" fill="${cs}" font-size="13">Not enough data to plot yet</text></svg>`;
+  }
+  const vals=pts.map(p=>p.v);
+  let maxV=Math.max(...vals, s.alert!=null?s.alert:0);
+  let minV=Math.min(...vals, 0);
+  if(maxV===minV) maxV=minV+1;
+  const pad=(maxV-minV)*0.12; maxV+=pad;
+  const x=i=> pts.length===1 ? P.l+iw/2 : P.l + (i/(pts.length-1))*iw;
+  const y=v=> P.t + ih - ((v-minV)/(maxV-minV))*ih;
+  // y grid ticks
+  let grids="";
+  const ticks=4;
+  for(let i=0;i<=ticks;i++){
+    const v=minV+(maxV-minV)*i/ticks; const yy=y(v);
+    grids+=`<line x1="${P.l}" y1="${yy}" x2="${W-P.r}" y2="${yy}" stroke="${grid}" stroke-width="1"/>`;
+    grids+=`<text x="${P.l-8}" y="${yy+4}" text-anchor="end" fill="${cs}" font-size="10">${v.toFixed(1)}</text>`;
+  }
+  // x labels (thin out if many)
+  let xlab="";
+  const step=Math.ceil(pts.length/8);
+  pts.forEach((p,i)=>{ if(i%step===0 || i===pts.length-1){ xlab+=`<text x="${x(i)}" y="${H-P.b+16}" text-anchor="middle" fill="${cs}" font-size="9.5">${fmtMonth(p.month).replace(" "," ")}</text>`; } });
+  // alert dashed line
+  let alertLine="";
+  if(s.alert!=null && s.alert<=maxV && s.alert>=minV){
+    const ay=y(s.alert);
+    alertLine=`<line x1="${P.l}" y1="${ay}" x2="${W-P.r}" y2="${ay}" stroke="var(--red)" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="${W-P.r}" y="${ay-6}" text-anchor="end" fill="var(--red)" font-size="10" font-weight="600">ALERT ${s.alert.toFixed(2)}</text>`;
+  }
+  // area + line
+  const linePath=pts.map((p,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(p.v).toFixed(1)).join(" ");
+  const areaPath=`M ${x(0).toFixed(1)} ${(P.t+ih)} `+pts.map((p,i)=>"L"+x(i).toFixed(1)+" "+y(p.v).toFixed(1)).join(" ")+` L ${x(pts.length-1).toFixed(1)} ${(P.t+ih)} Z`;
+  // dots
+  let dots="";
+  pts.forEach((p,i)=>{
+    const over=s.alert!=null && p.v>s.alert;
+    dots+=`<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${over?4.5:3.4}" fill="${over?"var(--red)":"var(--accent-2)"}" stroke="var(--surface)" stroke-width="1.5"><title>${fmtMonth(p.month)}: ${p.v.toFixed(2)}</title></circle>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:520px" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Chart: ${RATE_LABEL[state.relRate]}">
+    ${grids}
+    <path d="${areaPath}" fill="var(--accent)" opacity="0.10"/>
+    ${alertLine}
+    <path d="${linePath}" fill="none" stroke="var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    ${dots}${xlab}
+  </svg>`;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+function emptyState(title, body, onAdd, onSample){
+  return el("div",{class:"empty"},[
+    el("h3",{text:title}), el("p",{text:body}),
+    el("div",{class:"actions"},[
+      el("button",{class:"btn primary",text:"+ Add item",onclick:onAdd}),
+      el("button",{class:"btn",text:"Load sample data (DEMO)",onclick:onSample}),
+    ])
+  ]);
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+let escHandler=null;
+function openModal(node){
+  closeModal();
+  const overlay=el("div",{class:"modal",role:"dialog","aria-modal":"true", onclick:(e)=>{ if(e.target===overlay) closeModal(); }},node);
+  $("#modalHost").append(overlay);
+  escHandler=(e)=>{ if(e.key==="Escape") closeModal(); };
+  document.addEventListener("keydown",escHandler);
+  const first=overlay.querySelector("input,select,textarea"); if(first) first.focus();
+}
+function closeModal(){ $("#modalHost").innerHTML=""; if(escHandler){ document.removeEventListener("keydown",escHandler); escHandler=null; } }
+
+function fieldRow(opts){
+  const {id,label,type="text",value="",required=false,options=null,full=false,placeholder="",step=null,rows=null}=opts;
+  const wrap=el("div",{class:"form-row"+(full?" full":""),"data-id":id});
+  wrap.append(el("label",{for:id},[ label, required?el("span",{class:"req",text:" *"}):null ]));
+  let input;
+  if(options){
+    input=el("select",{id,name:id});
+    options.forEach(o=>{ const ov=typeof o==="string"?o:o.v; const ol=typeof o==="string"?o:o.l; const opt=el("option",{value:ov,text:ol}); if(String(value)===String(ov)) opt.selected=true; input.append(opt); });
+  } else if(type==="textarea"){
+    input=el("textarea",{id,name:id,placeholder,rows:rows||3}); input.value=value??"";
+  } else {
+    input=el("input",{id,name:id,type,placeholder, value:value??""}); if(step) input.step=step;
+  }
+  wrap.append(input);
+  wrap.append(el("div",{class:"err",text:"This field is required"}));
+  return wrap;
+}
+function collectForm(box, fields){
+  const data={}; let ok=true; let firstBad=null;
+  for(const f of fields){
+    const row=box.querySelector('.form-row[data-id="'+f.id+'"]');
+    const inp=row.querySelector("input,select,textarea");
+    let v=inp.value.trim();
+    row.classList.remove("invalid");
+    if(f.required && !v){ row.classList.add("invalid"); ok=false; if(!firstBad) firstBad=inp; }
+    data[f.id]= f.num ? (v===""?"":Number(v)) : v;
+  }
+  if(!ok && firstBad) firstBad.focus();
+  return ok?data:null;
+}
+
+/* ---------- AD modal ---------- */
+function openAdModal(rec){
+  const isEdit=!!rec; rec=rec||{};
+  const fields=[
+    {id:"adNo",label:"AD No.",required:true,placeholder:"e.g. DEMO-AD-2411"},
+    {id:"authority",label:"Authority",options:["EASA","FAA","CAAT","TCCA","Other"],value:rec.authority||"EASA"},
+    {id:"subject",label:"Subject",required:true,full:true,placeholder:"AD subject"},
+    {id:"category",label:"Category",options:["Engine","APU","Component"],value:rec.category||"Engine"},
+    {id:"applicability",label:"Applicability (model/ESN/S/N/P/N)",placeholder:"e.g. CFM56-7B / ESN 89xxxx"},
+    {id:"sbRef",label:"SB / Reference",placeholder:"e.g. SB 72-1234"},
+    {id:"complianceType",label:"Compliance type",options:["One-time","Repetitive","Terminating action"],value:rec.complianceType||"One-time"},
+    {id:"repeatInterval",label:"Repeat interval / threshold",placeholder:"e.g. every 3,000 FH"},
+    {id:"dueDate",label:"Due date",type:"date",required:true},
+    {id:"otherDueLimit",label:"Other due limit (FH/FC)",placeholder:"e.g. 21,000 FC"},
+    {id:"plannedDate",label:"Planned date",type:"date"},
+    {id:"sparesStatus",label:"Spares / Consumables",options:["Ready","Ordered","Not ready","N/A"],value:rec.sparesStatus||"N/A"},
+    {id:"status",label:"Status",options:["Open","Planned","In work","Complied","N/A"],value:rec.status||"Open"},
+    {id:"remarks",label:"Remarks (WO / task card / evidence)",type:"textarea",full:true},
+  ];
+  const box=el("div",{class:"modal-box"});
+  box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit AD":"Add AD"}), rec.adNo?el("span",{class:"adno-badge mono",text:rec.adNo}):null ]));
+  const body=el("form",{class:"modal-body", onsubmit:(e)=>e.preventDefault()});
+  fields.forEach(f=>body.append(fieldRow({...f, value: f.type==="date"? (rec[f.id]||"") : (rec[f.id]!==undefined?rec[f.id]:(f.value||"")) })));
+  box.append(body);
+  const foot=el("div",{class:"modal-foot"});
+  if(isEdit) foot.append(el("button",{class:"btn danger",text:"Delete",onclick:()=>{ closeModal(); confirmDel("ads",rec.id,rec.adNo); }}));
+  foot.append(el("div",{class:"spacer"}));
+  foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
+  foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
+    const data=collectForm(body,fields); if(!data) return;
+    upsert("ads",{ ...rec, ...data, id: rec.id||uid() }); closeModal();
+  }}));
+  box.append(foot); openModal(box);
+}
+
+/* ---------- ENG modal ---------- */
+function openEngModal(rec){
+  const isEdit=!!rec; rec=rec||{};
+  const fields=[
+    {id:"refNo",label:"Reference No.",required:true,placeholder:"e.g. DEMO-ES-014"},
+    {id:"type",label:"Type",options:["Technical query","Engineering order (EA)","Document review","Warranty claim","Repair scheme","Other"],value:rec.type||"Technical query"},
+    {id:"subject",label:"Subject",required:true,full:true},
+    {id:"counterparty",label:"Counterparty (OEM/vendor/authority)",placeholder:"e.g. GE Aerospace"},
+    {id:"asset",label:"Engine / APU / Component",placeholder:"e.g. ESN 706xxx"},
+    {id:"dateRaised",label:"Date raised",type:"date",required:true,value:rec.dateRaised||todayISO()},
+    {id:"targetDate",label:"Target / reply-by date",type:"date"},
+    {id:"status",label:"Status",options:["Open","Awaiting reply","Closed"],value:rec.status||"Open"},
+    {id:"notes",label:"Progress notes",type:"textarea",full:true},
+  ];
+  const box=el("div",{class:"modal-box"});
+  box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit Engineering task":"Add Engineering task"}), rec.refNo?el("span",{class:"adno-badge mono",text:rec.refNo}):null ]));
+  const body=el("form",{class:"modal-body",onsubmit:(e)=>e.preventDefault()});
+  fields.forEach(f=>body.append(fieldRow({...f, value:f.type==="date"?(rec[f.id]||f.value||""):(rec[f.id]!==undefined?rec[f.id]:(f.value||""))})));
+  box.append(body);
+  const foot=el("div",{class:"modal-foot"});
+  if(isEdit) foot.append(el("button",{class:"btn danger",text:"Delete",onclick:()=>{ closeModal(); confirmDel("eng",rec.id,rec.refNo); }}));
+  foot.append(el("div",{class:"spacer"}));
+  foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
+  foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
+    const data=collectForm(body,fields); if(!data) return;
+    upsert("eng",{ ...rec, ...data, id:rec.id||uid() }); closeModal();
+  }}));
+  box.append(foot); openModal(box);
+}
+
+/* ---------- REL modal ---------- */
+function openRelModal(rec){
+  const isEdit=!!rec; rec=rec||{};
+  const fields=[
+    {id:"month",label:"Month (YYYY-MM)",type:"month",required:true},
+    {id:"engFH",label:"Fleet engine flight hours (EFH)",type:"number",num:true,step:"1",required:true},
+    {id:"engRemovals",label:"Unscheduled engine removals",type:"number",num:true,step:"1",value:rec.engRemovals??0},
+    {id:"ifsd",label:"In-flight shutdowns (IFSD)",type:"number",num:true,step:"1",value:rec.ifsd??0},
+    {id:"apuHours",label:"Fleet APU hours",type:"number",num:true,step:"1",value:rec.apuHours??0},
+    {id:"apuRemovals",label:"APU unscheduled removals",type:"number",num:true,step:"1",value:rec.apuRemovals??0},
+    {id:"notes",label:"Notes",type:"textarea",full:true},
+  ];
+  const box=el("div",{class:"modal-box"});
+  box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit monthly data":"Add monthly data"}), rec.month?el("span",{class:"adno-badge mono",text:fmtMonth(rec.month)}):null ]));
+  const body=el("form",{class:"modal-body",onsubmit:(e)=>e.preventDefault()});
+  fields.forEach(f=>body.append(fieldRow({...f, value: rec[f.id]!==undefined?rec[f.id]:(f.value!==undefined?f.value:"") })));
+  box.append(body);
+  const foot=el("div",{class:"modal-foot"});
+  if(isEdit) foot.append(el("button",{class:"btn danger",text:"Delete",onclick:()=>{ closeModal(); confirmDel("rel",rec.id,fmtMonth(rec.month)); }}));
+  foot.append(el("div",{class:"spacer"}));
+  foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
+  foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
+    const data=collectForm(body,fields); if(!data) return;
+    upsert("rel",{ ...rec, ...data, id:rec.id||uid() }); closeModal();
+  }}));
+  box.append(foot); openModal(box);
+}
+
+function confirmDel(coll,id,label){
+  const box=el("div",{class:"modal-box",style:"max-width:420px"});
+  box.append(el("div",{class:"modal-head"},el("h3",{text:"Confirm delete"})));
+  box.append(el("div",{style:"padding:18px 20px;color:var(--ink-2);font-size:14px"},[ "Delete ", el("b",{class:"mono",style:"color:var(--ink)",text:label||"this item"}), "? This cannot be undone." ]));
+  const foot=el("div",{class:"modal-foot"});
+  foot.append(el("div",{class:"spacer"}));
+  foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
+  foot.append(el("button",{class:"btn primary",style:"background:var(--red);border-color:var(--red)",text:"Delete",onclick:()=>{ remove(coll,id); closeModal(); }}));
+  box.append(foot); openModal(box);
+}
+
+/* ============================================================
+   SAMPLE DATA (all fictional, DEMO- prefixed, relative to today)
+   ============================================================ */
+async function loadSamples(){
+  const T=todayISO();
+  const ads=[
+    { adNo:"DEMO-AD-2405", authority:"EASA", subject:"HPT stage-1 blade inspection", category:"Engine", applicability:"CFM56-7B / all ESN", sbRef:"SB 72-0481", complianceType:"Repetitive", repeatInterval:"Every 2,000 FC", dueDate:addDays(T,-8), otherDueLimit:"18,500 FC", plannedDate:addDays(T,-2), sparesStatus:"Ready", status:"In work", remarks:"WO 88213 opened, awaiting borescope" },
+    { adNo:"DEMO-AD-2417", authority:"FAA", subject:"APU fuel control unit replacement", category:"APU", applicability:"APS3200 / S/N 41xx", sbRef:"SB 49-2210", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,18), otherDueLimit:"", plannedDate:addDays(T,25), sparesStatus:"Ordered", status:"Planned", remarks:"Spares ETA 12 days — planned after due date" },
+    { adNo:"DEMO-AD-2422", authority:"CAAT", subject:"Fuel manifold coupling torque check", category:"Engine", applicability:"CFM56-5B", sbRef:"SB 73-0155", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,26), otherDueLimit:"", plannedDate:addDays(T,14), sparesStatus:"Not ready", status:"Open", remarks:"Awaiting consumable gasket kit" },
+    { adNo:"DEMO-AD-2431", authority:"EASA", subject:"Igniter plug wear inspection", category:"Component", applicability:"P/N 335-xxx", sbRef:"", complianceType:"Repetitive", repeatInterval:"Every 4,000 FH", dueDate:addDays(T,63), otherDueLimit:"", plannedDate:addDays(T,55), sparesStatus:"Ready", status:"Planned", remarks:"" },
+    { adNo:"DEMO-AD-2438", authority:"FAA", subject:"Oil chip detector functional test", category:"Engine", applicability:"CFM56-7B", sbRef:"SB 79-0092", complianceType:"Repetitive", repeatInterval:"Every 1,000 FH", dueDate:addDays(T,84), otherDueLimit:"", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
+    { adNo:"DEMO-AD-2402", authority:"TCCA", subject:"Bleed air duct clamp mod", category:"Component", applicability:"P/N 771-xxx", sbRef:"SB 36-0044", complianceType:"Terminating action", repeatInterval:"", dueDate:addDays(T,-40), otherDueLimit:"", plannedDate:addDays(T,-42), sparesStatus:"Ready", status:"Complied", remarks:"Closed, task card TC-5561" },
+    { adNo:"DEMO-AD-2444", authority:"EASA", subject:"APU compressor wheel life limit", category:"APU", applicability:"APS3200", sbRef:"", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,140), otherDueLimit:"25,000 APU h", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
+  ];
+  const eng=[
+    { refNo:"DEMO-ES-031", type:"Technical query", subject:"HPT blade coating spec clarification", counterparty:"GE Aerospace", asset:"ESN 706212", dateRaised:addDays(T,-20), targetDate:addDays(T,-5), status:"Awaiting reply", notes:"Query sent via OEM portal, no reply yet — overdue" },
+    { refNo:"DEMO-ES-034", type:"Engineering order (EA)", subject:"EA to approve borescope repeat interval", counterparty:"CAAT", asset:"CFM56-7B fleet", dateRaised:addDays(T,-10), targetDate:addDays(T,7), status:"Open", notes:"EA draft done, awaiting manager review" },
+    { refNo:"DEMO-ES-036", type:"Warranty claim", subject:"Claim for premature APU FCU failure", counterparty:"Honeywell", asset:"APU S/N 4132", dateRaised:addDays(T,-6), targetDate:addDays(T,20), status:"Open", notes:"Compiling removal report documents" },
+    { refNo:"DEMO-ES-029", type:"Document review", subject:"Review EM revision 42", counterparty:"Airbus", asset:"CFM56-5B", dateRaised:addDays(T,-30), targetDate:addDays(T,-12), status:"Closed", notes:"Review complete, closed" },
+    { refNo:"DEMO-ES-038", type:"Repair scheme", subject:"Repair scheme request for fan blade nick", counterparty:"GE Aerospace", asset:"ESN 706441", dateRaised:addDays(T,-3), targetDate:addDays(T,10), status:"Awaiting reply", notes:"" },
+  ];
+  const rel=[]; const now=new Date(); now.setDate(1);
+  const base=[
+    {efh:14200,er:1,ifsd:0,ah:2100,ar:1},{efh:15100,er:0,ifsd:0,ah:2250,ar:0},
+    {efh:14800,er:1,ifsd:1,ah:2180,ar:1},{efh:15600,er:0,ifsd:0,ah:2320,ar:0},
+    {efh:15200,er:1,ifsd:0,ah:2270,ar:2},{efh:14950,er:0,ifsd:0,ah:2200,ar:0},
+    {efh:15400,er:3,ifsd:2,ah:2300,ar:1},{efh:15050,er:1,ifsd:0,ah:2240,ar:0},
+  ];
+  for(let i=0;i<base.length;i++){
+    const m=new Date(now.getFullYear(), now.getMonth()-(base.length-1-i), 1);
+    const b=base[i];
+    rel.push({ month:monthKey(m), engFH:b.efh, engRemovals:b.er, ifsd:b.ifsd, apuHours:b.ah, apuRemovals:b.ar, notes:i===6?"Month with abnormally high removals":"" });
+  }
+  for(const a of ads) await upsert("ads",{ ...a, id:uid() });
+  for(const e of eng) await upsert("eng",{ ...e, id:uid() });
+  for(const r of rel) await upsert("rel",{ ...r, id:uid() });
+}
+
+/* ============================================================
+   TABS + THEME + RENDER
+   ============================================================ */
+function selectTab(t){
+  state.tab=t;
+  ["ad","eng","rel"].forEach(x=>{
+    $("#tab-"+x).setAttribute("aria-selected", x===t?"true":"false");
+    $("#panel-"+x).hidden = x!==t;
+  });
+}
+function renderCounts(){
+  $("#pill-ad").textContent = state.ads.filter(a=>!AD_DONE(a)).length;
+  $("#pill-eng").textContent = state.eng.filter(e=>e.status!=="Closed").length;
+  $("#pill-rel").textContent = state.rel.length;
+}
+function renderMode(){
+  const b=$("#modeBadge"), t=$("#modeText");
+  if(state.mode==="team"){ b.classList.add("team"); t.innerHTML='<b>Team mode</b> · real-time'; b.title="Data is shared with the team in real time"; }
+  else { b.classList.remove("team"); t.innerHTML='<b>This device only</b> · browser'; b.title="Data is saved in this browser only (publish as an Artifact to share with your team in real time)"; }
+}
+function renderAll(){ renderMode(); renderCounts(); renderLamps(); renderAD(); renderENG(); renderREL(); }
+
+/* wire controls */
+function wire(){
+  // theme
+  const saved = (()=>{ try{return localStorage.getItem("ppd.theme");}catch(e){return null;} })();
+  if(saved) document.documentElement.setAttribute("data-theme",saved);
+  $("#themeBtn").addEventListener("click",()=>{
+    const cur=document.documentElement.getAttribute("data-theme");
+    const isDark = cur? cur==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    const next=isDark?"light":"dark";
+    document.documentElement.setAttribute("data-theme",next);
+    try{ localStorage.setItem("ppd.theme",next); }catch(e){}
+  });
+  // tabs
+  $$(".tab").forEach(b=>b.addEventListener("click",()=>selectTab(b.dataset.tab)));
+  // AD controls
+  $("#adSearch").addEventListener("input",e=>{ state.adSearch=e.target.value; renderAD(); });
+  $("#adAdd").addEventListener("click",()=>openAdModal());
+  segWire("#adCat","adCat",()=>{ state.adFocus=null; renderAD(); });
+  segWire("#adStatus","adStatus",()=>{ state.adFocus=null; renderAD(); });
+  // ENG
+  $("#engSearch").addEventListener("input",e=>{ state.engSearch=e.target.value; renderENG(); });
+  $("#engAdd").addEventListener("click",()=>openEngModal());
+  segWire("#engStatus","engStatus",()=>{ state.engFocus=null; renderENG(); });
+  // REL
+  $("#relAdd").addEventListener("click",()=>openRelModal());
+  segWire("#relRate","relRate",()=>renderREL());
+}
+function segWire(sel, stateKey, cb){
+  const g=$(sel);
+  g.addEventListener("click",e=>{
+    const btn=e.target.closest("button[data-v]"); if(!btn) return;
+    $$("button",g).forEach(b=>b.setAttribute("aria-pressed", b===btn?"true":"false"));
+    state[stateKey]=btn.dataset.v; cb();
+  });
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot(){
+  wire();
+  LocalBackend.init(onData);   // render immediately from local storage (works as a file)
+  renderAll();
+  // Try shared realtime db when running as a published Artifact
+  try{
+    if (window.claude && typeof window.claude.use === "function"){
+      const db = await window.claude.use("db");
+      if (db){
+        // switch to team backend: it will push authoritative snapshots
+        backend = makeTeamBackend(db);
+        state.mode = "team";
+        state.ads=[]; state.eng=[]; state.rel=[];
+        backend.init(onData);
+        renderMode();
+      }
+    }
+  }catch(e){ /* stay local */ }
+}
+boot();
+</script>
+
+</body></html>
