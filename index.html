@@ -80,7 +80,7 @@ button{font-family:inherit}
 .ann-mark span{font-family:var(--mono); font-weight:600; font-size:13px; color:#8fe6f2}
 .ann-brand b{color:#e7eef6; font-weight:600; font-size:14px; letter-spacing:.02em}
 .ann-brand small{display:block; color:#7f92a8; font-size:11px; font-family:var(--mono); letter-spacing:.04em}
-.lamps{display:flex; gap:9px; flex-wrap:wrap; flex:1}
+.lamps{display:flex; gap:16px; flex-wrap:wrap; flex:1}
 .lamp{
   --glow:transparent; --lampink:var(--panel-off-ink);
   appearance:none; cursor:pointer; text-align:left;
@@ -92,13 +92,13 @@ button{font-family:inherit}
 .lamp:active{transform:translateY(0)}
 .lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono)}
 .lamp .cnt{font-size:19px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
-.lamp.on{color:var(--lampink); border-color:var(--glow); background:var(--panel-bg-2); box-shadow:0 0 0 1px var(--glow) inset, 0 0 14px -2px var(--glow); animation:lampPulse 2.6s ease-in-out infinite}
+.lamp.on{color:var(--lampink); border-color:var(--glow); background:var(--panel-bg-2); box-shadow:0 0 0 1px var(--glow) inset, 0 0 7px -3px var(--glow); animation:lampPulse 2.6s ease-in-out infinite}
 .lamp.on .lab{color:var(--lampink)}
 .lamp.on.red{--glow:#ff4433; --lampink:#ff8f84}
 .lamp.on.amber{--glow:#e79a1f; --lampink:#ffce80}
 .lamp::before{content:""; position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:var(--panel-off); box-shadow:none}
-.lamp.on::before{background:var(--glow); box-shadow:0 0 8px 1px var(--glow)}
-@keyframes lampPulse{0%,100%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 10px -3px var(--glow)} 50%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 18px 0 var(--glow)}}
+.lamp.on::before{background:var(--glow); box-shadow:0 0 6px 0 var(--glow)}
+@keyframes lampPulse{0%,100%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 5px -4px var(--glow)} 50%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 9px -2px var(--glow)}}
 .all-clear{color:#5f95a0; font-family:var(--mono); font-size:12px; letter-spacing:.03em; display:flex; align-items:center; gap:7px}
 .all-clear::before{content:""; width:8px; height:8px; border-radius:50%; background:#2ea36a; box-shadow:0 0 9px 1px #2ea36a}
 
