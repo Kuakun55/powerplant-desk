@@ -85,18 +85,18 @@ button{font-family:inherit}
   --glow:transparent; --lampink:var(--panel-off-ink);
   appearance:none; cursor:pointer; text-align:left;
   background:var(--panel-bg); border:1px solid var(--panel-off); color:var(--lampink);
-  border-radius:7px; padding:7px 11px; min-width:104px;
-  display:flex; flex-direction:column; gap:2px; position:relative; transition:transform .08s ease;
+  border-radius:7px; padding:7px 20px 7px 11px; min-width:104px;
+  display:flex; flex-direction:column; gap:3px; position:relative; transition:transform .08s ease;
 }
 .lamp:hover{transform:translateY(-1px)}
 .lamp:active{transform:translateY(0)}
-.lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono)}
-.lamp .cnt{font-size:19px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
+.lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono); white-space:nowrap}
+.lamp .cnt{font-size:16px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
 .lamp.on{color:var(--lampink); border-color:var(--glow); background:var(--panel-bg-2); box-shadow:0 0 0 1px var(--glow) inset, 0 0 7px -3px var(--glow); animation:lampPulse 2.6s ease-in-out infinite}
 .lamp.on .lab{color:var(--lampink)}
 .lamp.on.red{--glow:#ff4433; --lampink:#ff8f84}
 .lamp.on.amber{--glow:#e79a1f; --lampink:#ffce80}
-.lamp::before{content:""; position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:var(--panel-off); box-shadow:none}
+.lamp::before{content:""; position:absolute; top:9px; right:8px; width:6px; height:6px; border-radius:50%; background:var(--panel-off); box-shadow:none}
 .lamp.on::before{background:var(--glow); box-shadow:0 0 6px 0 var(--glow)}
 @keyframes lampPulse{0%,100%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 5px -4px var(--glow)} 50%{box-shadow:0 0 0 1px var(--glow) inset, 0 0 9px -2px var(--glow)}}
 .all-clear{color:#5f95a0; font-family:var(--mono); font-size:12px; letter-spacing:.03em; display:flex; align-items:center; gap:7px}
