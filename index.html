@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Powerplant Desk</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e2001a'/%3E%3Cpath d='M10 34l44-20-16 44-7-17-17-7z' fill='%23ffd200'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -258,22 +259,48 @@ svg text{font-family:var(--mono)}
 footer.foot{color:var(--ink-3); font-size:11.5px; text-align:center; padding:24px 0 34px; font-family:var(--mono)}
 </style>
 <style>
-#loginGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--bg,#dfe6ee);font-family:var(--font,system-ui,sans-serif);padding:20px}
-#loginGate form{background:var(--surface,#fff);color:var(--ink,#16273f);border:1px solid var(--line,#c5d2df);border-radius:12px;box-shadow:0 6px 24px rgba(16,32,54,.12);padding:28px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
-#loginGate h2{margin:0;font-size:20px}#loginGate p{margin:0 0 6px;color:var(--ink-3,#7a8aa0);font-size:13px}
+#loginGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:var(--font,system-ui,sans-serif);padding:20px;overflow:hidden;
+  background:linear-gradient(160deg,#c8102e 0%,#a80014 45%,#6e0510 100%)}
+#loginGate .vj-stripe{position:absolute;background:#ffd200;pointer-events:none;z-index:0}
+#loginGate .vj-stripe-a{width:75%;height:130px;top:-60px;right:-20%;transform:rotate(-9deg);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#loginGate .vj-stripe-b{width:85%;height:90px;bottom:-40px;left:-25%;transform:rotate(-9deg);opacity:.9}
+#loginGate form{background:var(--surface,#fff);color:var(--ink,#16273f);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.35);width:100%;max-width:380px;box-sizing:border-box;position:relative;z-index:1;overflow:hidden;padding:0}
+#loginGate .vj-head{background:linear-gradient(135deg,#e2001a,#a80014);padding:26px 28px 20px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative}
+#loginGate .vj-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:#ffd200}
+#loginGate .vj-badge{width:52px;height:52px;border-radius:50%;background:#ffd200;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#loginGate .vj-badge svg{width:26px;height:26px}
+#loginGate .vj-brandtext{display:flex;align-items:baseline;gap:6px;color:#fff}
+#loginGate .vj-brandtext .vj-fly{font-size:12px;font-weight:700;letter-spacing:.16em;color:#ffd200}
+#loginGate .vj-brandtext .vj-jet{font-size:23px;font-weight:800;font-style:italic;letter-spacing:.01em}
+#loginGate .vj-tagline{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-top:1px}
+#loginGate .vj-body{padding:22px 28px 28px;display:flex;flex-direction:column;gap:12px}
+#loginGate h2{margin:0;font-size:17px}#loginGate p{margin:0 0 4px;color:var(--ink-3,#7a8aa0);font-size:13px}
 #loginGate label{font-size:12px;font-weight:600;color:var(--ink-2,#48586f)}
 #loginGate input{font:inherit;padding:10px 12px;border:1px solid var(--line-strong,#a7b8ca);border-radius:8px;background:var(--surface-2,#f4f7fa);color:inherit}
-#loginGate button{font:inherit;font-weight:600;padding:11px;border:0;border-radius:8px;background:var(--accent,#1f4b78);color:var(--accent-ink,#fff);cursor:pointer;margin-top:6px}
-#loginErr{color:var(--red,#c62a1f);font-size:13px;min-height:18px}
+#loginGate input:focus{outline:none;border-color:#e2001a;box-shadow:0 0 0 3px rgba(226,0,26,.15)}
+#loginGate button{font:inherit;font-weight:700;padding:11px;border:0;border-radius:8px;background:linear-gradient(135deg,#e2001a,#b80014);color:#fff;cursor:pointer;margin-top:6px}
+#loginGate button:hover{filter:brightness(1.06)}
+#loginErr{color:#c62a1f;font-size:13px;min-height:18px}
 body.locked>.wrap,body.locked>section{display:none!important}
 </style>
 </head>
 <body class="locked">
-<div id="loginGate"><form id="loginForm" autocomplete="on">
-<h2>Powerplant Desk</h2><p>Sign in to continue</p>
+<div id="loginGate">
+<div class="vj-stripe vj-stripe-a"></div>
+<div class="vj-stripe vj-stripe-b"></div>
+<form id="loginForm" autocomplete="on">
+<div class="vj-head">
+  <div class="vj-badge"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12l19-9-7 19-3-7-9-3z" fill="#e2001a"/></svg></div>
+  <div class="vj-brandtext"><span class="vj-fly">THAI</span><span class="vj-jet">VietJet</span></div>
+  <div class="vj-tagline">Powerplant Desk</div>
+</div>
+<div class="vj-body">
+<h2>Sign in</h2><p>Enter your credentials to continue</p>
 <label for="lgUser">Username</label><input id="lgUser" name="username" autocomplete="username" required>
 <label for="lgPass">Password</label><input id="lgPass" name="password" type="password" autocomplete="current-password" required>
-<div id="loginErr"></div><button type="submit">Sign in</button></form></div>
+<div id="loginErr"></div><button type="submit">Sign in</button>
+</div>
+</form></div>
 <script>
 (function(){
   var HASH="97898f9a77bb9b241b96225cc35561930d74e13ad3dc517696c21dc5e142a804";
