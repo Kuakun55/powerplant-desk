@@ -19,7 +19,7 @@
   --surface:#ffffff; --surface-2:#f4f7fa;
   --ink:#16273f; --ink-2:#48586f; --ink-3:#7a8aa0;
   --line:#c5d2df; --line-strong:#a7b8ca;
-  --accent:#1f4b78; --accent-2:#2c689e; --accent-ink:#ffffff;
+  --accent:#e2001a; --accent-2:#b8000f; --accent-ink:#ffffff; --gold:#ffd200;
 
   --red:#c62a1f; --amber:#a56a12; --green:#1f8a4c; --cyan:#0c7595;
   --row-red:#fbe9e7; --row-amber:#fbf1de; --row-cyan:#e0f2f8; --row-green:#e7f5ec;
@@ -36,7 +36,7 @@
     --surface:#182432; --surface-2:#1e2d3d;
     --ink:#dde8f2; --ink-2:#98abbe; --ink-3:#6b7f93;
     --line:#2a3a4b; --line-strong:#3c5266;
-    --accent:#4a90c2; --accent-2:#5ea3d4; --accent-ink:#08131e;
+    --accent:#ff5b4d; --accent-2:#ff8f84; --accent-ink:#2a0500; --gold:#ffd200;
 
     --red:#ff6f60; --amber:#e7ab4c; --green:#4fc07d; --cyan:#48c2e0;
     --row-red:#301a18; --row-amber:#2c2515; --row-cyan:#132a34; --row-green:#153126;
@@ -48,7 +48,7 @@
   --surface:#182432; --surface-2:#1e2d3d;
   --ink:#dde8f2; --ink-2:#98abbe; --ink-3:#6b7f93;
   --line:#2a3a4b; --line-strong:#3c5266;
-  --accent:#4a90c2; --accent-2:#5ea3d4; --accent-ink:#08131e;
+  --accent:#ff5b4d; --accent-2:#ff8f84; --accent-ink:#2a0500; --gold:#ffd200;
   --red:#ff6f60; --amber:#e7ab4c; --green:#4fc07d; --cyan:#48c2e0;
   --row-red:#301a18; --row-amber:#2c2515; --row-cyan:#132a34; --row-green:#153126;
   --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
@@ -67,17 +67,17 @@ body{
 .num{font-variant-numeric:tabular-nums}
 h1,h2,h3{margin:0; text-wrap:balance; line-height:1.25}
 button{font-family:inherit}
-:focus-visible{outline:2.5px solid var(--accent-2); outline-offset:2px; border-radius:3px}
+:focus-visible{outline:2.5px solid var(--gold); outline-offset:2px; border-radius:3px}
 @media (prefers-reduced-motion: reduce){*{animation:none !important; transition:none !important; scroll-behavior:auto !important}}
 
 .wrap{max-width:1240px; margin:0 auto; padding-inline:16px}
 
 /* ============================== ANNUNCIATOR ============================== */
-.annunciator{background:linear-gradient(180deg,var(--panel-bg-2),var(--panel-bg)); border-bottom:1px solid var(--panel-line)}
+.annunciator{background:linear-gradient(180deg,var(--panel-bg-2),var(--panel-bg)); border-bottom:1px solid var(--panel-line); border-top:3px solid var(--gold)}
 .annunciator-inner{max-width:1240px; margin:0 auto; padding:12px 16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap}
 .ann-brand{display:flex; align-items:center; gap:11px; margin-right:4px}
-.ann-mark{width:30px; height:30px; border-radius:6px; border:1px solid var(--panel-line); background:radial-gradient(circle at 30% 25%, #1b6f7f, #0c3944); display:grid; place-items:center; flex:none}
-.ann-mark span{font-family:var(--mono); font-weight:600; font-size:13px; color:#8fe6f2}
+.ann-mark{width:30px; height:30px; border-radius:50%; border:1px solid var(--panel-line); background:linear-gradient(135deg,#e2001a,#a80014); display:grid; place-items:center; flex:none}
+.ann-mark svg{width:15px; height:15px}
 .ann-brand b{color:#e7eef6; font-weight:600; font-size:14px; letter-spacing:.02em}
 .ann-brand small{display:block; color:#7f92a8; font-size:11px; font-family:var(--mono); letter-spacing:.04em}
 .lamps{display:flex; gap:16px; flex-wrap:wrap; flex:1}
@@ -90,8 +90,8 @@ button{font-family:inherit}
 }
 .lamp:hover{transform:translateY(-1px)}
 .lamp:active{transform:translateY(0)}
-.lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono); white-space:nowrap}
-.lamp .cnt{font-size:13px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums}
+.lamp .lab{font-size:10.5px; font-weight:600; letter-spacing:.055em; font-family:var(--mono); white-space:nowrap; text-align:left; align-self:flex-start}
+.lamp .cnt{font-size:13px; font-weight:600; line-height:1; font-variant-numeric:tabular-nums; text-align:left; align-self:flex-start}
 .lamp.on{color:var(--lampink); border-color:var(--glow); background:var(--panel-bg-2); box-shadow:0 0 0 1px var(--glow) inset, 0 0 7px -3px var(--glow); animation:lampPulse 2.6s ease-in-out infinite}
 .lamp.on .lab{color:var(--lampink)}
 .lamp.on.red{--glow:#ff4433; --lampink:#ff8f84}
@@ -227,7 +227,7 @@ tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.
 .chart-scroll{overflow-x:auto}
 .chart-legend{display:flex; gap:18px; flex-wrap:wrap; font-size:11.5px; color:var(--ink-2); margin-top:8px}
 .chart-legend span{display:inline-flex; align-items:center; gap:6px}
-.lg-line{width:20px; height:3px; border-radius:2px; background:var(--accent-2)}
+.lg-line{width:20px; height:3px; border-radius:2px; background:var(--gold)}
 .lg-alert{width:20px; height:0; border-top:2px dashed var(--red)}
 .lg-dot{width:9px; height:9px; border-radius:50%; background:var(--red)}
 svg text{font-family:var(--mono)}
@@ -322,7 +322,7 @@ body.locked>.wrap,body.locked>section{display:none!important}
 <section class="annunciator" aria-label="Annunciator panel">
   <div class="annunciator-inner">
     <div class="ann-brand">
-      <div class="ann-mark"><span>PW</span></div>
+      <div class="ann-mark"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12l19-9-7 19-3-7-9-3z" fill="#ffd200"/></svg></div>
       <div><b>POWERPLANT DESK</b><small>ENG · APU · COMPONENTS</small></div>
     </div>
     <div class="lamps" id="lamps"></div>
@@ -886,13 +886,13 @@ function svgChart(s){
   let dots="";
   pts.forEach((p,i)=>{
     const over=s.alert!=null && p.v>s.alert;
-    dots+=`<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${over?4.5:3.4}" fill="${over?"var(--red)":"var(--accent-2)"}" stroke="var(--surface)" stroke-width="1.5"><title>${fmtMonth(p.month)}: ${p.v.toFixed(2)}</title></circle>`;
+    dots+=`<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${over?4.5:3.4}" fill="${over?"var(--red)":"var(--gold)"}" stroke="var(--surface)" stroke-width="1.5"><title>${fmtMonth(p.month)}: ${p.v.toFixed(2)}</title></circle>`;
   });
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:520px" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Chart: ${RATE_LABEL[state.relRate]}">
     ${grids}
     <path d="${areaPath}" fill="var(--accent)" opacity="0.10"/>
     ${alertLine}
-    <path d="${linePath}" fill="none" stroke="var(--accent-2)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="${linePath}" fill="none" stroke="var(--gold)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
     ${dots}${xlab}
   </svg>`;
 }
