@@ -281,10 +281,45 @@ footer.foot{color:var(--ink-3); font-size:11.5px; text-align:center; padding:24p
 #loginGate button{font:inherit;font-weight:700;padding:11px;border:0;border-radius:8px;background:linear-gradient(135deg,#e2001a,#b80014);color:#fff;cursor:pointer;margin-top:6px}
 #loginGate button:hover{filter:brightness(1.06)}
 #loginErr{color:#c62a1f;font-size:13px;min-height:18px}
-body.locked>.wrap,body.locked>section{display:none!important}
+body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>section{display:none!important}
+</style>
+<style>
+#projectGate{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;font-family:var(--font,system-ui,sans-serif);padding:20px;overflow:hidden;
+  background:linear-gradient(160deg,#c8102e 0%,#a80014 45%,#6e0510 100%)}
+#projectGate .pg-stripe{position:absolute;background:#ffd200;pointer-events:none;z-index:0}
+#projectGate .pg-stripe-a{width:75%;height:130px;top:-60px;right:-20%;transform:rotate(-9deg);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#projectGate .pg-stripe-b{width:85%;height:90px;bottom:-40px;left:-25%;transform:rotate(-9deg);opacity:.9}
+#projectGate .pg-card{background:var(--surface,#fff);color:var(--ink,#16273f);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.35);width:100%;max-width:420px;box-sizing:border-box;position:relative;z-index:1;overflow:hidden}
+#projectGate .pg-head{background:linear-gradient(135deg,#e2001a,#a80014);padding:26px 28px 20px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative}
+#projectGate .pg-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:#ffd200}
+#projectGate .pg-badge{width:52px;height:52px;border-radius:50%;background:#ffd200;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#projectGate .pg-badge svg{width:26px;height:26px}
+#projectGate .pg-brandtext{display:flex;align-items:baseline;gap:6px;color:#fff}
+#projectGate .pg-brandtext .pg-fly{font-size:12px;font-weight:700;letter-spacing:.16em;color:#ffd200}
+#projectGate .pg-brandtext .pg-jet{font-size:23px;font-weight:800;font-style:italic;letter-spacing:.01em}
+#projectGate .pg-tagline{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-top:1px}
+#projectGate .pg-body{padding:22px 28px 28px;display:flex;flex-direction:column;gap:14px;max-height:70vh;overflow-y:auto;box-sizing:border-box}
+#projectGate h2{margin:0;font-size:17px}
+#projectGate .pg-body>p{margin:0;color:var(--ink-3,#7a8aa0);font-size:13px;line-height:1.5}
+#projectGate .pg-list{display:flex;flex-direction:column;gap:8px}
+#projectGate .pg-item{appearance:none;width:100%;text-align:left;font:inherit;padding:11px 14px;border:1px solid var(--line-strong,#a7b8ca);border-radius:9px;background:var(--surface-2,#f4f7fa);color:inherit;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px}
+#projectGate .pg-item:hover{border-color:#e2001a;background:#fff5f5}
+#projectGate .pg-item b{font-weight:600;font-size:13.5px}
+#projectGate .pg-item small{display:block;color:var(--ink-3,#7a8aa0);font-size:11px;font-family:var(--mono);margin-top:2px}
+#projectGate .pg-empty{font-size:12.5px;color:var(--ink-3,#7a8aa0);font-style:italic;margin:0}
+#projectGate .pg-new{border-top:1px solid var(--line,#c5d2df);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+#projectGate .pg-new label{font-size:12px;font-weight:600;color:var(--ink-2,#48586f)}
+#projectGate .pg-new-row{display:flex;gap:8px}
+#projectGate .pg-new-row input{flex:1;min-width:0;font:inherit;padding:10px 12px;border:1px solid var(--line-strong,#a7b8ca);border-radius:8px;background:var(--surface-2,#f4f7fa);color:inherit;box-sizing:border-box}
+#projectGate .pg-new-row input:focus{outline:none;border-color:#e2001a;box-shadow:0 0 0 3px rgba(226,0,26,.15)}
+#projectGate .pg-new-row button{font:inherit;font-weight:700;padding:10px 16px;border:0;border-radius:8px;background:linear-gradient(135deg,#e2001a,#b80014);color:#fff;cursor:pointer;white-space:nowrap}
+#projectGate .pg-new-row button:hover{filter:brightness(1.06)}
+.proj-chip{display:flex; align-items:center; gap:7px; font-size:12px; font-weight:600; color:var(--ink); background:var(--surface); border:1px solid var(--line); padding:6px 12px; border-radius:20px; cursor:pointer; font-family:inherit}
+.proj-chip:hover{border-color:var(--accent); color:var(--accent)}
+.proj-chip svg{flex:none}
 </style>
 </head>
-<body class="locked">
+<body class="locked no-project">
 <div id="loginGate">
 <div class="vj-stripe vj-stripe-a"></div>
 <div class="vj-stripe vj-stripe-b"></div>
@@ -305,7 +340,7 @@ body.locked>.wrap,body.locked>section{display:none!important}
 (function(){
   var HASH="97898f9a77bb9b241b96225cc35561930d74e13ad3dc517696c21dc5e142a804";
   var gate=document.getElementById("loginGate");
-  function unlock(){ gate.remove(); document.body.classList.remove("locked"); }
+  function unlock(){ gate.remove(); document.body.classList.remove("locked"); document.dispatchEvent(new Event("ppd:unlocked")); }
   try{ if(sessionStorage.getItem("ppd.auth")===HASH){ unlock(); return; } }catch(e){}
   async function sha(t){ var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)); return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join(""); }
   document.getElementById("loginForm").addEventListener("submit",async function(e){
@@ -317,6 +352,29 @@ body.locked>.wrap,body.locked>section{display:none!important}
 })();
 </script>
 
+<div id="projectGate" hidden>
+<div class="pg-stripe pg-stripe-a"></div>
+<div class="pg-stripe pg-stripe-b"></div>
+<div class="pg-card">
+<div class="pg-head">
+  <div class="pg-badge"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12l19-9-7 19-3-7-9-3z" fill="#e2001a"/></svg></div>
+  <div class="pg-brandtext"><span class="pg-fly">THAI</span><span class="pg-jet">VietJet</span></div>
+  <div class="pg-tagline">Powerplant Desk</div>
+</div>
+<div class="pg-body">
+<h2>Select your project</h2>
+<p>Multiple engineers share this desk. Pick your project or create a new one — each project keeps its own AD, engineering and reliability records separate.</p>
+<div id="pgList" class="pg-list"></div>
+<form id="pgNewForm" class="pg-new">
+  <label for="pgNewName">New project name</label>
+  <div class="pg-new-row">
+    <input id="pgNewName" placeholder="e.g. ATR72 Fleet, HS-ABC" required maxlength="60">
+    <button type="submit">Create</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
 
 <!-- ===================== ANNUNCIATOR PANEL ===================== -->
 <section class="annunciator" aria-label="Annunciator panel">
@@ -334,6 +392,10 @@ body.locked>.wrap,body.locked>section{display:none!important}
   <div class="appbar">
     <h1>Powerplant Engineer Desk<small>Technical Services — Powerplant Engineering</small></h1>
     <div class="spacer"></div>
+    <button class="proj-chip" id="projChip" title="Switch project">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+      <span id="projChipName">Project</span>
+    </button>
     <div class="mode-badge" id="modeBadge" title="Data storage mode">
       <span class="dot"></span><span id="modeText">Checking…</span>
     </div>
@@ -488,6 +550,31 @@ const state = {
 const AD_DONE = a => a.status==="Complied" || a.status==="N/A";
 
 /* ============================================================
+   PROJECTS  (each project keeps its own isolated data set, since
+   several engineers share this desk/browser)
+   ============================================================ */
+let PROJECT_ID = null;
+
+function projList(){ try{ const l=JSON.parse(localStorage.getItem("ppd.projects")||"[]"); return Array.isArray(l)?l:[]; }catch(e){ return []; } }
+function projSave(list){ try{ localStorage.setItem("ppd.projects", JSON.stringify(list)); }catch(e){} }
+function projCreate(name){
+  const list = projList();
+  const rec = { id: uid(), name: name.trim(), createdAt: new Date().toISOString() };
+  list.push(rec); projSave(list);
+  return rec;
+}
+function migrateLegacyProjectIfNeeded(){
+  if (projList().length>0) return;
+  const hasLegacy = COLLS.some(c => localStorage.getItem("ppd."+c)!=null);
+  if (!hasLegacy) return;
+  const rec = projCreate("Default");
+  for (const c of COLLS){
+    const raw = localStorage.getItem("ppd."+c);
+    if (raw!=null){ localStorage.setItem("ppd."+rec.id+"."+c, raw); localStorage.removeItem("ppd."+c); }
+  }
+}
+
+/* ============================================================
    STORAGE BACKENDS  (uniform async interface)
    ============================================================ */
 const COLLS = ["ads","eng","rel"];
@@ -497,11 +584,11 @@ const LocalBackend = {
   init(onData){
     for (const c of COLLS){
       let arr = [];
-      try { arr = JSON.parse(localStorage.getItem("ppd."+c) || "[]"); } catch(e){ arr = []; }
+      try { arr = JSON.parse(localStorage.getItem("ppd."+PROJECT_ID+"."+c) || "[]"); } catch(e){ arr = []; }
       onData(c, Array.isArray(arr)?arr:[]);
     }
   },
-  _save(c){ try{ localStorage.setItem("ppd."+c, JSON.stringify(state[c])); }catch(e){} },
+  _save(c){ try{ localStorage.setItem("ppd."+PROJECT_ID+"."+c, JSON.stringify(state[c])); }catch(e){} },
   async upsert(c, rec){
     const i = state[c].findIndex(x => x.id===rec.id);
     if (i>=0) state[c][i]=rec; else state[c].push(rec);
@@ -519,7 +606,7 @@ function makeTeamBackend(db){
     _unsub:[],
     init(onData){
       for (const c of COLLS){
-        const un = db.collection(c).onSnapshot(
+        const un = db.collection(PROJECT_ID+"_"+c).onSnapshot(
           snap => { onData(c, snap.docs.map(d => ({ ...(d.data()||{}), id:d.id }))); },
           err => { console.warn("db snapshot error", c, err && err.code); }
         );
@@ -528,9 +615,9 @@ function makeTeamBackend(db){
     },
     async upsert(c, rec){
       const { id, ...body } = rec;
-      await db.collection(c).doc(id).set(body);
+      await db.collection(PROJECT_ID+"_"+c).doc(id).set(body);
     },
-    async remove(c, id){ await db.collection(c).doc(id).delete(); },
+    async remove(c, id){ await db.collection(PROJECT_ID+"_"+c).doc(id).delete(); },
   };
 }
 
@@ -1133,9 +1220,11 @@ function wire(){
   });
   // logout
   $("#logoutBtn").addEventListener("click",()=>{
-    try{ sessionStorage.removeItem("ppd.auth"); }catch(e){}
+    try{ sessionStorage.removeItem("ppd.auth"); sessionStorage.removeItem("ppd.project"); }catch(e){}
     location.reload();
   });
+  // switch project
+  $("#projChip").addEventListener("click", ()=> showProjectGate());
   // tabs
   $$(".tab").forEach(b=>b.addEventListener("click",()=>selectTab(b.dataset.tab)));
   // AD controls
@@ -1161,10 +1250,66 @@ function segWire(sel, stateKey, cb){
 }
 
 /* ============================================================
+   PROJECT GATE (shown after login, before the desk)
+   ============================================================ */
+function renderProjectGate(){
+  const host = $("#pgList");
+  host.innerHTML = "";
+  const list = projList().slice().sort((a,b)=> (b.createdAt||"").localeCompare(a.createdAt||""));
+  if (list.length===0){
+    host.append(el("p",{class:"pg-empty", text:"No projects yet — create one below to get started."}));
+    return;
+  }
+  list.forEach(p=>{
+    host.append(el("button",{class:"pg-item", type:"button", onclick:()=>activateProject(p)},[
+      el("span",{},[ el("b",{text:p.name}), el("small",{text:"Created "+fmtDate((p.createdAt||"").slice(0,10))}) ]),
+      el("span",{"aria-hidden":"true", text:"→"})
+    ]));
+  });
+}
+function showProjectGate(){
+  document.body.classList.add("no-project");
+  $("#projectGate").hidden = false;
+  renderProjectGate();
+}
+function hideProjectGate(){
+  $("#projectGate").hidden = true;
+  document.body.classList.remove("no-project");
+}
+function activateProject(rec){
+  PROJECT_ID = rec.id;
+  try{ sessionStorage.setItem("ppd.project", PROJECT_ID); }catch(e){}
+  hideProjectGate();
+  startApp();
+}
+function wireProjectGate(){
+  $("#pgNewForm").addEventListener("submit", e=>{
+    e.preventDefault();
+    const input = $("#pgNewName");
+    const name = input.value.trim();
+    if(!name) return;
+    const rec = projCreate(name);
+    input.value = "";
+    activateProject(rec);
+  });
+}
+wireProjectGate();
+
+function renderProjectChip(){
+  const rec = projList().find(p=>p.id===PROJECT_ID);
+  $("#projChipName").textContent = rec ? rec.name : "Project";
+}
+
+/* ============================================================
    BOOT
    ============================================================ */
-async function boot(){
-  wire();
+async function loadBackendData(){
+  if (backend && backend.name==="team" && Array.isArray(backend._unsub)){
+    backend._unsub.forEach(u=>{ try{ u && u(); }catch(e){} });
+  }
+  backend = LocalBackend;
+  state.mode = "local";
+  state.ads=[]; state.eng=[]; state.rel=[];
   LocalBackend.init(onData);   // render immediately from local storage (works as a file)
   renderAll();
   // Try shared realtime db when running as a published Artifact
@@ -1182,7 +1327,22 @@ async function boot(){
     }
   }catch(e){ /* stay local */ }
 }
-boot();
+let appWired = false;
+async function startApp(){
+  if (!appWired){ wire(); appWired = true; }
+  renderProjectChip();
+  await loadBackendData();
+}
+function afterLogin(){
+  migrateLegacyProjectIfNeeded();
+  let pid = null;
+  try{ pid = sessionStorage.getItem("ppd.project"); }catch(e){}
+  const existing = pid && projList().find(p=>p.id===pid);
+  if (existing){ PROJECT_ID = existing.id; hideProjectGate(); startApp(); }
+  else { showProjectGate(); }
+}
+if (!document.body.classList.contains("locked")) { afterLogin(); }
+else { document.addEventListener("ppd:unlocked", afterLogin, { once:true }); }
 </script>
 
 </body></html>
