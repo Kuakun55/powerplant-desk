@@ -847,7 +847,7 @@ function engFilteredRows(){
   if (state.engFocus==="overdue") rows = rows.filter(e=>e.status!=="Closed" && e.targetDate && e.targetDate<t);
   else if (state.engStatus!=="all") rows = rows.filter(e=>e.status===state.engStatus);
   const q = state.engSearch.trim().toLowerCase();
-  if (q) rows = rows.filter(e=>[e.refNo,e.type,e.subject,e.counterparty,e.asset,e.notes].join(" ").toLowerCase().includes(q));
+  if (q) rows = rows.filter(e=>[e.refNo,e.type,e.subject,e.counterparty,e.asset,e.notes,e.ataChapter,ATA_LABEL[e.ataChapter]].join(" ").toLowerCase().includes(q));
   rows.sort((a,b)=>{
     const ao=a.status!=="Closed"&&a.targetDate&&a.targetDate<t?0:1;
     const bo=b.status!=="Closed"&&b.targetDate&&b.targetDate<t?0:1;
@@ -866,10 +866,10 @@ function renderENG(){
   if(state.eng.length===0){ host.append(emptyState("No Engineering Support tasks yet","Log technical queries, engineering orders (EA), document reviews, warranty claims, etc., or load sample data", ()=>openEngModal(), loadSamples)); return; }
   const rows=engFilteredRows(); const t=todayISO();
   const table=el("table"); const thead=el("thead"); const htr=el("tr");
-  ["Reference","Type","Subject","Counterparty","ENG/APU/Comp","Raised","Target","Status","Progress",""].forEach(h=>htr.append(el("th",{text:h})));
+  ["Reference","Type","Subject","Counterparty","ENG/APU/Comp","ATA","Raised","Target","Status","Progress",""].forEach(h=>htr.append(el("th",{text:h})));
   thead.append(htr); table.append(thead);
   const tb=el("tbody");
-  if(rows.length===0) tb.append(el("tr",{},el("td",{colspan:10, html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'})));
+  if(rows.length===0) tb.append(el("tr",{},el("td",{colspan:11, html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'})));
   for(const e of rows){
     const late = e.status!=="Closed" && e.targetDate && e.targetDate<t;
     const tr=el("tr",{class:"clickable "+(late?"row-red":""), onclick:(ev)=>{ if(ev.target.closest(".row-actions"))return; openEngModal(e); }});
@@ -878,6 +878,7 @@ function renderENG(){
     tr.append(el("td",{class:"subject-cell"},el("div",{class:"subj",text:e.subject||"—"})));
     tr.append(el("td",{text:e.counterparty||"—"}));
     tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:e.asset||"—"})));
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:e.ataChapter||"—"})));
     tr.append(el("td",{text:fmtDate(e.dateRaised)}));
     tr.append(el("td",{},[ document.createTextNode(fmtDate(e.targetDate)), late?el("div",{class:"flag",text:"▲ OVERDUE"}):null ]));
     tr.append(el("td",{},el("span",{class:"tag "+(ENG_STATUS_TAG[e.status]||"grey"),text:e.status||"Open"})));
@@ -1116,6 +1117,7 @@ function openEngModal(rec){
     {id:"subject",label:"Subject",required:true,full:true},
     {id:"counterparty",label:"Counterparty (OEM/vendor/authority)",placeholder:"e.g. GE Aerospace"},
     {id:"asset",label:"Engine / APU / Component",placeholder:"e.g. ESN 706xxx"},
+    {id:"ataChapter",label:"ATA Chapter",options:ATA_CHAPTERS,value:rec.ataChapter||""},
     {id:"dateRaised",label:"Date raised",type:"date",required:true,value:rec.dateRaised||todayISO()},
     {id:"targetDate",label:"Target / reply-by date",type:"date"},
     {id:"status",label:"Status",options:["Open","Awaiting reply","Closed"],value:rec.status||"Open"},
@@ -1191,11 +1193,11 @@ async function loadSamples(){
     { adNo:"DEMO-AD-2444", authority:"EASA", subject:"APU compressor wheel life limit", category:"APU", ataChapter:"49", applicability:"APS3200", sbRef:"", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,140), otherDueLimit:"25,000 APU h", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
   ];
   const eng=[
-    { refNo:"DEMO-ES-031", type:"Technical query", subject:"HPT blade coating spec clarification", counterparty:"GE Aerospace", asset:"ESN 706212", dateRaised:addDays(T,-20), targetDate:addDays(T,-5), status:"Awaiting reply", notes:"Query sent via OEM portal, no reply yet — overdue" },
-    { refNo:"DEMO-ES-034", type:"Engineering order (EA)", subject:"EA to approve borescope repeat interval", counterparty:"CAAT", asset:"CFM56-7B fleet", dateRaised:addDays(T,-10), targetDate:addDays(T,7), status:"Open", notes:"EA draft done, awaiting manager review" },
-    { refNo:"DEMO-ES-036", type:"Warranty claim", subject:"Claim for premature APU FCU failure", counterparty:"Honeywell", asset:"APU S/N 4132", dateRaised:addDays(T,-6), targetDate:addDays(T,20), status:"Open", notes:"Compiling removal report documents" },
-    { refNo:"DEMO-ES-029", type:"Document review", subject:"Review EM revision 42", counterparty:"Airbus", asset:"CFM56-5B", dateRaised:addDays(T,-30), targetDate:addDays(T,-12), status:"Closed", notes:"Review complete, closed" },
-    { refNo:"DEMO-ES-038", type:"Repair scheme", subject:"Repair scheme request for fan blade nick", counterparty:"GE Aerospace", asset:"ESN 706441", dateRaised:addDays(T,-3), targetDate:addDays(T,10), status:"Awaiting reply", notes:"" },
+    { refNo:"DEMO-ES-031", type:"Technical query", subject:"HPT blade coating spec clarification", counterparty:"GE Aerospace", asset:"ESN 706212", ataChapter:"72", dateRaised:addDays(T,-20), targetDate:addDays(T,-5), status:"Awaiting reply", notes:"Query sent via OEM portal, no reply yet — overdue" },
+    { refNo:"DEMO-ES-034", type:"Engineering order (EA)", subject:"EA to approve borescope repeat interval", counterparty:"CAAT", asset:"CFM56-7B fleet", ataChapter:"72", dateRaised:addDays(T,-10), targetDate:addDays(T,7), status:"Open", notes:"EA draft done, awaiting manager review" },
+    { refNo:"DEMO-ES-036", type:"Warranty claim", subject:"Claim for premature APU FCU failure", counterparty:"Honeywell", asset:"APU S/N 4132", ataChapter:"49", dateRaised:addDays(T,-6), targetDate:addDays(T,20), status:"Open", notes:"Compiling removal report documents" },
+    { refNo:"DEMO-ES-029", type:"Document review", subject:"Review EM revision 42", counterparty:"Airbus", asset:"CFM56-5B", ataChapter:"71", dateRaised:addDays(T,-30), targetDate:addDays(T,-12), status:"Closed", notes:"Review complete, closed" },
+    { refNo:"DEMO-ES-038", type:"Repair scheme", subject:"Repair scheme request for fan blade nick", counterparty:"GE Aerospace", asset:"ESN 706441", ataChapter:"72", dateRaised:addDays(T,-3), targetDate:addDays(T,10), status:"Awaiting reply", notes:"" },
   ];
   const rel=[]; const now=new Date(); now.setDate(1);
   const base=[
