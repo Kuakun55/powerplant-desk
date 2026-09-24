@@ -697,6 +697,31 @@ function dLeftCell(a){
   let txt = d<0 ? Math.abs(d)+" d overdue" : d+" d";
   return el("span",{class:"dleft "+cls, text:txt});
 }
+const ATA_CHAPTERS = [
+  {v:"", l:"—"},
+  {v:"21", l:"21 – Air Conditioning"},
+  {v:"24", l:"24 – Electrical Power"},
+  {v:"26", l:"26 – Fire Protection"},
+  {v:"28", l:"28 – Fuel"},
+  {v:"29", l:"29 – Hydraulic Power"},
+  {v:"30", l:"30 – Ice & Rain Protection"},
+  {v:"36", l:"36 – Pneumatic"},
+  {v:"49", l:"49 – Airborne Auxiliary Power (APU)"},
+  {v:"54", l:"54 – Nacelles/Pylons"},
+  {v:"70", l:"70 – Standard Practices, Engine"},
+  {v:"71", l:"71 – Power Plant"},
+  {v:"72", l:"72 – Engine"},
+  {v:"73", l:"73 – Engine Fuel and Control"},
+  {v:"74", l:"74 – Ignition"},
+  {v:"75", l:"75 – Air (Engine Bleed)"},
+  {v:"76", l:"76 – Engine Controls"},
+  {v:"77", l:"77 – Engine Indicating"},
+  {v:"78", l:"78 – Exhaust"},
+  {v:"79", l:"79 – Oil"},
+  {v:"80", l:"80 – Starting"},
+  {v:"83", l:"83 – Accessory Gearboxes"},
+];
+const ATA_LABEL = Object.fromEntries(ATA_CHAPTERS.map(c=>[c.v,c.l]));
 const SPARE_TAG = { "Ready":"green", "Ordered":"amber", "Not ready":"red", "N/A":"grey" };
 const AD_STATUS_TAG = { "Open":"grey","Planned":"cyan","In work":"amber","Complied":"green","N/A":"grey" };
 
@@ -721,7 +746,7 @@ function adFilteredRows(){
     });
   }
   const q = state.adSearch.trim().toLowerCase();
-  if (q) rows = rows.filter(a => [a.adNo,a.subject,a.applicability,a.sbRef,a.remarks,a.authority].join(" ").toLowerCase().includes(q));
+  if (q) rows = rows.filter(a => [a.adNo,a.subject,a.applicability,a.sbRef,a.remarks,a.authority,a.ataChapter,ATA_LABEL[a.ataChapter]].join(" ").toLowerCase().includes(q));
   rows.sort((a,b)=>{
     const r = adUrgencyRank(a)-adUrgencyRank(b); if(r) return r;
     return (a.dueDate||"9999").localeCompare(b.dueDate||"9999");
@@ -741,13 +766,12 @@ function renderAD(){
   const host = $("#adTableHost"); host.innerHTML="";
   if (state.ads.length===0){ host.append(emptyState("No ADs yet","Start by adding an AD affecting an engine, APU or component, or load sample data to see how it works", ()=>openAdModal(), loadSamples)); renderAdPlan(); return; }
   const rows = adFilteredRows();
-  const cols = ["AD No.","Authority","Subject / Applicability","Cat.","SB / Ref","Compliance","Due date","Days","Planned","Spares","Status","",""];
   const table = el("table");
   const thead = el("thead"); const htr=el("tr");
-  ["AD No.","Auth","Subject / Applicability","Cat","SB / Ref","Compliance","Due date","Days","Planned","Spares","Status","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
+  ["AD No.","Auth","Subject / Applicability","Cat","ATA","SB / Ref","Compliance","Due date","Days","Planned","Spares","Status","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
   thead.append(htr); table.append(thead);
   const tb = el("tbody");
-  if (rows.length===0){ tb.append(el("tr",{},el("td",{colspan:13, class:"none", html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'}))); }
+  if (rows.length===0){ tb.append(el("tr",{},el("td",{colspan:14, class:"none", html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'}))); }
   for (const a of rows){
     const tr = el("tr",{class:"clickable "+adRowClass(a), onclick:(e)=>{ if(e.target.closest(".row-actions")) return; openAdModal(a); }});
     const planFlag = a.plannedDate && a.dueDate && a.plannedDate>a.dueDate;
@@ -758,6 +782,7 @@ function renderAD(){
       el("div",{class:"sub-meta"},[ el("span",{class:"mono",text:a.applicability||"—"}) ])
     ]));
     tr.append(el("td",{},el("span",{class:"tag "+(a.category==="Engine"?"cyan":a.category==="APU"?"amber":"grey"),text:a.category||"—"})));
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:a.ataChapter||"—"})));
     tr.append(el("td",{},el("span",{class:"mono",style:"font-size:11.5px",text:a.sbRef||"—"})));
     tr.append(el("td",{},[ document.createTextNode(a.complianceType||"—"), a.repeatInterval?el("div",{class:"sub-meta mono",text:a.repeatInterval}):null ]));
     tr.append(el("td",{},[ document.createTextNode(fmtDate(a.dueDate)), a.otherDueLimit?el("div",{class:"sub-meta mono",text:a.otherDueLimit}):null ]));
@@ -1054,6 +1079,7 @@ function openAdModal(rec){
     {id:"authority",label:"Authority",options:["EASA","FAA","CAAT","TCCA","Other"],value:rec.authority||"EASA"},
     {id:"subject",label:"Subject",required:true,full:true,placeholder:"AD subject"},
     {id:"category",label:"Category",options:["Engine","APU","Component"],value:rec.category||"Engine"},
+    {id:"ataChapter",label:"ATA Chapter",options:ATA_CHAPTERS,value:rec.ataChapter||""},
     {id:"applicability",label:"Applicability (model/ESN/S/N/P/N)",placeholder:"e.g. CFM56-7B / ESN 89xxxx"},
     {id:"sbRef",label:"SB / Reference",placeholder:"e.g. SB 72-1234"},
     {id:"complianceType",label:"Compliance type",options:["One-time","Repetitive","Terminating action"],value:rec.complianceType||"One-time"},
@@ -1156,13 +1182,13 @@ function confirmDel(coll,id,label){
 async function loadSamples(){
   const T=todayISO();
   const ads=[
-    { adNo:"DEMO-AD-2405", authority:"EASA", subject:"HPT stage-1 blade inspection", category:"Engine", applicability:"CFM56-7B / all ESN", sbRef:"SB 72-0481", complianceType:"Repetitive", repeatInterval:"Every 2,000 FC", dueDate:addDays(T,-8), otherDueLimit:"18,500 FC", plannedDate:addDays(T,-2), sparesStatus:"Ready", status:"In work", remarks:"WO 88213 opened, awaiting borescope" },
-    { adNo:"DEMO-AD-2417", authority:"FAA", subject:"APU fuel control unit replacement", category:"APU", applicability:"APS3200 / S/N 41xx", sbRef:"SB 49-2210", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,18), otherDueLimit:"", plannedDate:addDays(T,25), sparesStatus:"Ordered", status:"Planned", remarks:"Spares ETA 12 days — planned after due date" },
-    { adNo:"DEMO-AD-2422", authority:"CAAT", subject:"Fuel manifold coupling torque check", category:"Engine", applicability:"CFM56-5B", sbRef:"SB 73-0155", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,26), otherDueLimit:"", plannedDate:addDays(T,14), sparesStatus:"Not ready", status:"Open", remarks:"Awaiting consumable gasket kit" },
-    { adNo:"DEMO-AD-2431", authority:"EASA", subject:"Igniter plug wear inspection", category:"Component", applicability:"P/N 335-xxx", sbRef:"", complianceType:"Repetitive", repeatInterval:"Every 4,000 FH", dueDate:addDays(T,63), otherDueLimit:"", plannedDate:addDays(T,55), sparesStatus:"Ready", status:"Planned", remarks:"" },
-    { adNo:"DEMO-AD-2438", authority:"FAA", subject:"Oil chip detector functional test", category:"Engine", applicability:"CFM56-7B", sbRef:"SB 79-0092", complianceType:"Repetitive", repeatInterval:"Every 1,000 FH", dueDate:addDays(T,84), otherDueLimit:"", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
-    { adNo:"DEMO-AD-2402", authority:"TCCA", subject:"Bleed air duct clamp mod", category:"Component", applicability:"P/N 771-xxx", sbRef:"SB 36-0044", complianceType:"Terminating action", repeatInterval:"", dueDate:addDays(T,-40), otherDueLimit:"", plannedDate:addDays(T,-42), sparesStatus:"Ready", status:"Complied", remarks:"Closed, task card TC-5561" },
-    { adNo:"DEMO-AD-2444", authority:"EASA", subject:"APU compressor wheel life limit", category:"APU", applicability:"APS3200", sbRef:"", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,140), otherDueLimit:"25,000 APU h", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
+    { adNo:"DEMO-AD-2405", authority:"EASA", subject:"HPT stage-1 blade inspection", category:"Engine", ataChapter:"72", applicability:"CFM56-7B / all ESN", sbRef:"SB 72-0481", complianceType:"Repetitive", repeatInterval:"Every 2,000 FC", dueDate:addDays(T,-8), otherDueLimit:"18,500 FC", plannedDate:addDays(T,-2), sparesStatus:"Ready", status:"In work", remarks:"WO 88213 opened, awaiting borescope" },
+    { adNo:"DEMO-AD-2417", authority:"FAA", subject:"APU fuel control unit replacement", category:"APU", ataChapter:"49", applicability:"APS3200 / S/N 41xx", sbRef:"SB 49-2210", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,18), otherDueLimit:"", plannedDate:addDays(T,25), sparesStatus:"Ordered", status:"Planned", remarks:"Spares ETA 12 days — planned after due date" },
+    { adNo:"DEMO-AD-2422", authority:"CAAT", subject:"Fuel manifold coupling torque check", category:"Engine", ataChapter:"73", applicability:"CFM56-5B", sbRef:"SB 73-0155", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,26), otherDueLimit:"", plannedDate:addDays(T,14), sparesStatus:"Not ready", status:"Open", remarks:"Awaiting consumable gasket kit" },
+    { adNo:"DEMO-AD-2431", authority:"EASA", subject:"Igniter plug wear inspection", category:"Component", ataChapter:"74", applicability:"P/N 335-xxx", sbRef:"", complianceType:"Repetitive", repeatInterval:"Every 4,000 FH", dueDate:addDays(T,63), otherDueLimit:"", plannedDate:addDays(T,55), sparesStatus:"Ready", status:"Planned", remarks:"" },
+    { adNo:"DEMO-AD-2438", authority:"FAA", subject:"Oil chip detector functional test", category:"Engine", ataChapter:"79", applicability:"CFM56-7B", sbRef:"SB 79-0092", complianceType:"Repetitive", repeatInterval:"Every 1,000 FH", dueDate:addDays(T,84), otherDueLimit:"", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
+    { adNo:"DEMO-AD-2402", authority:"TCCA", subject:"Bleed air duct clamp mod", category:"Component", ataChapter:"36", applicability:"P/N 771-xxx", sbRef:"SB 36-0044", complianceType:"Terminating action", repeatInterval:"", dueDate:addDays(T,-40), otherDueLimit:"", plannedDate:addDays(T,-42), sparesStatus:"Ready", status:"Complied", remarks:"Closed, task card TC-5561" },
+    { adNo:"DEMO-AD-2444", authority:"EASA", subject:"APU compressor wheel life limit", category:"APU", ataChapter:"49", applicability:"APS3200", sbRef:"", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,140), otherDueLimit:"25,000 APU h", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
   ];
   const eng=[
     { refNo:"DEMO-ES-031", type:"Technical query", subject:"HPT blade coating spec clarification", counterparty:"GE Aerospace", asset:"ESN 706212", dateRaised:addDays(T,-20), targetDate:addDays(T,-5), status:"Awaiting reply", notes:"Query sent via OEM portal, no reply yet — overdue" },
