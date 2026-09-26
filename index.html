@@ -188,7 +188,13 @@ tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.
 .oil-hint{margin:0 0 14px; color:var(--ink-3); font-size:12.5px}
 .oil-hint b{color:var(--ink-2)}
 .desc-cell{max-width:320px; min-width:200px; font-size:12.5px; color:var(--ink-2)}
-.desc-cell .clip{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.desc-cell .clip{display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.oil-donut-card{margin-bottom:22px; display:flex; align-items:center; gap:24px; flex-wrap:wrap}
+.oil-donut-legend{display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--ink-2); min-width:190px}
+.oil-donut-legend .row{display:flex; align-items:center; gap:8px}
+.oil-donut-legend .dot{width:11px; height:11px; border-radius:50%; flex:none}
+.oil-donut-legend b{color:var(--ink); font-variant-numeric:tabular-nums}
+.oil-donut-legend .pct{margin-left:auto; font-family:var(--mono); color:var(--ink-3); font-variant-numeric:tabular-nums}
 .mini{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); padding:5px 8px; border-radius:6px; font-size:12px; font-weight:600; line-height:1; font-family:inherit}
 .mini:hover{background:var(--surface-2); color:var(--ink)}
 .mini.del:hover{color:var(--red); background:var(--row-red)}
@@ -530,6 +536,8 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
       <input type="file" id="oilFileInput" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden>
       <button class="btn primary" id="oilAdd">+ Add item</button>
     </div>
+
+    <div class="chart-card oil-donut-card" id="oilDonutCard"></div>
 
     <div class="section-head"><h2>Not answered at all</h2><div class="rule"></div><span class="hint">Aged from Date Raised</span></div>
     <div class="lamps" id="oilAgingRaised" style="margin-bottom:14px"></div>
@@ -1262,7 +1270,45 @@ function renderOilAgingGroup(hostId, status){
   if (!anyOn && state.oil.length>0){ host.append(el("div",{class:"all-clear",text:"ALL CLEAR — none in this group"})); }
 }
 
+function renderOilDonut(){
+  const host=$("#oilDonutCard"); host.innerHTML="";
+  const total=state.oil.length;
+  if (total===0){ host.hidden=true; return; }
+  host.hidden=false;
+  const notAns=state.oil.filter(r=>oilStatusOf(r)==="unanswered").length;
+  const pending=state.oil.filter(r=>oilStatusOf(r)==="pending").length;
+  const closed=state.oil.filter(r=>oilStatusOf(r)==="closed").length;
+  const answeredPct=Math.round(((pending+closed)/total)*100);
+  const segs=[
+    { n:notAns,  color:"var(--ink-3)", label:"Not answered" },
+    { n:pending, color:"var(--cyan)",  label:"Answered, not closed" },
+    { n:closed,  color:"var(--green)", label:"Closed" },
+  ].filter(s=>s.n>0);
+  const R=48, SW=20, C=2*Math.PI*R;
+  let offset=0;
+  const arcs=segs.map(s=>{
+    const frac=s.n/total, len=frac*C;
+    const arc=`<circle cx="60" cy="60" r="${R}" fill="none" stroke="${s.color}" stroke-width="${SW}" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}"><title>${s.label}: ${s.n} (${Math.round(frac*100)}%)</title></circle>`;
+    offset+=len; return arc;
+  }).join("");
+  const svg=`<svg viewBox="0 0 120 120" width="128" height="128" role="img" aria-label="Answered vs not answered">
+    <circle cx="60" cy="60" r="${R}" fill="none" stroke="var(--line)" stroke-width="${SW}"/>
+    <g transform="rotate(-90 60 60)">${arcs}</g>
+    <text x="60" y="57" text-anchor="middle" font-size="21" font-weight="700" fill="var(--ink)">${answeredPct}%</text>
+    <text x="60" y="73" text-anchor="middle" font-size="9" fill="var(--ink-3)">answered</text>
+  </svg>`;
+  const legend=el("div",{class:"oil-donut-legend"}, segs.map(s=>el("div",{class:"row"},[
+    el("span",{class:"dot",style:"background:"+s.color}),
+    el("span",{text:s.label}),
+    el("b",{text:String(s.n)}),
+    el("span",{class:"pct",text:Math.round(s.n/total*100)+"%"}),
+  ])));
+  host.append(el("div",{html:svg}));
+  host.append(legend);
+}
+
 function renderOIL(){
+  renderOilDonut();
   renderOilAgingGroup("#oilAgingRaised","unanswered");
   renderOilAgingGroup("#oilAgingReplied","pending");
   const chipHost=$("#oilFocusChip"); chipHost.innerHTML="";
