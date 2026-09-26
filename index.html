@@ -1848,7 +1848,14 @@ async function startApp(){
   if (!appWired){ wire(); appWired = true; }
   renderProjectChip();
   await loadBackendData();
-  if (!officialAdsLoaded){ officialAdsLoaded = true; loadOfficialAds(); }
+  if (!officialAdsLoaded){
+    officialAdsLoaded = true;
+    loadOfficialAds();
+    // the underlying snapshot refreshes every few hours (server-side); poll it
+    // often enough that an open tab picks up the change without a manual reload
+    setInterval(loadOfficialAds, 3*60*1000);
+    document.addEventListener("visibilitychange", ()=>{ if (!document.hidden) loadOfficialAds(); });
+  }
 }
 function afterLogin(){
   migrateLegacyProjectIfNeeded();

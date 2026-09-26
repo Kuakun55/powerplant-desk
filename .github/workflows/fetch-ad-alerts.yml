@@ -2,7 +2,7 @@ name: Fetch official AD alerts (FAA/EASA)
 
 on:
   schedule:
-    - cron: "17 3 * * *" # daily, ~10:17 Bangkok time
+    - cron: "17 */3 * * *" # every 3 hours (FAA/EASA don't publish faster than this anyway)
   workflow_dispatch:
 
 permissions:
