@@ -185,6 +185,10 @@ tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.
 .flag{display:inline-flex; align-items:center; gap:4px; font-size:10.5px; font-weight:700; color:var(--red); font-family:var(--mono); letter-spacing:.02em}
 .flag.amber{color:var(--amber)}
 .row-actions{display:flex; gap:2px; justify-content:flex-end}
+.oil-hint{margin:0 0 14px; color:var(--ink-3); font-size:12.5px}
+.oil-hint b{color:var(--ink-2)}
+.desc-cell{max-width:320px; min-width:200px; font-size:12.5px; color:var(--ink-2)}
+.desc-cell .clip{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
 .mini{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); padding:5px 8px; border-radius:6px; font-size:12px; font-weight:600; line-height:1; font-family:inherit}
 .mini:hover{background:var(--surface-2); color:var(--ink)}
 .mini.del:hover{color:var(--red); background:var(--row-red)}
@@ -420,6 +424,9 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
     <button class="tab" role="tab" id="tab-rel" aria-selected="false" data-tab="rel">
       Reliability <span class="pill" id="pill-rel">0</span>
     </button>
+    <button class="tab" role="tab" id="tab-oil" aria-selected="false" data-tab="oil">
+      Open Items (OIL) <span class="pill" id="pill-oil">0</span>
+    </button>
   </div>
 
   <!-- ===================== TAB 1: AD ===================== -->
@@ -501,6 +508,33 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
     </div>
   </section>
 
+  <!-- ===================== TAB 4: OIL (OPEN ITEMS LIST) ===================== -->
+  <section class="panel" id="panel-oil" role="tabpanel" aria-labelledby="tab-oil" hidden>
+    <div class="toolbar">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="oilSearch" type="search" placeholder="Search reference, description, remarks…" aria-label="Search open items">
+      </div>
+      <div class="seg" role="group" aria-label="Filter by party" id="oilPic">
+        <button data-v="all" aria-pressed="true">All</button>
+        <button data-v="Lessor">Lessor</button>
+        <button data-v="Lessee">Lessee</button>
+      </div>
+      <div class="seg" role="group" aria-label="Filter by status" id="oilStatus">
+        <button data-v="waiting" aria-pressed="true">Awaiting reply</button>
+        <button data-v="answered">Answered</button>
+        <button data-v="all">All</button>
+      </div>
+      <button class="btn" id="oilImportBtn">Import CSV</button>
+      <input type="file" id="oilFileInput" accept=".csv,text/csv" hidden>
+      <button class="btn primary" id="oilAdd">+ Add item</button>
+    </div>
+    <p class="oil-hint">Aging is counted from <b>Date Raised</b> to today, for items with no Lessor/Lessee reply yet.</p>
+    <div class="lamps" id="oilAging" style="margin-bottom:14px"></div>
+    <div id="oilFocusChip"></div>
+    <div id="oilTableHost"></div>
+  </section>
+
   <footer class="foot">Powerplant Desk · Sample records start with DEMO- and are entirely fictional</footer>
 </div>
 
@@ -545,10 +579,11 @@ function fmtMonth(k){ if(!k) return "—"; const [y,m]=k.split("-").map(Number);
 /* ----------------------------- state ----------------------------- */
 const state = {
   tab: "ad",
-  ads: [], eng: [], rel: [],
+  ads: [], eng: [], rel: [], oil: [],
   adSearch:"", adCat:"all", adStatus:"open", adFocus:null,
   engSearch:"", engStatus:"all", engFocus:null,
   relRate:"engUer",
+  oilSearch:"", oilPic:"all", oilStatus:"waiting", oilTier:null,
   mode:"local",
 };
 const AD_DONE = a => a.status==="Complied" || a.status==="N/A";
@@ -581,7 +616,7 @@ function migrateLegacyProjectIfNeeded(){
 /* ============================================================
    STORAGE BACKENDS  (uniform async interface)
    ============================================================ */
-const COLLS = ["ads","eng","rel"];
+const COLLS = ["ads","eng","rel","oil"];
 
 const LocalBackend = {
   name:"local",
@@ -1028,6 +1063,205 @@ function emptyState(title, body, onAdd, onSample){
 }
 
 /* ============================================================
+   TAB 4 — OIL (OPEN ITEMS LIST / Lessor-Lessee correspondence)
+   ============================================================ */
+const OIL_TIERS = [
+  { key:"green",  label:"Fresh",    max:3,   tone:"green" },
+  { key:"cyan",   label:"Watch",    max:7,   tone:"cyan"  },
+  { key:"amber",  label:"Due",      max:13,  tone:"amber" },
+  { key:"red",    label:"Critical", max:Infinity, tone:"red" },
+];
+function oilTierFor(days){
+  if (days==null) return null;
+  for (const t of OIL_TIERS) if (days<=t.max) return t;
+  return OIL_TIERS[OIL_TIERS.length-1];
+}
+function oilAnswered(rec){ return !!((rec.lessorRemark&&rec.lessorRemark.trim()) || (rec.lesseeRemark&&rec.lesseeRemark.trim())) || rec.openClosed==="Closed"; }
+function oilDaysWaiting(rec){
+  if (oilAnswered(rec) || !rec.dateRaised) return null;
+  const d = daysUntil(rec.dateRaised);
+  return d==null ? null : -d;
+}
+
+/* ---- CSV parsing (RFC4180-ish: quoted fields, embedded commas/newlines/"") ---- */
+function parseCSV(text){
+  const rows=[]; let row=[], field="", inQ=false;
+  for (let i=0;i<text.length;i++){
+    const c=text[i];
+    if (inQ){
+      if (c==='"'){ if (text[i+1]==='"'){ field+='"'; i++; } else inQ=false; }
+      else field+=c;
+    } else {
+      if (c==='"') inQ=true;
+      else if (c===','){ row.push(field); field=""; }
+      else if (c==='\r'){ /* skip */ }
+      else if (c==='\n'){ row.push(field); rows.push(row); row=[]; field=""; }
+      else field+=c;
+    }
+  }
+  if (field.length || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+const OIL_MON3 = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+function parseOilDateToken(s){
+  s=(s||"").trim(); if(!s) return null;
+  const m=s.match(/^(\d{1,2})[-\/]([A-Za-z]{3})[-\/](\d{2,4})$/);
+  if(!m) return null;
+  const mon=OIL_MON3[m[2].toLowerCase()]; if(mon===undefined) return null;
+  let yr=parseInt(m[3],10); if(yr<100) yr+=2000;
+  const d=new Date(yr,mon,parseInt(m[1],10));
+  return isNaN(d.getTime()) ? null : d;
+}
+function oilLatestDateISO(raisedRaw){
+  const parts=String(raisedRaw||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  let best=null;
+  for (const p of parts){ const d=parseOilDateToken(p); if (d && (!best||d>best)) best=d; }
+  if (!best) return "";
+  return best.getFullYear()+"-"+String(best.getMonth()+1).padStart(2,"0")+"-"+String(best.getDate()).padStart(2,"0");
+}
+function importOilCSV(text){
+  const rows=parseCSV(text);
+  let hi=-1;
+  for (let i=0;i<rows.length;i++){ if ((rows[i][0]||"").trim()==="Item" && (rows[i][1]||"").trim()==="Reference"){ hi=i; break; } }
+  if (hi===-1){ alert("Could not find the header row (Item, Reference, Description of Defect, ...) in this file."); return; }
+  const records=[];
+  for (let i=hi+1;i<rows.length;i++){
+    const r=rows[i]; const item=(r[0]||"").trim();
+    if (!item) continue;
+    records.push({
+      id: uid(),
+      item: item,
+      reference: (r[1]||"").trim(),
+      description: (r[2]||"").trim(),
+      openClosed: (r[3]||"Open").trim()||"Open",
+      dateRaisedRaw: (r[4]||"").trim(),
+      dateRaised: oilLatestDateISO(r[4]),
+      pic: (r[5]||"").trim(),
+      lessorRemark: (r[6]||"").trim(),
+      lesseeRemark: (r[7]||"").trim(),
+    });
+  }
+  if (records.length===0){ alert("No data rows found under the header."); return; }
+  const doReplace = state.oil.length===0 || confirm("Replace the current "+state.oil.length+" open item(s) in this project with "+records.length+" item(s) from this file?");
+  if (!doReplace) return;
+  state.oil = records;
+  if (backend.name==="local"){ LocalBackend._save("oil"); }
+  onDataChanged("oil");
+}
+
+function oilFilteredRows(){
+  let rows = state.oil.slice();
+  if (state.oilTier){ rows = rows.filter(r=>{ const t=oilTierFor(oilDaysWaiting(r)); return t && t.key===state.oilTier; }); }
+  else {
+    if (state.oilPic!=="all") rows = rows.filter(r=>r.pic===state.oilPic);
+    if (state.oilStatus==="waiting") rows = rows.filter(r=>!oilAnswered(r));
+    else if (state.oilStatus==="answered") rows = rows.filter(r=>oilAnswered(r));
+  }
+  const q = state.oilSearch.trim().toLowerCase();
+  if (q) rows = rows.filter(r=>[r.item,r.reference,r.description,r.pic,r.lessorRemark,r.lesseeRemark].join(" ").toLowerCase().includes(q));
+  rows.sort((a,b)=>{
+    const da=oilDaysWaiting(a), db=oilDaysWaiting(b);
+    if (da==null && db==null) return Number(a.item)-Number(b.item);
+    if (da==null) return 1; if (db==null) return -1;
+    return db-da;
+  });
+  return rows;
+}
+
+function renderOilAging(){
+  const host=$("#oilAging"); host.innerHTML="";
+  const waiting = state.oil.filter(r=>!oilAnswered(r));
+  let anyOn=false;
+  for (const t of OIL_TIERS){
+    const n = waiting.filter(r=>oilTierFor(oilDaysWaiting(r))?.key===t.key).length;
+    const on = n>0; if(on) anyOn=true;
+    host.append(el("button",{
+      class:"lamp "+(on?("on "+t.tone):""), type:"button",
+      "aria-label":t.label+": "+n,
+      onclick:()=>{ state.oilTier = state.oilTier===t.key ? null : t.key; renderOIL(); }
+    },[ el("span",{class:"lab",text:t.label.toUpperCase()+(t.max===Infinity?" ≥14D":" ≤"+t.max+"D")}), el("span",{class:"cnt",text:String(n)}) ]));
+  }
+  if (!anyOn && state.oil.length>0){ host.append(el("div",{class:"all-clear",text:"ALL CLEAR — no items awaiting a reply"})); }
+}
+
+function renderOIL(){
+  renderOilAging();
+  const chipHost=$("#oilFocusChip"); chipHost.innerHTML="";
+  if (state.oilTier){
+    const t=OIL_TIERS.find(x=>x.key===state.oilTier);
+    chipHost.append(el("div",{class:"focus-chip"},[ "Filtering: "+(t?t.label:state.oilTier)+" (awaiting reply)",
+      el("button",{type:"button","aria-label":"Clear filter",text:"×",onclick:()=>{state.oilTier=null; renderOIL();}}) ]));
+  }
+  const host=$("#oilTableHost"); host.innerHTML="";
+  if (state.oil.length===0){
+    host.append(el("div",{class:"empty"},[
+      el("h3",{text:"No open items imported yet"}),
+      el("p",{text:"Import a Lessor/Lessee open-items CSV (OIL) to track how long each unanswered item has been waiting, or add one manually."}),
+      el("div",{class:"actions"},[
+        el("button",{class:"btn primary",text:"Import CSV",onclick:()=>$("#oilFileInput").click()}),
+        el("button",{class:"btn",text:"+ Add item",onclick:()=>openOilModal()}),
+      ])
+    ]));
+    return;
+  }
+  const rows=oilFilteredRows();
+  const table=el("table"); const thead=el("thead"); const htr=el("tr");
+  ["#","Reference","Type","Description","Date raised","Waiting","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
+  thead.append(htr); table.append(thead);
+  const tb=el("tbody");
+  if (rows.length===0){ tb.append(el("tr",{},el("td",{colspan:8, html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'}))); }
+  for (const r of rows){
+    const days=oilDaysWaiting(r); const tier=oilTierFor(days);
+    const answered=oilAnswered(r);
+    const tr=el("tr",{class:"clickable "+(tier?"row-"+tier.key:""), onclick:(ev)=>{ if(ev.target.closest(".row-actions")) return; openOilModal(r); }});
+    tr.append(el("td",{},el("span",{class:"mono",text:r.item||"—"})));
+    tr.append(el("td",{},el("span",{class:"mono",style:"font-weight:600",text:r.reference||"—"})));
+    tr.append(el("td",{},el("span",{class:"tag "+(r.pic==="Lessor"?"cyan":r.pic==="Lessee"?"amber":"grey"),text:r.pic||"—"})));
+    tr.append(el("td",{class:"desc-cell"},el("div",{class:"clip",text:r.description||"—"})));
+    tr.append(el("td",{},[ document.createTextNode(fmtDate(r.dateRaised)), r.dateRaisedRaw&&r.dateRaisedRaw.includes("\n")?el("div",{class:"sub-meta mono",text:"latest of "+r.dateRaisedRaw.split(/\r?\n/).length+" dates"}):null ]));
+    tr.append(el("td",{}, answered
+      ? el("span",{class:"tag green",text: r.openClosed==="Closed"?"Closed":"Answered"})
+      : (days==null ? el("span",{class:"dleft muted",text:"—"}) : el("span",{class:"dleft "+tier.key, text:days+"d — "+tier.label}))
+    ));
+    tr.append(el("td",{class:"notes-cell"},oilDash((r.lessorRemark||"")+(r.lesseeRemark?(r.lessorRemark?" / ":"")+r.lesseeRemark:""))));
+    tr.append(el("td",{},el("div",{class:"row-actions"},[
+      el("button",{class:"mini",title:"Edit","aria-label":"Edit",text:"Edit",onclick:()=>openOilModal(r)}),
+      el("button",{class:"mini del",title:"Delete","aria-label":"Delete",text:"Del",onclick:()=>confirmDel("oil",r.id,r.reference)}),
+    ])));
+    tb.append(tr);
+  }
+  table.append(tb); host.append(el("div",{class:"table-wrap"},table));
+}
+function oilDash(s){ return el("span",{text: s&&s.trim() ? s : "—"}); }
+
+function openOilModal(rec){
+  const isEdit=!!rec; rec=rec||{};
+  const fields=[
+    {id:"reference",label:"Reference (AD No.)",required:true,placeholder:"e.g. 2026-0033"},
+    {id:"pic",label:"Type (P.I.C)",options:["Lessor","Lessee","Both","Other"],value:rec.pic||"Lessee"},
+    {id:"description",label:"Description of Defect",type:"textarea",full:true,required:true,rows:4},
+    {id:"dateRaised",label:"Date raised",type:"date",required:true},
+    {id:"openClosed",label:"Open / Closed",options:["Open","Closed"],value:rec.openClosed||"Open"},
+    {id:"lessorRemark",label:"Lessor remark",type:"textarea",full:true,rows:3},
+    {id:"lesseeRemark",label:"Lessee remark",type:"textarea",full:true,rows:3},
+  ];
+  const box=el("div",{class:"modal-box"});
+  box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit open item":"Add open item"}), rec.reference?el("span",{class:"adno-badge mono",text:rec.reference}):null ]));
+  const body=el("form",{class:"modal-body", onsubmit:(e)=>e.preventDefault()});
+  fields.forEach(f=>body.append(fieldRow({...f, value: f.type==="date"? (rec[f.id]||"") : (rec[f.id]!==undefined?rec[f.id]:(f.value||"")) })));
+  box.append(body);
+  const foot=el("div",{class:"modal-foot"});
+  if (isEdit) foot.append(el("button",{class:"btn danger",text:"Delete",onclick:()=>{ closeModal(); confirmDel("oil",rec.id,rec.reference); }}));
+  foot.append(el("div",{class:"spacer"}));
+  foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
+  foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
+    const data=collectForm(body,fields); if(!data) return;
+    upsert("oil",{ ...rec, ...data, item: rec.item||String(state.oil.length+1), dateRaisedRaw: rec.dateRaisedRaw||data.dateRaised, id: rec.id||uid() }); closeModal();
+  }}));
+  box.append(foot); openModal(box);
+}
+
+/* ============================================================
    MODALS
    ============================================================ */
 let escHandler=null;
@@ -1221,7 +1455,7 @@ async function loadSamples(){
    ============================================================ */
 function selectTab(t){
   state.tab=t;
-  ["ad","eng","rel"].forEach(x=>{
+  ["ad","eng","rel","oil"].forEach(x=>{
     $("#tab-"+x).setAttribute("aria-selected", x===t?"true":"false");
     $("#panel-"+x).hidden = x!==t;
   });
@@ -1230,13 +1464,14 @@ function renderCounts(){
   $("#pill-ad").textContent = state.ads.filter(a=>!AD_DONE(a)).length;
   $("#pill-eng").textContent = state.eng.filter(e=>e.status!=="Closed").length;
   $("#pill-rel").textContent = state.rel.length;
+  $("#pill-oil").textContent = state.oil.filter(r=>!oilAnswered(r)).length;
 }
 function renderMode(){
   const b=$("#modeBadge"), t=$("#modeText");
   if(state.mode==="team"){ b.classList.add("team"); t.innerHTML='<b>Team mode</b> · real-time'; b.title="Data is shared with the team in real time"; }
   else { b.classList.remove("team"); t.innerHTML='<b>This device only</b> · browser'; b.title="Data is saved in this browser only (publish as an Artifact to share with your team in real time)"; }
 }
-function renderAll(){ renderMode(); renderCounts(); renderLamps(); renderAD(); renderENG(); renderREL(); }
+function renderAll(){ renderMode(); renderCounts(); renderLamps(); renderAD(); renderENG(); renderREL(); renderOIL(); }
 
 /* wire controls */
 function wire(){
@@ -1271,6 +1506,19 @@ function wire(){
   // REL
   $("#relAdd").addEventListener("click",()=>openRelModal());
   segWire("#relRate","relRate",()=>renderREL());
+  // OIL
+  $("#oilSearch").addEventListener("input",e=>{ state.oilSearch=e.target.value; renderOIL(); });
+  $("#oilAdd").addEventListener("click",()=>openOilModal());
+  segWire("#oilPic","oilPic",()=>{ state.oilTier=null; renderOIL(); });
+  segWire("#oilStatus","oilStatus",()=>{ state.oilTier=null; renderOIL(); });
+  $("#oilImportBtn").addEventListener("click",()=>$("#oilFileInput").click());
+  $("#oilFileInput").addEventListener("change",(e)=>{
+    const file=e.target.files&&e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{ try{ importOilCSV(String(reader.result||"")); }catch(err){ alert("Could not read this CSV: "+(err&&err.message||err)); } };
+    reader.readAsText(file);
+    e.target.value="";
+  });
 }
 function segWire(sel, stateKey, cb){
   const g=$(sel);
