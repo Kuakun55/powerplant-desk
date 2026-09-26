@@ -203,6 +203,10 @@ tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.
 .official-ad-alert li .ref{font-weight:700; font-size:12px; white-space:nowrap}
 .official-ad-alert li .subj{flex:1; min-width:160px; font-size:12.5px; color:var(--ink-2)}
 .official-ad-alert li .actions{display:flex; gap:6px; flex:none}
+.official-ad-cols{display:flex; gap:16px; flex-wrap:wrap}
+.official-ad-group{flex:1; min-width:280px}
+.official-ad-group h5{margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-2)}
+.official-ad-scroll{max-height:340px; overflow-y:auto; padding-right:2px}
 .mini{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); padding:5px 8px; border-radius:6px; font-size:12px; font-weight:600; line-height:1; font-family:inherit}
 .mini:hover{background:var(--surface-2); color:var(--ink)}
 .mini.del:hover{color:var(--red); background:var(--row-red)}
@@ -798,6 +802,29 @@ async function loadOfficialAds(){
   }catch(e){ /* file may not exist yet, or offline — silently skip */ }
   renderOfficialAdAlert();
 }
+function officialAdList(o){
+  return el("li",{},[
+    el("span",{class:"ref mono",text:o.ref}),
+    el("span",{class:"subj",text:o.subject||"—"}),
+    el("div",{class:"actions"},[
+      el("a",{class:"btn sm",href:o.url,target:"_blank",rel:"noopener",text:"View"}),
+      el("button",{class:"btn sm primary",type:"button",text:"+ Track",onclick:()=>openAdModal({
+        adNo:o.ref, subject:o.subject||"", authority:o.source,
+        category:(o.tcHolders||[]).some(t=>/CFM|APS3200/i.test(t))?"Engine":"Component",
+        status:"Open",
+      })}),
+    ]),
+  ]);
+}
+function officialAdSection(title, items){
+  if (items.length===0) return null;
+  const box = el("div",{class:"official-ad-group"});
+  box.append(el("h5",{text:title+" — "+items.length+" not tracked"}));
+  const ul = el("ul",{class:"official-ad-scroll"});
+  items.forEach(o=>ul.append(officialAdList(o)));
+  box.append(ul);
+  return box;
+}
 function renderOfficialAdAlert(){
   const host = $("#officialAdAlert"); if(!host) return; host.innerHTML="";
   const list = state.officialAds||[];
@@ -808,27 +835,15 @@ function renderOfficialAdAlert(){
     return n && !known.some(k=>k && (k.includes(n) || n.includes(k)));
   });
   if (untracked.length===0) return;
-  const shown = untracked.slice(0,8);
+  const faa = untracked.filter(o=>o.source==="FAA");
+  const easa = untracked.filter(o=>o.source==="EASA");
   const box = el("div",{class:"official-ad-alert"});
   box.append(el("h4",{text:untracked.length+" official AD(s) not yet in your tracker"}));
-  box.append(el("div",{class:"meta"},"From FAA (Boeing 737 MAX/LEAP-1B) + EASA (A320/A321/CFM56-5B/APS3200)"+(state.officialAdsFetchedAt?" · checked "+fmtDate(state.officialAdsFetchedAt.slice(0,10)):"")));
-  const ul = el("ul");
-  shown.forEach(o=>{
-    ul.append(el("li",{},[
-      el("span",{class:"ref mono",text:o.source+" "+o.ref}),
-      el("span",{class:"subj",text:o.subject||"—"}),
-      el("div",{class:"actions"},[
-        el("a",{class:"btn sm",href:o.url,target:"_blank",rel:"noopener",text:"View"}),
-        el("button",{class:"btn sm primary",type:"button",text:"+ Track",onclick:()=>openAdModal({
-          adNo:o.ref, subject:o.subject||"", authority:o.source,
-          category:(o.tcHolders||[]).some(t=>/CFM|APS3200/i.test(t))?"Engine":"Component",
-          status:"Open",
-        })}),
-      ]),
-    ]));
-  });
-  box.append(ul);
-  if (untracked.length>shown.length) box.append(el("div",{class:"meta",style:"margin-top:8px",text:"+"+(untracked.length-shown.length)+" more — refine your search or check data/official-ads.json"}));
+  box.append(el("div",{class:"meta"},"FAA = Boeing 737 MAX/LEAP-1B · EASA = A320/A321/CFM56-5B/APS3200"+(state.officialAdsFetchedAt?" · checked "+fmtDate(state.officialAdsFetchedAt.slice(0,10)):"")));
+  const cols = el("div",{class:"official-ad-cols"});
+  const faaBox = officialAdSection("FAA", faa); if (faaBox) cols.append(faaBox);
+  const easaBox = officialAdSection("EASA", easa); if (easaBox) cols.append(easaBox);
+  box.append(cols);
   host.append(box);
 }
 
