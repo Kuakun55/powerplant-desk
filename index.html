@@ -526,8 +526,8 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
         <button data-v="closed">Closed</button>
         <button data-v="all">All</button>
       </div>
-      <button class="btn" id="oilImportBtn">Import CSV</button>
-      <input type="file" id="oilFileInput" accept=".csv,text/csv" hidden>
+      <button class="btn" id="oilImportBtn">Import CSV / Excel</button>
+      <input type="file" id="oilFileInput" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden>
       <button class="btn primary" id="oilAdd">+ Add item</button>
     </div>
 
@@ -546,6 +546,7 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
 
 <div id="modalHost"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 "use strict";
 /* =========================================================================
@@ -680,29 +681,27 @@ async function remove(coll, id){ try { await backend.remove(coll, id); } catch(e
    FLAGS / ANNUNCIATOR
    ============================================================ */
 function flagSets(){
-  const t = todayISO();
-  const active = state.ads.filter(a => !AD_DONE(a));
-  const overdue     = active.filter(a => { const d=daysUntil(a.dueDate); return d!==null && d<0; });
-  const planAfter   = state.ads.filter(a => a.plannedDate && a.dueDate && a.plannedDate>a.dueDate && !AD_DONE(a));
-  const due30       = active.filter(a => { const d=daysUntil(a.dueDate); return d!==null && d>=0 && d<=30; });
-  const sparesNR    = active.filter(a => a.sparesStatus==="Not ready");
-  const queryOver   = state.eng.filter(e => e.status!=="Closed" && e.targetDate && e.targetDate<t);
-  const relAlertRates = ["engUer","ifsd","apuUer"].filter(r => { const s=relStats(r); return s.alert!=null && s.latest!=null && s.latest>s.alert; });
-  return { overdue, planAfter, due30, sparesNR, queryOver, relAlertRates };
+  const notAnswered     = state.oil.filter(r=>oilStatusOf(r)==="unanswered");
+  const notAnsweredCrit = notAnswered.filter(r=>oilTierFor(oilDaysWaiting(r))?.key==="red");
+  const pending         = state.oil.filter(r=>oilStatusOf(r)==="pending");
+  const pendingCrit     = pending.filter(r=>oilTierFor(oilDaysWaiting(r))?.key==="red");
+  const lessorOpen      = state.oil.filter(r=>r.pic==="Lessor" && oilStatusOf(r)!=="closed");
+  const lesseeOpen      = state.oil.filter(r=>r.pic==="Lessee" && oilStatusOf(r)!=="closed");
+  return { notAnswered, notAnsweredCrit, pending, pendingCrit, lessorOpen, lesseeOpen };
 }
 
 const LAMPS = [
-  { key:"overdue",   lab:"AD OVERDUE",      tone:"red",   go:()=>focusAD("overdue") },
-  { key:"planAfter", lab:"PLAN AFTER DUE",  tone:"amber", go:()=>focusAD("planAfter") },
-  { key:"due30",     lab:"AD DUE ≤ 30 D", tone:"amber", go:()=>focusAD("due30") },
-  { key:"sparesNR",  lab:"SPARES NOT READY", tone:"amber", go:()=>focusAD("sparesNR") },
-  { key:"queryOver", lab:"QUERY OVERDUE",   tone:"red",   go:()=>focusENG("overdue") },
-  { key:"relAlert",  lab:"RELIABILITY ALERT", tone:"red", go:()=>{ selectTab("rel"); $("#relChart").scrollIntoView({behavior:"smooth", block:"center"}); } },
+  { key:"notAnswered",     lab:"OIL NOT ANSWERED",     tone:"amber", go:()=>focusOIL("unanswered") },
+  { key:"notAnsweredCrit", lab:"NOT ANSWERED ≥ 14 D",  tone:"red",   go:()=>focusOIL("unanswered","red") },
+  { key:"pending",         lab:"OIL PENDING CLOSURE",  tone:"amber", go:()=>focusOIL("pending") },
+  { key:"pendingCrit",     lab:"PENDING CLOSURE ≥14D", tone:"red",   go:()=>focusOIL("pending","red") },
+  { key:"lessorOpen",      lab:"LESSOR ITEMS OPEN",    tone:"amber", go:()=>focusOILPic("Lessor") },
+  { key:"lesseeOpen",      lab:"LESSEE ITEMS OPEN",    tone:"amber", go:()=>focusOILPic("Lessee") },
 ];
 
 function renderLamps(){
   const f = flagSets();
-  const counts = { overdue:f.overdue.length, planAfter:f.planAfter.length, due30:f.due30.length, sparesNR:f.sparesNR.length, queryOver:f.queryOver.length, relAlert:f.relAlertRates.length };
+  const counts = { notAnswered:f.notAnswered.length, notAnsweredCrit:f.notAnsweredCrit.length, pending:f.pending.length, pendingCrit:f.pendingCrit.length, lessorOpen:f.lessorOpen.length, lesseeOpen:f.lesseeOpen.length };
   const host = $("#lamps"); host.innerHTML="";
   let anyOn = false;
   for (const L of LAMPS){
@@ -1221,6 +1220,20 @@ function setOilStatus(v){
   $$("#oilStatus button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===v?"true":"false"));
   renderOIL();
 }
+function focusOIL(status, tier){
+  state.oilStatus=status; state.oilTier=tier||null; state.oilPic="all";
+  selectTab("oil"); renderOIL();
+  $$("#oilStatus button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===status?"true":"false"));
+  $$("#oilPic button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v==="all"?"true":"false"));
+  $("#oilTableHost").scrollIntoView({behavior:"smooth", block:"start"});
+}
+function focusOILPic(pic){
+  state.oilStatus="all"; state.oilTier=null; state.oilPic=pic;
+  selectTab("oil"); renderOIL();
+  $$("#oilStatus button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v==="all"?"true":"false"));
+  $$("#oilPic button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===pic?"true":"false"));
+  $("#oilTableHost").scrollIntoView({behavior:"smooth", block:"start"});
+}
 function renderOilAgingGroup(hostId, status){
   const host=$(hostId); host.innerHTML="";
   const group = state.oil.filter(r=>oilStatusOf(r)===status);
@@ -1257,7 +1270,7 @@ function renderOIL(){
       el("h3",{text:"No open items imported yet"}),
       el("p",{text:"Import a Lessor/Lessee open-items CSV (OIL) to track how long each unanswered item has been waiting, or add one manually."}),
       el("div",{class:"actions"},[
-        el("button",{class:"btn primary",text:"Import CSV",onclick:()=>$("#oilFileInput").click()}),
+        el("button",{class:"btn primary",text:"Import CSV / Excel",onclick:()=>$("#oilFileInput").click()}),
         el("button",{class:"btn",text:"+ Add item",onclick:()=>openOilModal()}),
       ])
     ]));
@@ -1581,9 +1594,23 @@ function wire(){
   $("#oilImportBtn").addEventListener("click",()=>$("#oilFileInput").click());
   $("#oilFileInput").addEventListener("change",(e)=>{
     const file=e.target.files&&e.target.files[0]; if(!file) return;
+    const isExcel = /\.(xlsx|xls)$/i.test(file.name||"");
     const reader=new FileReader();
-    reader.onload=()=>{ try{ importOilCSV(String(reader.result||"")); }catch(err){ alert("Could not read this CSV: "+(err&&err.message||err)); } };
-    reader.readAsText(file);
+    if (isExcel){
+      reader.onload=()=>{
+        try{
+          if (typeof XLSX==="undefined") throw new Error("Excel reader did not load — check your internet connection and try again, or save the sheet as CSV instead.");
+          const wb = XLSX.read(reader.result, {type:"array", cellDates:true});
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const csv = XLSX.utils.sheet_to_csv(sheet, {blankrows:true, dateNF:"dd-mmm-yy"});
+          importOilCSV(csv);
+        }catch(err){ alert("Could not read this Excel file: "+(err&&err.message||err)); }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      reader.onload=()=>{ try{ importOilCSV(String(reader.result||"")); }catch(err){ alert("Could not read this CSV: "+(err&&err.message||err)); } };
+      reader.readAsText(file);
+    }
     e.target.value="";
   });
 }
