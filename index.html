@@ -1082,7 +1082,7 @@ function oilTierFor(days){
   for (const t of OIL_TIERS) if (days<=t.max) return t;
   return OIL_TIERS[OIL_TIERS.length-1];
 }
-function oilHasReply(rec){ return !!((rec.lessorRemark&&rec.lessorRemark.trim()) || (rec.lesseeRemark&&rec.lesseeRemark.trim())); }
+function oilHasReply(rec){ return !!(rec.lesseeRemark && rec.lesseeRemark.trim()); }
 /* "unanswered" = no reply text yet · "pending" = replied but not marked Closed · "closed" = done */
 function oilStatusOf(rec){
   if (rec.openClosed==="Closed") return "closed";
@@ -1173,7 +1173,7 @@ function importOilCSV(text){
     const lessorRemark = (r[6]||"").trim();
     const lesseeRemark = (r[7]||"").trim();
     const fallbackYear = dateRaised ? parseInt(dateRaised.slice(0,4),10) : new Date().getFullYear();
-    const repliedDate = extractReplyDateISO(lesseeRemark || lessorRemark, fallbackYear);
+    const repliedDate = extractReplyDateISO(lesseeRemark, fallbackYear);
     records.push({
       id: uid(),
       item: item,
@@ -1320,7 +1320,7 @@ function openOilModal(rec){
   foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
   foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
     const data=collectForm(body,fields); if(!data) return;
-    const hasReply = !!((data.lessorRemark&&data.lessorRemark.trim()) || (data.lesseeRemark&&data.lesseeRemark.trim()));
+    const hasReply = !!(data.lesseeRemark && data.lesseeRemark.trim());
     if (hasReply && !data.repliedDate) data.repliedDate = todayISO();
     if (!hasReply) data.repliedDate = "";
     upsert("oil",{ ...rec, ...data, item: rec.item||String(state.oil.length+1), dateRaisedRaw: rec.dateRaisedRaw||data.dateRaised, id: rec.id||uid() }); closeModal();
