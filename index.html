@@ -521,16 +521,22 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
         <button data-v="Lessee">Lessee</button>
       </div>
       <div class="seg" role="group" aria-label="Filter by status" id="oilStatus">
-        <button data-v="waiting" aria-pressed="true">Awaiting reply</button>
-        <button data-v="answered">Answered</button>
+        <button data-v="unanswered" aria-pressed="true">Not answered</button>
+        <button data-v="pending">Answered, not closed</button>
+        <button data-v="closed">Closed</button>
         <button data-v="all">All</button>
       </div>
       <button class="btn" id="oilImportBtn">Import CSV</button>
       <input type="file" id="oilFileInput" accept=".csv,text/csv" hidden>
       <button class="btn primary" id="oilAdd">+ Add item</button>
     </div>
-    <p class="oil-hint">Aging is counted from <b>Date Raised</b> to today, for items with no Lessor/Lessee reply yet.</p>
-    <div class="lamps" id="oilAging" style="margin-bottom:14px"></div>
+
+    <div class="section-head"><h2>Not answered at all</h2><div class="rule"></div><span class="hint">Aged from Date Raised</span></div>
+    <div class="lamps" id="oilAgingRaised" style="margin-bottom:14px"></div>
+
+    <div class="section-head"><h2>Answered, but not complete enough to close</h2><div class="rule"></div><span class="hint">Aged from the reply date (edit an item to set/correct it)</span></div>
+    <div class="lamps" id="oilAgingReplied" style="margin-bottom:14px"></div>
+
     <div id="oilFocusChip"></div>
     <div id="oilTableHost"></div>
   </section>
@@ -583,7 +589,7 @@ const state = {
   adSearch:"", adCat:"all", adStatus:"open", adFocus:null,
   engSearch:"", engStatus:"all", engFocus:null,
   relRate:"engUer",
-  oilSearch:"", oilPic:"all", oilStatus:"waiting", oilTier:null,
+  oilSearch:"", oilPic:"all", oilStatus:"unanswered", oilTier:null,
   mode:"local",
 };
 const AD_DONE = a => a.status==="Complied" || a.status==="N/A";
@@ -1076,10 +1082,18 @@ function oilTierFor(days){
   for (const t of OIL_TIERS) if (days<=t.max) return t;
   return OIL_TIERS[OIL_TIERS.length-1];
 }
-function oilAnswered(rec){ return !!((rec.lessorRemark&&rec.lessorRemark.trim()) || (rec.lesseeRemark&&rec.lesseeRemark.trim())) || rec.openClosed==="Closed"; }
+function oilHasReply(rec){ return !!((rec.lessorRemark&&rec.lessorRemark.trim()) || (rec.lesseeRemark&&rec.lesseeRemark.trim())); }
+/* "unanswered" = no reply text yet · "pending" = replied but not marked Closed · "closed" = done */
+function oilStatusOf(rec){
+  if (rec.openClosed==="Closed") return "closed";
+  return oilHasReply(rec) ? "pending" : "unanswered";
+}
 function oilDaysWaiting(rec){
-  if (oilAnswered(rec) || !rec.dateRaised) return null;
-  const d = daysUntil(rec.dateRaised);
+  const st = oilStatusOf(rec);
+  if (st==="closed") return null;
+  const anchor = st==="unanswered" ? rec.dateRaised : rec.repliedDate;
+  if (!anchor) return null;
+  const d = daysUntil(anchor);
   return d==null ? null : -d;
 }
 
@@ -1117,7 +1131,34 @@ function oilLatestDateISO(raisedRaw){
   let best=null;
   for (const p of parts){ const d=parseOilDateToken(p); if (d && (!best||d>best)) best=d; }
   if (!best) return "";
-  return best.getFullYear()+"-"+String(best.getMonth()+1).padStart(2,"0")+"-"+String(best.getDate()).padStart(2,"0");
+  return isoFromDate(best);
+}
+function isoFromDate(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+/* Best-effort: many remarks start with "NAME DDMon:" or "DD.MM NAME" or "NAME DD.MM.YYYY".
+   Used only to pre-fill Replied date on import — always editable afterwards. */
+function extractReplyDateISO(text, fallbackYear){
+  text=(text||"").trim(); if(!text) return "";
+  let m;
+  m = text.match(/^[A-Za-z]{2,14}\s*(\d{1,2})[\s-]?([A-Za-z]{3})[a-z]*(?:[\s.-](\d{2,4}))?\s*:/);
+  if (m){
+    const mon=OIL_MON3[m[2].toLowerCase()];
+    if (mon!==undefined){
+      let yr=m[3]?parseInt(m[3],10):fallbackYear; if(yr<100) yr+=2000;
+      const d=new Date(yr,mon,parseInt(m[1],10));
+      if (!isNaN(d.getTime())) return isoFromDate(d);
+    }
+  }
+  m = text.match(/^(\d{1,2})\.(\d{1,2})\s+[A-Za-z]/);
+  if (m){
+    const d=new Date(fallbackYear, parseInt(m[2],10)-1, parseInt(m[1],10));
+    if (!isNaN(d.getTime())) return isoFromDate(d);
+  }
+  m = text.match(/^[A-Za-z]{2,14}\s+(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if (m){
+    const d=new Date(parseInt(m[3],10), parseInt(m[2],10)-1, parseInt(m[1],10));
+    if (!isNaN(d.getTime())) return isoFromDate(d);
+  }
+  return "";
 }
 function importOilCSV(text){
   const rows=parseCSV(text);
@@ -1128,6 +1169,11 @@ function importOilCSV(text){
   for (let i=hi+1;i<rows.length;i++){
     const r=rows[i]; const item=(r[0]||"").trim();
     if (!item) continue;
+    const dateRaised = oilLatestDateISO(r[4]);
+    const lessorRemark = (r[6]||"").trim();
+    const lesseeRemark = (r[7]||"").trim();
+    const fallbackYear = dateRaised ? parseInt(dateRaised.slice(0,4),10) : new Date().getFullYear();
+    const repliedDate = extractReplyDateISO(lesseeRemark || lessorRemark, fallbackYear);
     records.push({
       id: uid(),
       item: item,
@@ -1135,10 +1181,10 @@ function importOilCSV(text){
       description: (r[2]||"").trim(),
       openClosed: (r[3]||"Open").trim()||"Open",
       dateRaisedRaw: (r[4]||"").trim(),
-      dateRaised: oilLatestDateISO(r[4]),
+      dateRaised,
       pic: (r[5]||"").trim(),
-      lessorRemark: (r[6]||"").trim(),
-      lesseeRemark: (r[7]||"").trim(),
+      lessorRemark, lesseeRemark,
+      repliedDate,
     });
   }
   if (records.length===0){ alert("No data rows found under the header."); return; }
@@ -1147,16 +1193,18 @@ function importOilCSV(text){
   state.oil = records;
   if (backend.name==="local"){ LocalBackend._save("oil"); }
   onDataChanged("oil");
+  const pendingCount = records.filter(r=>oilStatusOf(r)==="pending").length;
+  const estimated = records.filter(r=>oilStatusOf(r)==="pending" && r.repliedDate).length;
+  if (pendingCount>0){
+    alert("Imported "+records.length+" item(s).\n\n"+pendingCount+" are answered but not marked Closed. Estimated a reply date from the remark text for "+estimated+" of them — check/correct these via Edit, since it's a best-effort guess, not exact.");
+  }
 }
 
 function oilFilteredRows(){
   let rows = state.oil.slice();
+  if (state.oilPic!=="all") rows = rows.filter(r=>r.pic===state.oilPic);
+  if (state.oilStatus!=="all") rows = rows.filter(r=>oilStatusOf(r)===state.oilStatus);
   if (state.oilTier){ rows = rows.filter(r=>{ const t=oilTierFor(oilDaysWaiting(r)); return t && t.key===state.oilTier; }); }
-  else {
-    if (state.oilPic!=="all") rows = rows.filter(r=>r.pic===state.oilPic);
-    if (state.oilStatus==="waiting") rows = rows.filter(r=>!oilAnswered(r));
-    else if (state.oilStatus==="answered") rows = rows.filter(r=>oilAnswered(r));
-  }
   const q = state.oilSearch.trim().toLowerCase();
   if (q) rows = rows.filter(r=>[r.item,r.reference,r.description,r.pic,r.lessorRemark,r.lesseeRemark].join(" ").toLowerCase().includes(q));
   rows.sort((a,b)=>{
@@ -1168,28 +1216,39 @@ function oilFilteredRows(){
   return rows;
 }
 
-function renderOilAging(){
-  const host=$("#oilAging"); host.innerHTML="";
-  const waiting = state.oil.filter(r=>!oilAnswered(r));
+function setOilStatus(v){
+  state.oilStatus=v; state.oilTier=null;
+  $$("#oilStatus button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===v?"true":"false"));
+  renderOIL();
+}
+function renderOilAgingGroup(hostId, status){
+  const host=$(hostId); host.innerHTML="";
+  const group = state.oil.filter(r=>oilStatusOf(r)===status);
   let anyOn=false;
   for (const t of OIL_TIERS){
-    const n = waiting.filter(r=>oilTierFor(oilDaysWaiting(r))?.key===t.key).length;
+    const n = group.filter(r=>oilTierFor(oilDaysWaiting(r))?.key===t.key).length;
     const on = n>0; if(on) anyOn=true;
     host.append(el("button",{
       class:"lamp "+(on?("on "+t.tone):""), type:"button",
       "aria-label":t.label+": "+n,
-      onclick:()=>{ state.oilTier = state.oilTier===t.key ? null : t.key; renderOIL(); }
+      onclick:()=>{
+        if (state.oilStatus===status && state.oilTier===t.key){ state.oilTier=null; }
+        else { setOilStatus(status); state.oilTier=t.key; }
+        renderOIL();
+      }
     },[ el("span",{class:"lab",text:t.label.toUpperCase()+(t.max===Infinity?" ≥14D":" ≤"+t.max+"D")}), el("span",{class:"cnt",text:String(n)}) ]));
   }
-  if (!anyOn && state.oil.length>0){ host.append(el("div",{class:"all-clear",text:"ALL CLEAR — no items awaiting a reply"})); }
+  if (!anyOn && state.oil.length>0){ host.append(el("div",{class:"all-clear",text:"ALL CLEAR — none in this group"})); }
 }
 
 function renderOIL(){
-  renderOilAging();
+  renderOilAgingGroup("#oilAgingRaised","unanswered");
+  renderOilAgingGroup("#oilAgingReplied","pending");
   const chipHost=$("#oilFocusChip"); chipHost.innerHTML="";
   if (state.oilTier){
     const t=OIL_TIERS.find(x=>x.key===state.oilTier);
-    chipHost.append(el("div",{class:"focus-chip"},[ "Filtering: "+(t?t.label:state.oilTier)+" (awaiting reply)",
+    const groupLabel = state.oilStatus==="pending" ? "answered, pending closure" : "not answered";
+    chipHost.append(el("div",{class:"focus-chip"},[ "Filtering: "+(t?t.label:state.oilTier)+" ("+groupLabel+")",
       el("button",{type:"button","aria-label":"Clear filter",text:"×",onclick:()=>{state.oilTier=null; renderOIL();}}) ]));
   }
   const host=$("#oilTableHost"); host.innerHTML="";
@@ -1206,23 +1265,27 @@ function renderOIL(){
   }
   const rows=oilFilteredRows();
   const table=el("table"); const thead=el("thead"); const htr=el("tr");
-  ["#","Reference","Type","Description","Date raised","Waiting","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
+  ["#","Reference","Type","Description","Status","Aging","Remarks",""].forEach(h=>htr.append(el("th",{text:h})));
   thead.append(htr); table.append(thead);
   const tb=el("tbody");
   if (rows.length===0){ tb.append(el("tr",{},el("td",{colspan:8, html:'<div style="padding:26px;text-align:center;color:var(--ink-3)">No items match the current filter</div>'}))); }
   for (const r of rows){
-    const days=oilDaysWaiting(r); const tier=oilTierFor(days);
-    const answered=oilAnswered(r);
+    const st=oilStatusOf(r); const days=oilDaysWaiting(r); const tier=oilTierFor(days);
     const tr=el("tr",{class:"clickable "+(tier?"row-"+tier.key:""), onclick:(ev)=>{ if(ev.target.closest(".row-actions")) return; openOilModal(r); }});
     tr.append(el("td",{},el("span",{class:"mono",text:r.item||"—"})));
     tr.append(el("td",{},el("span",{class:"mono",style:"font-weight:600",text:r.reference||"—"})));
     tr.append(el("td",{},el("span",{class:"tag "+(r.pic==="Lessor"?"cyan":r.pic==="Lessee"?"amber":"grey"),text:r.pic||"—"})));
     tr.append(el("td",{class:"desc-cell"},el("div",{class:"clip",text:r.description||"—"})));
-    tr.append(el("td",{},[ document.createTextNode(fmtDate(r.dateRaised)), r.dateRaisedRaw&&r.dateRaisedRaw.includes("\n")?el("div",{class:"sub-meta mono",text:"latest of "+r.dateRaisedRaw.split(/\r?\n/).length+" dates"}):null ]));
-    tr.append(el("td",{}, answered
-      ? el("span",{class:"tag green",text: r.openClosed==="Closed"?"Closed":"Answered"})
-      : (days==null ? el("span",{class:"dleft muted",text:"—"}) : el("span",{class:"dleft "+tier.key, text:days+"d — "+tier.label}))
+    tr.append(el("td",{}, st==="closed"
+      ? el("span",{class:"tag green",text:"Closed"})
+      : st==="pending"
+        ? el("span",{class:"tag cyan",text:"Answered, not closed"})
+        : el("span",{class:"tag grey",text:"Not answered"})
     ));
+    tr.append(el("td",{},[
+      days==null ? el("span",{class:"dleft muted",text:"—"}) : el("span",{class:"dleft "+tier.key, text:days+"d — "+tier.label}),
+      el("div",{class:"sub-meta mono",text: st==="pending" ? "since replied "+fmtDate(r.repliedDate) : "since raised "+fmtDate(r.dateRaised)})
+    ]));
     tr.append(el("td",{class:"notes-cell"},oilDash((r.lessorRemark||"")+(r.lesseeRemark?(r.lessorRemark?" / ":"")+r.lesseeRemark:""))));
     tr.append(el("td",{},el("div",{class:"row-actions"},[
       el("button",{class:"mini",title:"Edit","aria-label":"Edit",text:"Edit",onclick:()=>openOilModal(r)}),
@@ -1244,6 +1307,7 @@ function openOilModal(rec){
     {id:"openClosed",label:"Open / Closed",options:["Open","Closed"],value:rec.openClosed||"Open"},
     {id:"lessorRemark",label:"Lessor remark",type:"textarea",full:true,rows:3},
     {id:"lesseeRemark",label:"Lessee remark",type:"textarea",full:true,rows:3},
+    {id:"repliedDate",label:"Replied on (leave blank until answered — auto-fills to today once you save a remark)",type:"date"},
   ];
   const box=el("div",{class:"modal-box"});
   box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit open item":"Add open item"}), rec.reference?el("span",{class:"adno-badge mono",text:rec.reference}):null ]));
@@ -1256,6 +1320,9 @@ function openOilModal(rec){
   foot.append(el("button",{class:"btn",text:"Cancel",onclick:closeModal}));
   foot.append(el("button",{class:"btn primary",text:isEdit?"Save":"Add",onclick:()=>{
     const data=collectForm(body,fields); if(!data) return;
+    const hasReply = !!((data.lessorRemark&&data.lessorRemark.trim()) || (data.lesseeRemark&&data.lesseeRemark.trim()));
+    if (hasReply && !data.repliedDate) data.repliedDate = todayISO();
+    if (!hasReply) data.repliedDate = "";
     upsert("oil",{ ...rec, ...data, item: rec.item||String(state.oil.length+1), dateRaisedRaw: rec.dateRaisedRaw||data.dateRaised, id: rec.id||uid() }); closeModal();
   }}));
   box.append(foot); openModal(box);
@@ -1464,7 +1531,7 @@ function renderCounts(){
   $("#pill-ad").textContent = state.ads.filter(a=>!AD_DONE(a)).length;
   $("#pill-eng").textContent = state.eng.filter(e=>e.status!=="Closed").length;
   $("#pill-rel").textContent = state.rel.length;
-  $("#pill-oil").textContent = state.oil.filter(r=>!oilAnswered(r)).length;
+  $("#pill-oil").textContent = state.oil.filter(r=>oilStatusOf(r)!=="closed").length;
 }
 function renderMode(){
   const b=$("#modeBadge"), t=$("#modeText");
