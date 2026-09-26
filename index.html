@@ -1087,10 +1087,18 @@ function oilStatusOf(rec){
   if (rec.openClosed==="Closed") return "closed";
   return oilHasReply(rec) ? "pending" : "unanswered";
 }
+/* Falls back to a live best-effort extraction for records saved before
+   the repliedDate field existed, so old imports self-heal without needing
+   to be re-imported. */
+function oilEffectiveRepliedDate(rec){
+  if (rec.repliedDate) return rec.repliedDate;
+  const fallbackYear = rec.dateRaised ? parseInt(rec.dateRaised.slice(0,4),10) : new Date().getFullYear();
+  return extractReplyDateISO(rec.lesseeRemark, fallbackYear) || "";
+}
 function oilDaysWaiting(rec){
   const st = oilStatusOf(rec);
   if (st==="closed") return null;
-  const anchor = st==="unanswered" ? rec.dateRaised : rec.repliedDate;
+  const anchor = st==="unanswered" ? rec.dateRaised : oilEffectiveRepliedDate(rec);
   if (!anchor) return null;
   const d = daysUntil(anchor);
   return d==null ? null : -d;
@@ -1297,7 +1305,7 @@ function renderOIL(){
     ));
     tr.append(el("td",{},[
       days==null ? el("span",{class:"dleft muted",text:"—"}) : el("span",{class:"dleft "+tier.key, text:days+"d — "+tier.label}),
-      el("div",{class:"sub-meta mono",text: st==="pending" ? "since replied "+fmtDate(r.repliedDate) : "since raised "+fmtDate(r.dateRaised)})
+      el("div",{class:"sub-meta mono",text: st==="pending" ? "since replied "+fmtDate(oilEffectiveRepliedDate(r)) : "since raised "+fmtDate(r.dateRaised)})
     ]));
     tr.append(el("td",{class:"notes-cell"},oilDash((r.lessorRemark||"")+(r.lesseeRemark?(r.lessorRemark?" / ":"")+r.lesseeRemark:""))));
     tr.append(el("td",{},el("div",{class:"row-actions"},[
@@ -1325,7 +1333,7 @@ function openOilModal(rec){
   const box=el("div",{class:"modal-box"});
   box.append(el("div",{class:"modal-head"},[ el("h3",{text:isEdit?"Edit open item":"Add open item"}), rec.reference?el("span",{class:"adno-badge mono",text:rec.reference}):null ]));
   const body=el("form",{class:"modal-body", onsubmit:(e)=>e.preventDefault()});
-  fields.forEach(f=>body.append(fieldRow({...f, value: f.type==="date"? (rec[f.id]||"") : (rec[f.id]!==undefined?rec[f.id]:(f.value||"")) })));
+  fields.forEach(f=>body.append(fieldRow({...f, value: f.id==="repliedDate" ? oilEffectiveRepliedDate(rec) : f.type==="date"? (rec[f.id]||"") : (rec[f.id]!==undefined?rec[f.id]:(f.value||"")) })));
   box.append(body);
   const foot=el("div",{class:"modal-foot"});
   if (isEdit) foot.append(el("button",{class:"btn danger",text:"Delete",onclick:()=>{ closeModal(); confirmDel("oil",rec.id,rec.reference); }}));
