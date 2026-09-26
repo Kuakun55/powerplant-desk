@@ -195,6 +195,14 @@ tr.row-green{background:var(--row-green)} tr.row-green:hover{filter:brightness(.
 .oil-donut-legend .dot{width:11px; height:11px; border-radius:50%; flex:none}
 .oil-donut-legend b{color:var(--ink); font-variant-numeric:tabular-nums}
 .oil-donut-legend .pct{margin-left:auto; font-family:var(--mono); color:var(--ink-3); font-variant-numeric:tabular-nums}
+.official-ad-alert{background:var(--row-amber); border:1px solid var(--amber); border-radius:var(--radius); padding:14px 16px; margin-bottom:16px}
+.official-ad-alert h4{margin:0 0 4px; font-size:13.5px; color:var(--amber)}
+.official-ad-alert .meta{font-size:11.5px; color:var(--ink-2); margin-bottom:10px}
+.official-ad-alert ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px}
+.official-ad-alert li{display:flex; align-items:center; flex-wrap:wrap; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:9px 11px}
+.official-ad-alert li .ref{font-weight:700; font-size:12px; white-space:nowrap}
+.official-ad-alert li .subj{flex:1; min-width:160px; font-size:12.5px; color:var(--ink-2)}
+.official-ad-alert li .actions{display:flex; gap:6px; flex:none}
 .mini{appearance:none; border:none; background:none; cursor:pointer; color:var(--ink-2); padding:5px 8px; border-radius:6px; font-size:12px; font-weight:600; line-height:1; font-family:inherit}
 .mini:hover{background:var(--surface-2); color:var(--ink)}
 .mini.del:hover{color:var(--red); background:var(--row-red)}
@@ -456,6 +464,7 @@ body.locked>.wrap,body.locked>section,body.no-project>.wrap,body.no-project>sect
       </div>
       <button class="btn primary" id="adAdd">+ Add AD</button>
     </div>
+    <div id="officialAdAlert"></div>
     <div id="adFocusChip"></div>
     <div id="adTableHost"></div>
 
@@ -599,6 +608,7 @@ const state = {
   engSearch:"", engStatus:"all", engFocus:null,
   relRate:"engUer",
   oilSearch:"", oilPic:"all", oilStatus:"unanswered", oilTier:null,
+  officialAds:[], officialAdsFetchedAt:null,
   mode:"local",
 };
 const AD_DONE = a => a.status==="Complied" || a.status==="N/A";
@@ -773,6 +783,55 @@ const ATA_LABEL = Object.fromEntries(ATA_CHAPTERS.map(c=>[c.v,c.l]));
 const SPARE_TAG = { "Ready":"green", "Ordered":"amber", "Not ready":"red", "N/A":"grey" };
 const AD_STATUS_TAG = { "Open":"grey","Planned":"cyan","In work":"amber","Complied":"green","N/A":"grey" };
 
+/* ============================================================
+   OFFICIAL AD CHECK (FAA/EASA) — periodic snapshot, see
+   scripts/fetch-ad-alerts.mjs and .github/workflows/fetch-ad-alerts.yml
+   ============================================================ */
+function normalizeAdRef(s){ return String(s||"").toLowerCase().replace(/\bad\b/g,"").replace(/[^a-z0-9]/g,""); }
+async function loadOfficialAds(){
+  try{
+    const res = await fetch("./data/official-ads.json", {cache:"no-store"});
+    if (!res.ok) return;
+    const data = await res.json();
+    state.officialAds = Array.isArray(data.items) ? data.items : [];
+    state.officialAdsFetchedAt = data.fetchedAt || null;
+  }catch(e){ /* file may not exist yet, or offline — silently skip */ }
+  renderOfficialAdAlert();
+}
+function renderOfficialAdAlert(){
+  const host = $("#officialAdAlert"); if(!host) return; host.innerHTML="";
+  const list = state.officialAds||[];
+  if (list.length===0) return;
+  const known = state.ads.map(a=>normalizeAdRef(a.adNo));
+  const untracked = list.filter(o=>{
+    const n = normalizeAdRef(o.ref);
+    return n && !known.some(k=>k && (k.includes(n) || n.includes(k)));
+  });
+  if (untracked.length===0) return;
+  const shown = untracked.slice(0,8);
+  const box = el("div",{class:"official-ad-alert"});
+  box.append(el("h4",{text:untracked.length+" official AD(s) not yet in your tracker"}));
+  box.append(el("div",{class:"meta"},"From FAA (Boeing 737 MAX/LEAP-1B) + EASA (A320/A321/CFM56-5B/APS3200)"+(state.officialAdsFetchedAt?" · checked "+fmtDate(state.officialAdsFetchedAt.slice(0,10)):"")));
+  const ul = el("ul");
+  shown.forEach(o=>{
+    ul.append(el("li",{},[
+      el("span",{class:"ref mono",text:o.source+" "+o.ref}),
+      el("span",{class:"subj",text:o.subject||"—"}),
+      el("div",{class:"actions"},[
+        el("a",{class:"btn sm",href:o.url,target:"_blank",rel:"noopener",text:"View"}),
+        el("button",{class:"btn sm primary",type:"button",text:"+ Track",onclick:()=>openAdModal({
+          adNo:o.ref, subject:o.subject||"", authority:o.source,
+          category:(o.tcHolders||[]).some(t=>/CFM|APS3200/i.test(t))?"Engine":"Component",
+          status:"Open",
+        })}),
+      ]),
+    ]));
+  });
+  box.append(ul);
+  if (untracked.length>shown.length) box.append(el("div",{class:"meta",style:"margin-top:8px",text:"+"+(untracked.length-shown.length)+" more — refine your search or check data/official-ads.json"}));
+  host.append(box);
+}
+
 function focusAD(kind){ state.adFocus=kind; selectTab("ad"); renderAD(); $("#adTableHost").scrollIntoView({behavior:"smooth", block:"start"}); }
 const AD_FOCUS_LABEL = { overdue:"Overdue ADs", planAfter:"Planned after due date", due30:"Due within 30 days", sparesNR:"Spares not ready" };
 
@@ -803,6 +862,7 @@ function adFilteredRows(){
 }
 
 function renderAD(){
+  renderOfficialAdAlert();
   // focus chip
   const chipHost = $("#adFocusChip"); chipHost.innerHTML="";
   if (state.adFocus){
@@ -1449,7 +1509,7 @@ function openAdModal(rec){
     {id:"subject",label:"Subject",required:true,full:true,placeholder:"AD subject"},
     {id:"category",label:"Category",options:["Engine","APU","Component"],value:rec.category||"Engine"},
     {id:"ataChapter",label:"ATA Chapter",options:ATA_CHAPTERS,value:rec.ataChapter||""},
-    {id:"applicability",label:"Applicability (model/ESN/S/N/P/N)",placeholder:"e.g. CFM56-7B / ESN 89xxxx"},
+    {id:"applicability",label:"Applicability (model/ESN/S/N/P/N)",placeholder:"e.g. CFM56-5B / ESN 89xxxx"},
     {id:"sbRef",label:"SB / Reference",placeholder:"e.g. SB 72-1234"},
     {id:"complianceType",label:"Compliance type",options:["One-time","Repetitive","Terminating action"],value:rec.complianceType||"One-time"},
     {id:"repeatInterval",label:"Repeat interval / threshold",placeholder:"e.g. every 3,000 FH"},
@@ -1552,17 +1612,17 @@ function confirmDel(coll,id,label){
 async function loadSamples(){
   const T=todayISO();
   const ads=[
-    { adNo:"DEMO-AD-2405", authority:"EASA", subject:"HPT stage-1 blade inspection", category:"Engine", ataChapter:"72", applicability:"CFM56-7B / all ESN", sbRef:"SB 72-0481", complianceType:"Repetitive", repeatInterval:"Every 2,000 FC", dueDate:addDays(T,-8), otherDueLimit:"18,500 FC", plannedDate:addDays(T,-2), sparesStatus:"Ready", status:"In work", remarks:"WO 88213 opened, awaiting borescope" },
+    { adNo:"DEMO-AD-2405", authority:"EASA", subject:"HPT stage-1 blade inspection", category:"Engine", ataChapter:"72", applicability:"CFM56-5B / all ESN", sbRef:"SB 72-0481", complianceType:"Repetitive", repeatInterval:"Every 2,000 FC", dueDate:addDays(T,-8), otherDueLimit:"18,500 FC", plannedDate:addDays(T,-2), sparesStatus:"Ready", status:"In work", remarks:"WO 88213 opened, awaiting borescope" },
     { adNo:"DEMO-AD-2417", authority:"FAA", subject:"APU fuel control unit replacement", category:"APU", ataChapter:"49", applicability:"APS3200 / S/N 41xx", sbRef:"SB 49-2210", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,18), otherDueLimit:"", plannedDate:addDays(T,25), sparesStatus:"Ordered", status:"Planned", remarks:"Spares ETA 12 days — planned after due date" },
     { adNo:"DEMO-AD-2422", authority:"CAAT", subject:"Fuel manifold coupling torque check", category:"Engine", ataChapter:"73", applicability:"CFM56-5B", sbRef:"SB 73-0155", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,26), otherDueLimit:"", plannedDate:addDays(T,14), sparesStatus:"Not ready", status:"Open", remarks:"Awaiting consumable gasket kit" },
     { adNo:"DEMO-AD-2431", authority:"EASA", subject:"Igniter plug wear inspection", category:"Component", ataChapter:"74", applicability:"P/N 335-xxx", sbRef:"", complianceType:"Repetitive", repeatInterval:"Every 4,000 FH", dueDate:addDays(T,63), otherDueLimit:"", plannedDate:addDays(T,55), sparesStatus:"Ready", status:"Planned", remarks:"" },
-    { adNo:"DEMO-AD-2438", authority:"FAA", subject:"Oil chip detector functional test", category:"Engine", ataChapter:"79", applicability:"CFM56-7B", sbRef:"SB 79-0092", complianceType:"Repetitive", repeatInterval:"Every 1,000 FH", dueDate:addDays(T,84), otherDueLimit:"", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
+    { adNo:"DEMO-AD-2438", authority:"FAA", subject:"Oil chip detector functional test", category:"Engine", ataChapter:"79", applicability:"CFM56-5B", sbRef:"SB 79-0092", complianceType:"Repetitive", repeatInterval:"Every 1,000 FH", dueDate:addDays(T,84), otherDueLimit:"", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
     { adNo:"DEMO-AD-2402", authority:"TCCA", subject:"Bleed air duct clamp mod", category:"Component", ataChapter:"36", applicability:"P/N 771-xxx", sbRef:"SB 36-0044", complianceType:"Terminating action", repeatInterval:"", dueDate:addDays(T,-40), otherDueLimit:"", plannedDate:addDays(T,-42), sparesStatus:"Ready", status:"Complied", remarks:"Closed, task card TC-5561" },
     { adNo:"DEMO-AD-2444", authority:"EASA", subject:"APU compressor wheel life limit", category:"APU", ataChapter:"49", applicability:"APS3200", sbRef:"", complianceType:"One-time", repeatInterval:"", dueDate:addDays(T,140), otherDueLimit:"25,000 APU h", plannedDate:"", sparesStatus:"N/A", status:"Open", remarks:"" },
   ];
   const eng=[
     { refNo:"DEMO-ES-031", type:"Technical query", subject:"HPT blade coating spec clarification", counterparty:"GE Aerospace", asset:"ESN 706212", ataChapter:"72", dateRaised:addDays(T,-20), targetDate:addDays(T,-5), status:"Awaiting reply", notes:"Query sent via OEM portal, no reply yet — overdue" },
-    { refNo:"DEMO-ES-034", type:"Engineering order (EA)", subject:"EA to approve borescope repeat interval", counterparty:"CAAT", asset:"CFM56-7B fleet", ataChapter:"72", dateRaised:addDays(T,-10), targetDate:addDays(T,7), status:"Open", notes:"EA draft done, awaiting manager review" },
+    { refNo:"DEMO-ES-034", type:"Engineering order (EA)", subject:"EA to approve borescope repeat interval", counterparty:"CAAT", asset:"CFM56-5B fleet", ataChapter:"72", dateRaised:addDays(T,-10), targetDate:addDays(T,7), status:"Open", notes:"EA draft done, awaiting manager review" },
     { refNo:"DEMO-ES-036", type:"Warranty claim", subject:"Claim for premature APU FCU failure", counterparty:"Honeywell", asset:"APU S/N 4132", ataChapter:"49", dateRaised:addDays(T,-6), targetDate:addDays(T,20), status:"Open", notes:"Compiling removal report documents" },
     { refNo:"DEMO-ES-029", type:"Document review", subject:"Review EM revision 42", counterparty:"Airbus", asset:"CFM56-5B", ataChapter:"71", dateRaised:addDays(T,-30), targetDate:addDays(T,-12), status:"Closed", notes:"Review complete, closed" },
     { refNo:"DEMO-ES-038", type:"Repair scheme", subject:"Repair scheme request for fan blade nick", counterparty:"GE Aerospace", asset:"ESN 706441", ataChapter:"72", dateRaised:addDays(T,-3), targetDate:addDays(T,10), status:"Awaiting reply", notes:"" },
@@ -1783,10 +1843,12 @@ async function loadBackendData(){
   }catch(e){ /* stay local */ }
 }
 let appWired = false;
+let officialAdsLoaded = false;
 async function startApp(){
   if (!appWired){ wire(); appWired = true; }
   renderProjectChip();
   await loadBackendData();
+  if (!officialAdsLoaded){ officialAdsLoaded = true; loadOfficialAds(); }
 }
 function afterLogin(){
   migrateLegacyProjectIfNeeded();

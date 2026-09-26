@@ -1,0 +1,2894 @@
+{
+  "fetchedAt": "2026-09-26T17:32:51.386Z",
+  "keywords": {
+    "easa": [
+      "A320",
+      "A321",
+      "CFM56-5B",
+      "APS3200"
+    ],
+    "faa": [
+      "737 MAX",
+      "LEAP-1B"
+    ]
+  },
+  "count": 181,
+  "items": [
+    {
+      "source": "EASA",
+      "ref": "26-113",
+      "url": "https://ad.easa.europa.eu/ad/26-113",
+      "issueDate": "2026-09-23",
+      "subject": "Engine – High Pressure Turbine Front Seal – Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5B",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0182R1",
+      "url": "https://ad.easa.europa.eu/ad/2026-0182R1",
+      "issueDate": "2026-09-22",
+      "subject": "Stabilizers – Elevators – Inspections / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "A321"
+      ],
+      "effectiveDate": "2026-10-05",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0176",
+      "url": "https://ad.easa.europa.eu/ad/2026-0176",
+      "issueDate": "2026-09-11",
+      "subject": "Electrical Systems Installation – Battery Retaining Rods – Identification / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-09-25",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0144R1",
+      "url": "https://ad.easa.europa.eu/ad/2026-0144R1",
+      "issueDate": "2026-09-11",
+      "subject": "Stabilizers – Rudder Outer Skin – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-09-18",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "26-102",
+      "url": "https://ad.easa.europa.eu/ad/26-102",
+      "issueDate": "2026-09-09",
+      "subject": "Fuselage – Cockpit Floor Structure – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "CF-2026-44",
+      "url": "https://ad.easa.europa.eu/ad/CF-2026-44",
+      "issueDate": "2026-09-01",
+      "subject": "Engine – High Pressure Turbine – 1st and 2nd-Stage Disks Suspected Material Defect - Replacement",
+      "tcHolders": [
+        "PRATT &amp; WHITNEY CANADA"
+      ],
+      "types": [
+        "PW307"
+      ],
+      "effectiveDate": "2026-09-14",
+      "matchedKeyword": "A321"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0142",
+      "url": "https://ad.easa.europa.eu/ad/2026-0142",
+      "issueDate": "2026-07-20",
+      "subject": "Wings – Main Landing Gear Support Rib 5 – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-08-03",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0136",
+      "url": "https://ad.easa.europa.eu/ad/2026-0136",
+      "issueDate": "2026-07-10",
+      "subject": "Flights Controls – Trimmable Horizontal Stabilizer Actuator Ballscrew Lower Splines – Inspection / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0134",
+      "url": "https://ad.easa.europa.eu/ad/2026-0134",
+      "issueDate": "2026-07-08",
+      "subject": "Flight Controls – Elevator Aileron Computer – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0133",
+      "url": "https://ad.easa.europa.eu/ad/2026-0133",
+      "issueDate": "2026-07-08",
+      "subject": "Fuselage – Centre Fuselage Forward Pressure Bulkhead – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0274R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0274R1",
+      "issueDate": "2026-07-07",
+      "subject": "Fire Protection – Fire Panel – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-14",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0158R2",
+      "url": "https://ad.easa.europa.eu/ad/2025-0158R2",
+      "issueDate": "2026-07-07",
+      "subject": "Landing Gear – Main Landing Gear Door Actuators – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-14",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0130",
+      "url": "https://ad.easa.europa.eu/ad/2026-0130",
+      "issueDate": "2026-07-06",
+      "subject": "SUPERSEDED BY EASA AD 2026-0176",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-20",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0171R2",
+      "url": "https://ad.easa.europa.eu/ad/2025-0171R2",
+      "issueDate": "2026-07-03",
+      "subject": "Engine – High Pressure Turbine Rotor Stage 1 Blade – Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2026-07-10",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0237R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0237R1",
+      "issueDate": "2026-06-24",
+      "subject": "[Correction] Equipment / Furnishings – 80 VU Rack Attachments – Inspection / Repair",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-06-30",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0120",
+      "url": "https://ad.easa.europa.eu/ad/2026-0120",
+      "issueDate": "2026-06-23",
+      "subject": "Fuselage – Lateral Window Frame – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-07-07",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0093-CN",
+      "url": "https://ad.easa.europa.eu/ad/2025-0093-CN",
+      "issueDate": "2026-05-26",
+      "subject": "CANCELLED: Landing Gear – Nose Landing Gear Shock Absorber – Functional Check",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A350"
+      ],
+      "effectiveDate": "2026-05-26",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0093",
+      "url": "https://ad.easa.europa.eu/ad/2026-0093",
+      "issueDate": "2026-05-12",
+      "subject": "SAFRAN SEATS: Third Occupant Seat Bottom Equipped Screw – Replacement",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 25 EQUIPMENT / FURNISHINGS"
+      ],
+      "effectiveDate": "2026-05-26",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0037R1",
+      "url": "https://ad.easa.europa.eu/ad/2026-0037R1",
+      "issueDate": "2026-05-04",
+      "subject": "Equipment/Furnishings – Evacuation Slide/Inflation Hose Assemblies – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-05-11",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0083",
+      "url": "https://ad.easa.europa.eu/ad/2026-0083",
+      "issueDate": "2026-04-22",
+      "subject": "Stabilizers – Rudder Overweight Detection – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-29",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0079",
+      "url": "https://ad.easa.europa.eu/ad/2026-0079",
+      "issueDate": "2026-04-17",
+      "subject": "Communications – IFE Control and Service Box – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S.",
+        "LUFTHANSA TECHNIK AG"
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321",
+        "EASA STC 10049524"
+      ],
+      "effectiveDate": "2026-05-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0055R1",
+      "url": "https://ad.easa.europa.eu/ad/2026-0055R1",
+      "issueDate": "2026-04-14",
+      "subject": "Fuselage – Forward Fuselage Skin Panels – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-21",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "G-2026-0001",
+      "url": "https://ad.easa.europa.eu/ad/G-2026-0001",
+      "issueDate": "2026-03-26",
+      "subject": "Equipment / Furnishings – Passenger Seats – Modification",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 25 EQUIPMENT / FURNISHINGS"
+      ],
+      "effectiveDate": "2026-03-26",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0064",
+      "url": "https://ad.easa.europa.eu/ad/2026-0064",
+      "issueDate": "2026-03-26",
+      "subject": "Time Limits / Maintenance Checks – Airworthiness Limitations Section Part 4, System Equipment Maintenance Requirements – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0063",
+      "url": "https://ad.easa.europa.eu/ad/2026-0063",
+      "issueDate": "2026-03-26",
+      "subject": "Time Limits / Maintenance Checks – Airworthiness Limitations Section Part 1, Safe Life Airworthiness Limitation Items – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0062",
+      "url": "https://ad.easa.europa.eu/ad/2026-0062",
+      "issueDate": "2026-03-25",
+      "subject": "Time Limits / Maintenance Checks – Airworthiness Limitations Section Part 5, Fuel Airworthiness Limitations – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-08",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0061",
+      "url": "https://ad.easa.europa.eu/ad/2026-0061",
+      "issueDate": "2026-03-25",
+      "subject": "Time Limits / Maintenance Checks – Airworthiness Limitations Section Part 3, Certification Maintenance Requirements – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-04-08",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0166R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0166R1",
+      "issueDate": "2026-03-24",
+      "subject": "Fuselage – Inner Cap and Frame Flange at Frame 68 Stringer 22 – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-03-31",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0083R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0083R1",
+      "issueDate": "2026-03-24",
+      "subject": "Equipment/Furnishings – Cargo Bulkhead Frame 24A Vertical Members – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-03-31",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0049",
+      "url": "https://ad.easa.europa.eu/ad/2026-0049",
+      "issueDate": "2026-03-11",
+      "subject": "Engine – Full Authority Digital Electronic Control Software – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2026-03-25",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0033",
+      "url": "https://ad.easa.europa.eu/ad/2026-0033",
+      "issueDate": "2026-02-20",
+      "subject": "Engine – High-Pressure Turbine Inner Stationary Seal – Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5B",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2026-03-06",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0028",
+      "url": "https://ad.easa.europa.eu/ad/2026-0028",
+      "issueDate": "2026-02-11",
+      "subject": "Time Limits / Maintenance Checks – Airworthiness Limitations Section Part 2 – Damage Tolerant Airworthiness Limitation Items – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-02-25",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "CF-2026-05",
+      "url": "https://ad.easa.europa.eu/ad/CF-2026-05",
+      "issueDate": "2026-02-03",
+      "subject": "HONEYWELL ASCa Inc.: Emergency Locator Transmitter - Degraded Performance in High Temperature environment.",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 25 EQUIPMENT / FURNISHINGS"
+      ],
+      "effectiveDate": "2026-02-13",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2026-0017",
+      "url": "https://ad.easa.europa.eu/ad/2026-0017",
+      "issueDate": "2026-01-23",
+      "subject": "Equipment / Furnishings – Galley – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2026-02-06",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0275",
+      "url": "https://ad.easa.europa.eu/ad/2025-0275",
+      "issueDate": "2025-12-09",
+      "subject": "Aircraft Flight Manual / Normal Procedure Ground Engine Operation in Icing Condition – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-12-23",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0254R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0254R1",
+      "issueDate": "2025-12-05",
+      "subject": "Wing – Main Landing Gear Retraction Actuator Fitting – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-12-08",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0268-E",
+      "url": "https://ad.easa.europa.eu/ad/2025-0268-E",
+      "issueDate": "2025-11-28",
+      "subject": "SUPERSEDED BY EASA AD 2026-0134",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-11-29",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0258",
+      "url": "https://ad.easa.europa.eu/ad/2025-0258",
+      "issueDate": "2025-11-21",
+      "subject": "Landing Gear – Nose Landing Gear Sliding Tube – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-12-05",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0253",
+      "url": "https://ad.easa.europa.eu/ad/2025-0253",
+      "issueDate": "2025-11-14",
+      "subject": "SUPERSEDED BY EASA AD 2025-0274",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-11-21",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0248",
+      "url": "https://ad.easa.europa.eu/ad/2025-0248",
+      "issueDate": "2025-11-06",
+      "subject": "Equipment / Furnishings – Overhead Stowage Compartments – Inspection / Repair",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-11-20",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0246",
+      "url": "https://ad.easa.europa.eu/ad/2025-0246",
+      "issueDate": "2025-10-30",
+      "subject": "Engine – Non-Synchronous Vibration During Engine Operation – Monitoring / Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2025-11-13",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0207R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0207R1",
+      "issueDate": "2025-10-30",
+      "subject": "Fuselage – Seat Rail Connections Nylon Bushes – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-11-06",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0243",
+      "url": "https://ad.easa.europa.eu/ad/2025-0243",
+      "issueDate": "2025-10-28",
+      "subject": "Engine – Forward Outer Seal, High-Pressure Compressor Stages 6-10 Compressor Rotor Spools and High-Pressure Turbine Rotor Stage 1 Disks – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2025-11-11",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0234",
+      "url": "https://ad.easa.europa.eu/ad/2025-0234",
+      "issueDate": "2025-10-23",
+      "subject": "SUPERSEDED BY EASA AD 2025-0253",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-11-06",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-08",
+      "url": "https://ad.easa.europa.eu/ad/2025-08",
+      "issueDate": "2025-10-20",
+      "subject": "Failure of the Digital Radio and Audio Integrated Management System on the Airbus A320 NEO and A330 Family Aeroplanes",
+      "tcHolders": [
+        "AIRBUS S.A.S.",
+        "Safety Information Bulletin"
+      ],
+      "types": [
+        "",
+        "A330",
+        "ATM/ANS",
+        "Operations"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0151R2",
+      "url": "https://ad.easa.europa.eu/ad/2025-0151R2",
+      "issueDate": "2025-09-12",
+      "subject": "Equipment / Furnishings – Escape Slide Inflation Reservoir Regulator Valve – Inspection / Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2025-09-19",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0193",
+      "url": "https://ad.easa.europa.eu/ad/2025-0193",
+      "issueDate": "2025-09-08",
+      "subject": "Fuselage – Forward and Aft Upper Corner Bulk Cargo Door Section 16 and 17 – Inspection / Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-09-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0167R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0167R1",
+      "issueDate": "2025-09-02",
+      "subject": "Landing Gear – Main Landing Gear Aft Pintle Pin – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-09-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0189",
+      "url": "https://ad.easa.europa.eu/ad/2025-0189",
+      "issueDate": "2025-09-02",
+      "subject": "Fuselage – Centre Fuselage / Main Landing Gear Door Keel Beam Hinge and Actuator Fittings – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-09-16",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0185",
+      "url": "https://ad.easa.europa.eu/ad/2025-0185",
+      "issueDate": "2025-08-26",
+      "subject": "Wings – Pylon Spigot Fitting – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-09-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0210R1",
+      "url": "https://ad.easa.europa.eu/ad/2024-0210R1",
+      "issueDate": "2025-07-22",
+      "subject": "SUPERSEDED BY EASA AD 2025-0166",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-07-29",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0075R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0075R1",
+      "issueDate": "2025-07-21",
+      "subject": "Flight Controls / Landing Gear / Oxygen / Pneumatic - Part(s) Installation",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2025-08-04",
+      "matchedKeyword": "A321"
+    },
+    {
+      "source": "FAA",
+      "ref": "2025-13660",
+      "url": "https://www.federalregister.gov/documents/2025/07/21/2025-13660/airworthiness-directives-cfm-international-sa-engines",
+      "issueDate": "2025-07-21",
+      "subject": "Airworthiness Directives; CFM International, S.A. Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2025-07-21/pdf/2025-13660.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-06",
+      "url": "https://ad.easa.europa.eu/ad/2025-06",
+      "issueDate": "2025-07-18",
+      "subject": "Potential Risk Management Issue after Engine Load Reduction Device Activation",
+      "tcHolders": [
+        "CFM INTERNATIONAL",
+        "Safety Information Bulletin"
+      ],
+      "types": [
+        "LEAP-1A/-1C",
+        "LEAP-1B",
+        "Airworthiness",
+        "Operations"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0118R1",
+      "url": "https://ad.easa.europa.eu/ad/2025-0118R1",
+      "issueDate": "2025-07-15",
+      "subject": "Aircraft Flight Manual – Amendment / Communications – Digital Radio and Audio Integrating Management System – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-07-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2021-0177R3",
+      "url": "https://ad.easa.europa.eu/ad/2021-0177R3",
+      "issueDate": "2025-07-15",
+      "subject": "Hydraulic Power – Pylon / Engine Interface Rods – Inspection / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-07-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0133",
+      "url": "https://ad.easa.europa.eu/ad/2025-0133",
+      "issueDate": "2025-06-25",
+      "subject": "Aircraft Flight Manual / Cabin Crew Operating Manual / Cabin Crew Data – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319"
+      ],
+      "effectiveDate": "2025-07-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2017-0098R2",
+      "url": "https://ad.easa.europa.eu/ad/2017-0098R2",
+      "issueDate": "2025-06-25",
+      "subject": "Fuselage – Potable Water and Waste Water Service Panels – Reinforcement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-07-02",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0120",
+      "url": "https://ad.easa.europa.eu/ad/2025-0120",
+      "issueDate": "2025-05-26",
+      "subject": "Cabin Systems – Antenna Adapter Plate – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A350",
+        "A380"
+      ],
+      "effectiveDate": "2025-06-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0111",
+      "url": "https://ad.easa.europa.eu/ad/2025-0111",
+      "issueDate": "2025-05-14",
+      "subject": "Fuselage – Service Door Stop Fitting Hole – Inspection / Repair",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-05-28",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0107",
+      "url": "https://ad.easa.europa.eu/ad/2025-0107",
+      "issueDate": "2025-05-07",
+      "subject": "Fuselage – Frame 35 / Slidebox Junction – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2025-05-21",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0096",
+      "url": "https://ad.easa.europa.eu/ad/2025-0096",
+      "issueDate": "2025-04-28",
+      "subject": "Aircraft Flight Manual – Section Limitations – Amendment / Master Minimum Equipment List – Amendment / Pneumatic – High Pressure Bleed Valve – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-05-12",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "SD-2025-01",
+      "url": "https://ad.easa.europa.eu/ad/SD-2025-01",
+      "issueDate": "2025-04-16",
+      "subject": "Replacement of certain Rockwell Collins SBAS receivers on aeroplanes conducting LPV200 approaches in EGNOS SoL service area",
+      "tcHolders": [
+        "Safety Directives"
+      ],
+      "types": [
+        "Operations"
+      ],
+      "effectiveDate": "2025-04-30",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0088",
+      "url": "https://ad.easa.europa.eu/ad/2025-0088",
+      "issueDate": "2025-04-16",
+      "subject": "ROCKWELL COLLINS: Satellite Based Augmentation Systems / Global Positioning System Receiver – Replacement",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 34 NAVIGATION"
+      ],
+      "effectiveDate": "2025-04-30",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0078",
+      "url": "https://ad.easa.europa.eu/ad/2025-0078",
+      "issueDate": "2025-04-09",
+      "subject": "Fuselage – Centre Fuselage Skin and Forward Pressure Bulkhead – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-04-23",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0066",
+      "url": "https://ad.easa.europa.eu/ad/2025-0066",
+      "issueDate": "2025-03-28",
+      "subject": "Fuselage – Pressure Panel at Centre Wing Box – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-04-11",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0067",
+      "url": "https://ad.easa.europa.eu/ad/2025-0067",
+      "issueDate": "2025-03-28",
+      "subject": "Fuselage – Centre Fuselage Frame Foot Joint – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2025-04-11",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0068",
+      "url": "https://ad.easa.europa.eu/ad/2025-0068",
+      "issueDate": "2025-03-28",
+      "subject": "SUPERSEDED BY EASA AD 2026-0017",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-04-11",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0065",
+      "url": "https://ad.easa.europa.eu/ad/2025-0065",
+      "issueDate": "2025-03-27",
+      "subject": "Fuselage – Angle Fitting Connection to Side Skin Panel and Transition Angle – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2025-04-10",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "FAA",
+      "ref": "2025-03459",
+      "url": "https://www.federalregister.gov/documents/2025/03/04/2025-03459/airworthiness-directives-cfm-international-sa-engines",
+      "issueDate": "2025-03-04",
+      "subject": "Airworthiness Directives; CFM International, S.A. Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2025-03-04/pdf/2025-03459.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0041",
+      "url": "https://ad.easa.europa.eu/ad/2025-0041",
+      "issueDate": "2025-02-18",
+      "subject": "Flight Controls – Trimmable Horizontal Stabilizer Actuator – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A340"
+      ],
+      "effectiveDate": "2025-02-25",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0037",
+      "url": "https://ad.easa.europa.eu/ad/2025-0037",
+      "issueDate": "2025-02-12",
+      "subject": "SUPERSEDED BY EASA AD 2025-0118",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-02-26",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0033",
+      "url": "https://ad.easa.europa.eu/ad/2025-0033",
+      "issueDate": "2025-02-10",
+      "subject": "SUPERSEDED BY EASA AD 2026-0062",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-02-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0032",
+      "url": "https://ad.easa.europa.eu/ad/2025-0032",
+      "issueDate": "2025-02-10",
+      "subject": "SUPERSEDED BY EASA AD 2026-0064",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-02-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0031",
+      "url": "https://ad.easa.europa.eu/ad/2025-0031",
+      "issueDate": "2025-02-10",
+      "subject": "SUPERSEDED BY EASA AD 2026-0061",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-02-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0030",
+      "url": "https://ad.easa.europa.eu/ad/2025-0030",
+      "issueDate": "2025-02-10",
+      "subject": "SUPERSEDED BY EASA AD 2026-0028",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2025-02-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0007",
+      "url": "https://ad.easa.europa.eu/ad/2025-0007",
+      "issueDate": "2025-01-09",
+      "subject": "Engine – High-Pressure Turbine – Rotor Interstage Seal – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2025-01-23",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "FAA",
+      "ref": "2025-00207",
+      "url": "https://www.federalregister.gov/documents/2025/01/08/2025-00207/airworthiness-directives-cfm-international-sa-engines",
+      "issueDate": "2025-01-08",
+      "subject": "Airworthiness Directives; CFM International, S.A. Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2025-01-08/pdf/2025-00207.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2025-0003",
+      "url": "https://ad.easa.europa.eu/ad/2025-0003",
+      "issueDate": "2025-01-07",
+      "subject": "Engine – Low Pressure Turbine – Stage 4 and Stage 5 Disks – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C",
+        "LEAP-1B"
+      ],
+      "effectiveDate": "2025-01-21",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0247",
+      "url": "https://ad.easa.europa.eu/ad/2024-0247",
+      "issueDate": "2024-12-18",
+      "subject": "SUPERSEDED BY EASA AD 2025-0041",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A340"
+      ],
+      "effectiveDate": "2025-01-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0231",
+      "url": "https://ad.easa.europa.eu/ad/2024-0231",
+      "issueDate": "2024-12-04",
+      "subject": "SUPERSEDED BY EASA AD 2025-0083",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-12-18",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0201R1",
+      "url": "https://ad.easa.europa.eu/ad/2024-0201R1",
+      "issueDate": "2024-12-02",
+      "subject": "Wings – Outer Wing Bottom Buttstrap – Inspections",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-12-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0230",
+      "url": "https://ad.easa.europa.eu/ad/2024-0230",
+      "issueDate": "2024-12-02",
+      "subject": "Wings – Bottom Wing Skin Panel 2 – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-12-16",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "FAA",
+      "ref": "2024-28120",
+      "url": "https://www.federalregister.gov/documents/2024/12/02/2024-28120/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2024-12-02",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2024-12-02/pdf/2024-28120.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0175",
+      "url": "https://ad.easa.europa.eu/ad/2024-0175",
+      "issueDate": "2024-11-28",
+      "subject": "[Correction] Engine – Fuel Nozzle – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2024-09-20",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0225",
+      "url": "https://ad.easa.europa.eu/ad/2024-0225",
+      "issueDate": "2024-11-26",
+      "subject": "SUPERSEDED BY EASA AD 2025-0243",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "LEAP-1A/-1C"
+      ],
+      "effectiveDate": "2024-12-10",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "US-2024-19-15",
+      "url": "https://ad.easa.europa.eu/ad/US-2024-19-15",
+      "issueDate": "2024-11-25",
+      "subject": "[Correction] SAFRAN AEROSYSTEMS - Oxygen Cylinder and Valve Assemblies - Inspection / Replacement",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 35 OXYGEN"
+      ],
+      "effectiveDate": "2024-11-26",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0217",
+      "url": "https://ad.easa.europa.eu/ad/2024-0217",
+      "issueDate": "2024-11-18",
+      "subject": "Fuselage – Double Joggle Area at Frame 16 and Frame 20 – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-12-02",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0216",
+      "url": "https://ad.easa.europa.eu/ad/2024-0216",
+      "issueDate": "2024-11-15",
+      "subject": "SUPERSEDED BY EASA AD 2025-0158",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-11-22",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0208",
+      "url": "https://ad.easa.europa.eu/ad/2024-0208",
+      "issueDate": "2024-10-25",
+      "subject": "SUPERSEDED BY EASA AD 2025-0030",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-11-08",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0203",
+      "url": "https://ad.easa.europa.eu/ad/2024-0203",
+      "issueDate": "2024-10-22",
+      "subject": "Flight Controls – Trimmable Horizontal Stabilizer Actuator – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-11-05",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0204",
+      "url": "https://ad.easa.europa.eu/ad/2024-0204",
+      "issueDate": "2024-10-22",
+      "subject": "Fuselage – Rivet Holes at Frame 64 – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        ""
+      ],
+      "effectiveDate": "2024-11-05",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0199",
+      "url": "https://ad.easa.europa.eu/ad/2024-0199",
+      "issueDate": "2024-10-18",
+      "subject": "SUPERSEDED BY EASA AD 2025-0120",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A350",
+        "A380"
+      ],
+      "effectiveDate": "2024-11-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0198",
+      "url": "https://ad.easa.europa.eu/ad/2024-0198",
+      "issueDate": "2024-10-18",
+      "subject": "Oxygen – Chemical Oxygen Generators – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A300-600",
+        "A300-600ST (Beluga)",
+        "A310",
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A340"
+      ],
+      "effectiveDate": "2024-11-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0197",
+      "url": "https://ad.easa.europa.eu/ad/2024-0197",
+      "issueDate": "2024-10-18",
+      "subject": "Oxygen – SafeLav Gaseous Oxygen Container – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A340"
+      ],
+      "effectiveDate": "2024-11-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0196",
+      "url": "https://ad.easa.europa.eu/ad/2024-0196",
+      "issueDate": "2024-10-18",
+      "subject": "Pneumatic – Overheat Detection System Sensing Elements – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-11-01",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0187",
+      "url": "https://ad.easa.europa.eu/ad/2024-0187",
+      "issueDate": "2024-09-25",
+      "subject": "Doors – Overwing Exit Door Latch Bracket Bushes – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2024-10-09",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2020-0104R1-CN",
+      "url": "https://ad.easa.europa.eu/ad/2020-0104R1-CN",
+      "issueDate": "2024-08-30",
+      "subject": "CANCELLED: Oxygen – Oxygen Supply Solenoid Valve – Inspection / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-08-30",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0147R1",
+      "url": "https://ad.easa.europa.eu/ad/2024-0147R1",
+      "issueDate": "2024-08-07",
+      "subject": "Fuselage – Centre Fuselage Forward Pressure Bulkhead – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-08-13",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2019-0069R2",
+      "url": "https://ad.easa.europa.eu/ad/2019-0069R2",
+      "issueDate": "2024-08-05",
+      "subject": "[Correction] Equipment / Furnishings – Overhead Stowage Compartments – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-08-05",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0151",
+      "url": "https://ad.easa.europa.eu/ad/2024-0151",
+      "issueDate": "2024-07-31",
+      "subject": "Aircraft Flight Manual / Complementary Performance Data File – Amendment",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2024-08-14",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2011-28R1",
+      "url": "https://ad.easa.europa.eu/ad/2011-28R1",
+      "issueDate": "2024-07-30",
+      "subject": "Maintenance of Emergency Evacuation Systems",
+      "tcHolders": [
+        "AIRBUS S.A.S.",
+        "Safety Information Bulletin"
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "Airworthiness"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0097R2",
+      "url": "https://ad.easa.europa.eu/ad/2024-0097R2",
+      "issueDate": "2024-07-12",
+      "subject": "SUPERSEDED BY EASA AD 2025-0189",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-07-19",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0135",
+      "url": "https://ad.easa.europa.eu/ad/2024-0135",
+      "issueDate": "2024-07-10",
+      "subject": "Fuselage – Centre Fuselage – Keel Beam Bottom Panel – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "",
+        "A321"
+      ],
+      "effectiveDate": "2024-07-24",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0128",
+      "url": "https://ad.easa.europa.eu/ad/2024-0128",
+      "issueDate": "2024-07-03",
+      "subject": "Fuselage – Cabin Floor Beam Junction – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A321"
+      ],
+      "effectiveDate": "2024-07-17",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "US-2024-11-01",
+      "url": "https://ad.easa.europa.eu/ad/US-2024-11-01",
+      "issueDate": "2024-06-26",
+      "subject": "Electrical Power - Nickel-Cadmium Batteries during Aeroplane Parking or Storage - Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A300",
+        "A300-600",
+        "A300-600ST (Beluga)",
+        "A310",
+        "A318",
+        "A319",
+        "",
+        "A321",
+        "A330",
+        "A340",
+        "A350",
+        "A380"
+      ],
+      "effectiveDate": "2024-07-03",
+      "matchedKeyword": "A320"
+    },
+    {
+      "source": "EASA",
+      "ref": "24-039",
+      "url": "https://ad.easa.europa.eu/ad/24-039",
+      "issueDate": "2024-06-10",
+      "subject": "WITHDRAWN - EXPLANATORY STATEMENT ATTACHED",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A320",
+        ""
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "A321"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0106",
+      "url": "https://ad.easa.europa.eu/ad/2024-0106",
+      "issueDate": "2024-05-31",
+      "subject": "SUPERSEDED BY EASA AD 2024-0199",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "A320",
+        "",
+        "A330",
+        "A350",
+        "A380"
+      ],
+      "effectiveDate": "2024-06-14",
+      "matchedKeyword": "A321"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0091R1",
+      "url": "https://ad.easa.europa.eu/ad/2024-0091R1",
+      "issueDate": "2024-05-30",
+      "subject": "Aircraft Flight Manual / Section Limitations – Amendment / Auto Flight – New Flight Guidance Standard – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A319",
+        "A320",
+        ""
+      ],
+      "effectiveDate": "2024-06-06",
+      "matchedKeyword": "A321"
+    },
+    {
+      "source": "FAA",
+      "ref": "2024-08105",
+      "url": "https://www.federalregister.gov/documents/2024/04/17/2024-08105/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2024-04-17",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2024-04-17/pdf/2024-08105.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0067-E",
+      "url": "https://ad.easa.europa.eu/ad/2024-0067-E",
+      "issueDate": "2024-03-09",
+      "subject": "Engine – Life Limited Parts – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "CFM56-5",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2024-03-11",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2024-0002",
+      "url": "https://ad.easa.europa.eu/ad/2024-0002",
+      "issueDate": "2024-01-04",
+      "subject": "Engine – High-Pressure Turbine Inner Stationary Seal – Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2024-01-18",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2023-27092",
+      "url": "https://www.federalregister.gov/documents/2023/12/11/2023-27092/airworthiness-directives-cfm-international-sa-engines",
+      "issueDate": "2023-12-11",
+      "subject": "Airworthiness Directives; CFM International, S.A. Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2023-12-11/pdf/2023-27092.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2023-17197",
+      "url": "https://www.federalregister.gov/documents/2023/08/10/2023-17197/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2023-08-10",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2023-08-10/pdf/2023-17197.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2023-09737",
+      "url": "https://www.federalregister.gov/documents/2023/05/09/2023-09737/airworthiness-directives-cfm-international-sa-engines",
+      "issueDate": "2023-05-09",
+      "subject": "Airworthiness Directives; CFM International, S.A. Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2023-05-09/pdf/2023-09737.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2022-19946",
+      "url": "https://www.federalregister.gov/documents/2022/09/15/2022-19946/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2022-09-15",
+      "subject": "Airworthiness Directives; CFM International, S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2022-09-15/pdf/2022-19946.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2022-11926",
+      "url": "https://www.federalregister.gov/documents/2022/06/03/2022-11926/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2022-06-03",
+      "subject": "Airworthiness Directives; CFM International, S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2022-06-03/pdf/2022-11926.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2022-04146",
+      "url": "https://www.federalregister.gov/documents/2022/02/28/2022-04146/airworthiness-directives-avox-system-inc-formerly-scott-aviation-oxygen-cylinder-and-valve",
+      "issueDate": "2022-02-28",
+      "subject": "Airworthiness Directives; AVOX System Inc. (Formerly Scott Aviation) Oxygen Cylinder and Valve Assemblies and Oxygen Valve Assemblies",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2022-02-28/pdf/2022-04146.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-16972",
+      "url": "https://www.federalregister.gov/documents/2021/08/09/2021-16972/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2021-08-09",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-08-09/pdf/2021-16972.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2017-0132R2",
+      "url": "https://ad.easa.europa.eu/ad/2017-0132R2",
+      "issueDate": "2021-08-03",
+      "subject": "Engine – Forward Engine Mount Main Beam Snout – Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2021-08-10",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-16174",
+      "url": "https://www.federalregister.gov/documents/2021/07/30/2021-16174/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2021-07-30",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-07-30/pdf/2021-16174.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-13458",
+      "url": "https://www.federalregister.gov/documents/2021/06/23/2021-13458/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2021-06-23",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-06-23/pdf/2021-13458.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-09507",
+      "url": "https://www.federalregister.gov/documents/2021/05/04/2021-09507/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2021-05-04",
+      "subject": "Airworthiness Directives; CFM International, S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-05-04/pdf/2021-09507.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-09221",
+      "url": "https://www.federalregister.gov/documents/2021/04/30/2021-09221/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2021-04-30",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-04-30/pdf/2021-09221.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2021-0062",
+      "url": "https://ad.easa.europa.eu/ad/2021-0062",
+      "issueDate": "2021-03-05",
+      "subject": "Engine – Low Pressure Turbine Rear Frames – Inspection / Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2021-03-19",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2021-01851",
+      "url": "https://www.federalregister.gov/documents/2021/02/22/2021-01851/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2021-02-22",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2021-02-22/pdf/2021-01851.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2020-25844",
+      "url": "https://www.federalregister.gov/documents/2020/11/20/2020-25844/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2020-11-20",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2020-11-20/pdf/2020-25844.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2020-15410",
+      "url": "https://www.federalregister.gov/documents/2020/07/15/2020-15410/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2020-07-15",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2020-07-15/pdf/2020-15410.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2020-04997",
+      "url": "https://www.federalregister.gov/documents/2020/03/12/2020-04997/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2020-03-12",
+      "subject": "Airworthiness Directives; CFM International, S.A., Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2020-03-12/pdf/2020-04997.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2020-0044",
+      "url": "https://ad.easa.europa.eu/ad/2020-0044",
+      "issueDate": "2020-03-03",
+      "subject": "SUPERSEDED BY EASA AD 2024-0002",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2020-03-17",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2020-03427",
+      "url": "https://www.federalregister.gov/documents/2020/02/21/2020-03427/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2020-02-21",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2020-02-21/pdf/2020-03427.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2020-0007",
+      "url": "https://ad.easa.europa.eu/ad/2020-0007",
+      "issueDate": "2020-01-15",
+      "subject": "Engine – Rotating Air High Pressure Turbine Front Seal – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2020-01-29",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2019-26736",
+      "url": "https://www.federalregister.gov/documents/2019/12/12/2019-26736/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2019-12-12",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2019-12-12/pdf/2019-26736.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2019-20184",
+      "url": "https://www.federalregister.gov/documents/2019/09/18/2019-20184/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2019-09-18",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2019-09-18/pdf/2019-20184.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2019-0150",
+      "url": "https://ad.easa.europa.eu/ad/2019-0150",
+      "issueDate": "2019-06-28",
+      "subject": "SUPERSEDED BY EASA AD 2020-0007",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2019-07-05",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2019-0146",
+      "url": "https://ad.easa.europa.eu/ad/2019-0146",
+      "issueDate": "2019-06-21",
+      "subject": "SUPERSEDED BY EASA AD 2019-0150",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2019-06-28",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2019-13022",
+      "url": "https://www.federalregister.gov/documents/2019/06/18/2019-13022/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2019-06-18",
+      "subject": "Airworthiness Directives; CFM International S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-13022.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2019-12221",
+      "url": "https://www.federalregister.gov/documents/2019/06/10/2019-12221/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2019-06-10",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2019-06-10/pdf/2019-12221.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "FAA",
+      "ref": "2018-26611",
+      "url": "https://www.federalregister.gov/documents/2018/12/11/2018-26611/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2018-12-11",
+      "subject": "Airworthiness Directives; CFM International S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2018-12-11/pdf/2018-26611.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2018-26026",
+      "url": "https://www.federalregister.gov/documents/2018/11/30/2018-26026/airworthiness-directives-cfm-international-sa-turbofan-engines",
+      "issueDate": "2018-11-30",
+      "subject": "Airworthiness Directives; CFM International S.A. Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2018-11-30/pdf/2018-26026.pdf",
+      "matchedKeyword": "LEAP-1B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2017-0084",
+      "url": "https://ad.easa.europa.eu/ad/2017-0084",
+      "issueDate": "2017-05-12",
+      "subject": "Engine – Radial Drive Shaft – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        ""
+      ],
+      "effectiveDate": "2017-05-26",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2017-0065",
+      "url": "https://ad.easa.europa.eu/ad/2017-0065",
+      "issueDate": "2017-04-19",
+      "subject": "Engine Fuel and Control – Hydro-Mechanical Units – Operational Limitations",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        ""
+      ],
+      "effectiveDate": "2017-05-03",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2016-0257",
+      "url": "https://ad.easa.europa.eu/ad/2016-0257",
+      "issueDate": "2016-12-16",
+      "subject": "Power Plant – CFM56 Engines Fan Cowl Door Latch with Key and Flag – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2016-12-30",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2016-0076",
+      "url": "https://ad.easa.europa.eu/ad/2016-0076",
+      "issueDate": "2016-04-18",
+      "subject": "Exhaust – Thrust Reverser Pivot Fitting – Inspection",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2016-04-25",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2016-0068",
+      "url": "https://ad.easa.europa.eu/ad/2016-0068",
+      "issueDate": "2016-04-11",
+      "subject": "SUPERSEDED BY EASA AD 2016-0076",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2016-04-25",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2016-0069",
+      "url": "https://ad.easa.europa.eu/ad/2016-0069",
+      "issueDate": "2016-04-11",
+      "subject": "SUPERSEDED BY EASA AD 2016-0257",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2016-04-25",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "2016-07150",
+      "url": "https://www.federalregister.gov/documents/2016/04/05/2016-07150/airworthiness-directives-the-boeing-company-airplanes",
+      "issueDate": "2016-04-05",
+      "subject": "Airworthiness Directives; The Boeing Company Airplanes",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2016-04-05/pdf/2016-07150.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "2016-0039",
+      "url": "https://ad.easa.europa.eu/ad/2016-0039",
+      "issueDate": "2016-02-29",
+      "subject": "SUPERSEDED BY EASA AD 2021-0062",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2016-03-01",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2014-0276",
+      "url": "https://ad.easa.europa.eu/ad/2014-0276",
+      "issueDate": "2014-12-19",
+      "subject": "Power Plant – Fan Cowl Door Hinge Nuts – Inspection / Replacement",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2015-01-02",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2014-0130",
+      "url": "https://ad.easa.europa.eu/ad/2014-0130",
+      "issueDate": "2014-05-20",
+      "subject": "Time Limits – Engine Stationary Parts – Life Limits / Mandatory Inspections",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2014-06-03",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2013-0129",
+      "url": "https://ad.easa.europa.eu/ad/2013-0129",
+      "issueDate": "2013-06-21",
+      "subject": "Airborne Auxiliary Power – Auxiliary Power Unit Exhaust Tailpipe – Modification",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2013-07-05",
+      "matchedKeyword": "APS3200"
+    },
+    {
+      "source": "EASA",
+      "ref": "2012-0214",
+      "url": "https://ad.easa.europa.eu/ad/2012-0214",
+      "issueDate": "2012-10-18",
+      "subject": "SUPERSEDED BY EASA AD 2013-0129",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2012-11-01",
+      "matchedKeyword": "APS3200"
+    },
+    {
+      "source": "EASA",
+      "ref": "2012-17",
+      "url": "https://ad.easa.europa.eu/ad/2012-17",
+      "issueDate": "2012-09-20",
+      "subject": "CFM International CFM56-5B engines – High Cycle Fatigue Failure of Low Pressure Turbine Active Clearance Control Fuel Manifolds",
+      "tcHolders": [
+        "Safety Information Bulletin"
+      ],
+      "types": [
+        "Airworthiness"
+      ],
+      "effectiveDate": "",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2012-0123",
+      "url": "https://ad.easa.europa.eu/ad/2012-0123",
+      "issueDate": "2012-07-09",
+      "subject": "SUPERSEDED BY EASA AD 2017-0065",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        ""
+      ],
+      "effectiveDate": "2012-07-23",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "US-2009-11-02",
+      "url": "https://ad.easa.europa.eu/ad/US-2009-11-02",
+      "issueDate": "2012-03-09",
+      "subject": "[Correction] High-Pressure Compressor (HPC) 4-9 Spools Improperly repaired by Propulsion Technology LLC (PTLLC)",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "CFM56-5",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2009-06-23",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2010-0212",
+      "url": "https://ad.easa.europa.eu/ad/2010-0212",
+      "issueDate": "2010-10-18",
+      "subject": "Engine – Fan Blade – Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2010-11-01",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2009-0088R1",
+      "url": "https://ad.easa.europa.eu/ad/2009-0088R1",
+      "issueDate": "2010-08-17",
+      "subject": "[Correction] Engine – High Pressure Compressor (HPC) – Inspection / Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2009-05-08",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2009-0270",
+      "url": "https://ad.easa.europa.eu/ad/2009-0270",
+      "issueDate": "2009-12-17",
+      "subject": "Engine - LPT Rotor / Stator Assembly - Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2009-12-31",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2009-0154-E",
+      "url": "https://ad.easa.europa.eu/ad/2009-0154-E",
+      "issueDate": "2009-07-15",
+      "subject": "Engine Fuel and Control - Hydromechanical Unit (HMU) – Inspection / Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2009-07-17",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2009-0110",
+      "url": "https://ad.easa.europa.eu/ad/2009-0110",
+      "issueDate": "2009-05-07",
+      "subject": "Time Limits – Low Pressure Turbine Rear Frame – Life Limit / Mandatory Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2009-05-21",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2008-0228-E",
+      "url": "https://ad.easa.europa.eu/ad/2008-0228-E",
+      "issueDate": "2008-12-26",
+      "subject": "SUPERSEDED BY EASA AD 2009-0088",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2008-12-27",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2008-0227-E",
+      "url": "https://ad.easa.europa.eu/ad/2008-0227-E",
+      "issueDate": "2008-12-23",
+      "subject": "SUPERSEDED by EASA AD 2008-0228-E",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2008-12-24",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2007-0221",
+      "url": "https://ad.easa.europa.eu/ad/2007-0221",
+      "issueDate": "2007-08-13",
+      "subject": "Time Limits - Low Pressure Turbine Rear Frame - Life Reduction",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2007-08-27",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "2007-0036R1",
+      "url": "https://ad.easa.europa.eu/ad/2007-0036R1",
+      "issueDate": "2007-02-27",
+      "subject": "Power Plant - Forward Engine Mount Bolts - Inspection / Replacement / Retorque",
+      "tcHolders": [
+        "AIRBUS S.A.S."
+      ],
+      "types": [
+        "A318",
+        "A319",
+        "A320",
+        "A321"
+      ],
+      "effectiveDate": "2007-02-16",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "US-2006-26-01",
+      "url": "https://ad.easa.europa.eu/ad/US-2006-26-01",
+      "issueDate": "2006-12-20",
+      "subject": "Engine Fuel &amp; Control - Fuel Filters (PMA Parts) - Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "CFM56-5",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2007-01-03",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2003-001R2",
+      "url": "https://ad.easa.europa.eu/ad/F-2003-001R2",
+      "issueDate": "2005-06-08",
+      "subject": "Engine indicating - EGT harnesses and couplings",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        ""
+      ],
+      "effectiveDate": "2005-06-18",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2003-456R2",
+      "url": "https://ad.easa.europa.eu/ad/F-2003-456R2",
+      "issueDate": "2004-09-29",
+      "subject": "Starting - Air Turbine Starter - Rework",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "2004-10-09",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2003-422",
+      "url": "https://ad.easa.europa.eu/ad/F-2003-422",
+      "issueDate": "2003-11-26",
+      "subject": "SUPERSEDED BY DGAC FRANCE AD F-2003-456",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "2003-12-06",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2003-403",
+      "url": "https://ad.easa.europa.eu/ad/F-2003-403",
+      "issueDate": "2003-10-29",
+      "subject": "SUPERSEDED BY DGAC FRANCE AD F-2003-422",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "2003-11-08",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2002-470",
+      "url": "https://ad.easa.europa.eu/ad/F-2002-470",
+      "issueDate": "2002-09-28",
+      "subject": "Second and Third Stage Low Pressure (LP) Turbine Nozzle Segments",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2002-09-28",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2002-390",
+      "url": "https://ad.easa.europa.eu/ad/F-2002-390",
+      "issueDate": "2002-07-24",
+      "subject": "Critical Life-limited Rotating Engine parts",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "CFM56-5",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2002-08-01",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-1998-003R3",
+      "url": "https://ad.easa.europa.eu/ad/F-1998-003R3",
+      "issueDate": "2001-12-12",
+      "subject": "Engine - Low Pressure Turbine Casing Life Limit",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        ""
+      ],
+      "effectiveDate": "2001-12-22",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2001-240",
+      "url": "https://ad.easa.europa.eu/ad/F-2001-240",
+      "issueDate": "2001-06-13",
+      "subject": "Aft Sump Magnetic Chip Detector Inspection / Number 4 Bearing Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2001-06-23",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2001-207",
+      "url": "https://ad.easa.europa.eu/ad/F-2001-207",
+      "issueDate": "2001-05-30",
+      "subject": "SUPERSEDED BY DGAC FRANCE AD 2001-240",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-2",
+        "CFM56-3",
+        "",
+        "CFM56-5C",
+        "CFM56-7B"
+      ],
+      "effectiveDate": "2001-05-30",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-2001-177",
+      "url": "https://ad.easa.europa.eu/ad/F-2001-177",
+      "issueDate": "2001-05-16",
+      "subject": "Engine Starting - Starter Bayonet Oil Plug - Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "2001-05-26",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "FAA",
+      "ref": "01-4216",
+      "url": "https://www.federalregister.gov/documents/2001/02/28/01-4216/airworthiness-directives-cfm-international-sa-cfm56-3--3b-and--3c-series-turbofan-engines",
+      "issueDate": "2001-02-28",
+      "subject": "Airworthiness Directives; CFM International, S.A. CFM56-3, -3B, and -3C Series Turbofan Engines",
+      "pdfUrl": "https://www.govinfo.gov/content/pkg/FR-2001-02-28/pdf/01-4216.pdf",
+      "matchedKeyword": "737 MAX"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-1998-427R2",
+      "url": "https://ad.easa.europa.eu/ad/F-1998-427R2",
+      "issueDate": "1999-10-20",
+      "subject": "Engine Fuel &amp; Control - Fuel Filter Cover Attachment Parts - Inspection",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "1999-12-31",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-1998-097",
+      "url": "https://ad.easa.europa.eu/ad/F-1998-097",
+      "issueDate": "1998-02-25",
+      "subject": "Engine - Accessory Gearbox Gearshaft Cluster Spur Assembly - Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "1998-02-25",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-1997-354R3",
+      "url": "https://ad.easa.europa.eu/ad/F-1997-354R3",
+      "issueDate": "1997-12-17",
+      "subject": "CANCELLED - SEE DGAC FRANCE AD F-1998-096 and AD F-1998-097",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-3",
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "1997-12-01",
+      "matchedKeyword": "CFM56-5B"
+    },
+    {
+      "source": "EASA",
+      "ref": "US-97-03-06",
+      "url": "https://ad.easa.europa.eu/ad/US-97-03-06",
+      "issueDate": "1997-02-19",
+      "subject": "AUXILIARY POWER INTERNATIONAL CORP. (APIC) - APU Electronic Control Box - Replacement",
+      "tcHolders": [
+        "APPLIANCES"
+      ],
+      "types": [
+        "ATA 49 AIRBORNE AUXILIARY POWER"
+      ],
+      "effectiveDate": "1997-03-06",
+      "matchedKeyword": "APS3200"
+    },
+    {
+      "source": "EASA",
+      "ref": "F-1994-272R3",
+      "url": "https://ad.easa.europa.eu/ad/F-1994-272R3",
+      "issueDate": "1995-09-27",
+      "subject": "Engine - High Pressure Compressor 1-2 Spool - Inspection / Replacement",
+      "tcHolders": [
+        "CFM INTERNATIONAL"
+      ],
+      "types": [
+        "CFM56-5",
+        "",
+        "CFM56-5C"
+      ],
+      "effectiveDate": "1995-10-07",
+      "matchedKeyword": "CFM56-5B"
+    }
+  ]
+}
